@@ -2,173 +2,439 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Apple iOS-inspired Design System with Glassmorphism */
+/* ============================================
+   Apple iOS 17 Design System - Premium Edition
+   Authentic glassmorphism, depth, and motion
+   ============================================ */
 
 @layer base {
     :root {
-        /* Premium iOS-inspired Light Mode Colors */
-        --background: 240 20% 99%;
-        --foreground: 240 10% 4%;
+        /* iOS 17 Light Mode - Premium Color Palette */
+        --background: 0 0% 98%;
+        --foreground: 220 13% 13%;
+        
+        /* Glass surfaces */
         --card: 0 0% 100%;
-        --card-foreground: 240 10% 4%;
+        --card-foreground: 220 13% 13%;
         --popover: 0 0% 100%;
-        --popover-foreground: 240 10% 4%;
-        --primary: 221 83% 53%;
+        --popover-foreground: 220 13% 13%;
+        
+        /* Apple Blue (System Blue) */
+        --primary: 211 100% 50%;
         --primary-foreground: 0 0% 100%;
-        --secondary: 240 5% 96%;
-        --secondary-foreground: 240 6% 10%;
-        --accent: 262 83% 58%;
+        
+        /* Subtle greys */
+        --secondary: 220 14% 96%;
+        --secondary-foreground: 220 13% 13%;
+        
+        /* Accent purple */
+        --accent: 271 81% 56%;
         --accent-foreground: 0 0% 100%;
-        --success: 142 76% 36%;
-        --success-subtle: 142 76% 96%;
+        
+        /* Status colors */
+        --success: 142 72% 40%;
+        --success-subtle: 142 72% 96%;
         --warning: 38 92% 50%;
         --warning-subtle: 38 92% 95%;
-        --destructive: 0 84% 60%;
-        --destructive-subtle: 0 84% 97%;
-        --muted: 240 5% 96%;
-        --muted-foreground: 240 4% 46%;
-        --border: 240 6% 90%;
-        --input: 240 6% 90%;
-        --ring: 221 83% 53%;
-        --radius: 1rem;
+        --destructive: 0 72% 51%;
+        --destructive-subtle: 0 72% 97%;
         
-        /* Glassmorphism variables */
-        --glass-bg: rgba(255, 255, 255, 0.7);
-        --glass-border: rgba(255, 255, 255, 0.18);
-        --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        /* UI elements */
+        --muted: 220 14% 96%;
+        --muted-foreground: 220 9% 46%;
+        --border: 220 13% 91%;
+        --input: 220 13% 91%;
+        --ring: 211 100% 50%;
+        
+        /* Border radius - iOS style */
+        --radius: 1.25rem;
+        
+        /* Apple Glassmorphism */
+        --glass-bg: rgba(255, 255, 255, 0.72);
+        --glass-border: rgba(255, 255, 255, 0.25);
+        --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        --glass-highlight: rgba(255, 255, 255, 0.4);
     }
     
     .dark {
-        /* Premium iOS-inspired Dark Mode Colors */
-        --background: 240 10% 4%;
-        --foreground: 240 5% 96%;
-        --card: 240 8% 8%;
-        --card-foreground: 240 5% 96%;
-        --popover: 240 8% 8%;
-        --popover-foreground: 240 5% 96%;
-        --primary: 221 83% 53%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 240 4% 16%;
-        --secondary-foreground: 240 5% 96%;
-        --accent: 262 83% 58%;
-        --accent-foreground: 0 0% 100%;
-        --success: 142 76% 36%;
-        --success-subtle: 142 76% 12%;
-        --warning: 38 92% 50%;
-        --warning-subtle: 38 92% 12%;
-        --destructive: 0 84% 60%;
-        --destructive-subtle: 0 84% 12%;
-        --muted: 240 4% 16%;
-        --muted-foreground: 240 5% 65%;
-        --border: 240 4% 16%;
-        --input: 240 4% 16%;
-        --ring: 221 83% 53%;
+        /* iOS 17 Dark Mode - True Dark with Depth */
+        --background: 220 15% 6%;
+        --foreground: 220 10% 95%;
         
-        /* Glassmorphism variables for dark mode */
-        --glass-bg: rgba(20, 20, 30, 0.7);
+        --card: 220 13% 10%;
+        --card-foreground: 220 10% 95%;
+        --popover: 220 13% 10%;
+        --popover-foreground: 220 10% 95%;
+        
+        --primary: 211 100% 55%;
+        --primary-foreground: 0 0% 100%;
+        
+        --secondary: 220 13% 16%;
+        --secondary-foreground: 220 10% 95%;
+        
+        --accent: 271 81% 60%;
+        --accent-foreground: 0 0% 100%;
+        
+        --success: 142 72% 45%;
+        --success-subtle: 142 72% 15%;
+        --warning: 38 92% 55%;
+        --warning-subtle: 38 92% 15%;
+        --destructive: 0 72% 55%;
+        --destructive-subtle: 0 72% 15%;
+        
+        --muted: 220 13% 16%;
+        --muted-foreground: 220 9% 60%;
+        --border: 220 13% 18%;
+        --input: 220 13% 18%;
+        --ring: 211 100% 55%;
+        
+        /* Dark glassmorphism */
+        --glass-bg: rgba(20, 20, 30, 0.72);
         --glass-border: rgba(255, 255, 255, 0.08);
-        --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+        --glass-highlight: rgba(255, 255, 255, 0.05);
     }
 }
 
 @layer base {
     * {
         @apply border-border;
+        box-sizing: border-box;
+    }
+    
+    html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
     }
     
     body {
         @apply bg-background text-foreground;
-        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        letter-spacing: -0.01em;
+        letter-spacing: -0.011em;
+        font-feature-settings: 'kern' 1, 'liga' 1;
     }
     
+    /* Apple Typography Hierarchy */
     h1, h2, h3, h4, h5, h6 {
-        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
         font-weight: 600;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.022em;
+        line-height: 1.1;
     }
     
-    code {
-        font-family: 'SF Mono', Menlo, Monaco, 'Courier New', monospace;
+    h1 { @apply text-5xl lg:text-6xl; }
+    h2 { @apply text-4xl lg:text-5xl; }
+    h3 { @apply text-3xl lg:text-4xl; }
+    h4 { @apply text-2xl lg:text-3xl; }
+    h5 { @apply text-xl lg:text-2xl; }
+    h6 { @apply text-lg lg:text-xl; }
+    
+    p {
+        line-height: 1.6;
+        letter-spacing: -0.011em;
+    }
+    
+    code, pre {
+        font-family: 'SF Mono', 'Monaco', 'Menlo', 'Courier New', monospace;
+        font-feature-settings: 'calt' 1;
+    }
+    
+    /* Selection */
+    ::selection {
+        background-color: hsla(var(--primary), 0.3);
+        color: hsl(var(--foreground));
     }
 }
 
-/* Apple iOS Glassmorphism Styles */
+/* ============================================
+   Apple iOS Glassmorphism System
+   ============================================ */
 @layer components {
+    
+    /* Core Glass Effect */
     .glass {
         background: var(--glass-bg);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
         border: 1px solid var(--glass-border);
         box-shadow: var(--glass-shadow);
+        position: relative;
     }
     
+    .glass::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+        opacity: 0.5;
+    }
+    
+    /* Glass Variants */
     .glass-card {
-        @apply glass rounded-2xl;
+        @apply glass rounded-3xl p-6;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .glass-card:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
     }
     
     .glass-nav {
-        @apply glass border-b;
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        @apply glass;
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-bottom: 1px solid var(--glass-border);
     }
     
+    .glass-heavy {
+        background: var(--glass-bg);
+        backdrop-filter: blur(40px) saturate(200%);
+        -webkit-backdrop-filter: blur(40px) saturate(200%);
+    }
+    
+    .glass-light {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+    }
+    
+    /* ============================================
+       iOS Button System
+       ============================================ */
+    
     .ios-button {
-        @apply rounded-xl px-6 py-3 font-medium transition-all duration-200;
-        @apply active:scale-95 hover:shadow-lg;
+        @apply rounded-2xl px-6 py-3 font-semibold text-[15px] leading-tight;
+        @apply transition-all duration-200 ease-out;
+        @apply active:scale-[0.96];
+        letter-spacing: -0.01em;
+        position: relative;
+        overflow: hidden;
     }
     
     .ios-button-primary {
         @apply ios-button bg-primary text-primary-foreground;
-        box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 4px 20px hsla(var(--primary), 0.4);
+    }
+    
+    .ios-button-primary:hover {
+        box-shadow: 0 6px 28px hsla(var(--primary), 0.5);
+        transform: translateY(-1px);
     }
     
     .ios-button-secondary {
         @apply ios-button glass;
     }
     
-    /* Premium gradient backgrounds */
-    .gradient-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .ios-button-secondary:hover {
+        background: rgba(255, 255, 255, 0.85);
     }
     
-    .gradient-accent {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    .ios-button-ghost {
+        @apply ios-button bg-transparent;
     }
     
-    .gradient-success {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    .ios-button-ghost:hover {
+        background: hsla(var(--muted), 0.5);
     }
     
-    .gradient-mesh {
-        background: 
-            radial-gradient(at 0% 0%, hsla(221, 83%, 53%, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, hsla(262, 83%, 58%, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, hsla(221, 83%, 53%, 0.15) 0px, transparent 50%),
-            radial-gradient(at 0% 100%, hsla(262, 83%, 58%, 0.15) 0px, transparent 50%);
-    }
+    /* ============================================
+       iOS Input System
+       ============================================ */
     
-    /* iOS-style input */
     .ios-input {
-        @apply glass rounded-xl px-4 py-3 border-none focus:ring-2 focus:ring-primary/50;
+        @apply glass rounded-2xl px-5 py-3.5 text-[15px];
+        @apply border-none outline-none;
         @apply transition-all duration-200;
+        @apply focus:ring-2 focus:ring-primary/30;
+        letter-spacing: -0.011em;
     }
     
-    /* Smooth animations */
+    .ios-input:focus {
+        background: rgba(255, 255, 255, 0.9);
+        transform: scale(1.01);
+    }
+    
+    .ios-textarea {
+        @apply ios-input;
+        resize: none;
+        min-height: 120px;
+    }
+    
+    /* ============================================
+       Premium Gradients (iOS Style)
+       ============================================ */
+    
+    .gradient-ios-blue {
+        background: linear-gradient(135deg, #0A84FF 0%, #0066D9 100%);
+    }
+    
+    .gradient-ios-purple {
+        background: linear-gradient(135deg, #BF5AF2 0%, #AF52DE 100%);
+    }
+    
+    .gradient-ios-pink {
+        background: linear-gradient(135deg, #FF375F 0%, #FF2D55 100%);
+    }
+    
+    .gradient-ios-green {
+        background: linear-gradient(135deg, #32D74B 0%, #30D158 100%);
+    }
+    
+    .gradient-mesh-ios {
+        background: 
+            radial-gradient(at 0% 0%, hsla(211, 100%, 50%, 0.15) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, hsla(271, 81%, 56%, 0.15) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, hsla(211, 100%, 50%, 0.15) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, hsla(271, 81%, 56%, 0.15) 0px, transparent 50%);
+    }
+    
+    /* ============================================
+       iOS Depth System
+       ============================================ */
+    
+    .depth-1 {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    
+    .depth-2 {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+    
+    .depth-3 {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+    
+    .depth-4 {
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* ============================================
+       iOS Animations
+       ============================================ */
+    
     .animate-fade-in {
-        animation: fadeIn 0.6s ease-out;
+        animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .animate-slide-up {
-        animation: slideUp 0.6s ease-out;
+        animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .animate-scale-in {
-        animation: scaleIn 0.4s ease-out;
+        animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .animate-spring-in {
+        animation: springIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    /* Hover effects */
+    .hover-lift {
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-4px) scale(1.02);
+    }
+    
+    .hover-glow {
+        transition: all 0.25s ease-out;
+    }
+    
+    .hover-glow:hover {
+        box-shadow: 0 8px 32px hsla(var(--primary), 0.3);
+    }
+    
+    /* ============================================
+       iOS Badge & Tag System
+       ============================================ */
+    
+    .ios-badge {
+        @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold;
+        letter-spacing: -0.01em;
+    }
+    
+    .ios-badge-primary {
+        @apply ios-badge bg-primary/10 text-primary;
+    }
+    
+    .ios-badge-success {
+        @apply ios-badge bg-success/10 text-success;
+    }
+    
+    .ios-badge-warning {
+        @apply ios-badge bg-warning/10 text-warning;
+    }
+    
+    .ios-badge-destructive {
+        @apply ios-badge bg-destructive/10 text-destructive;
+    }
+    
+    /* ============================================
+       iOS Card System
+       ============================================ */
+    
+    .ios-card {
+        @apply glass-card;
+        overflow: hidden;
+    }
+    
+    .ios-card-header {
+        @apply flex items-center justify-between mb-4;
+    }
+    
+    .ios-card-title {
+        @apply text-xl font-semibold tracking-tight;
+    }
+    
+    .ios-card-description {
+        @apply text-muted-foreground text-sm mt-1;
+    }
+    
+    /* ============================================
+       iOS Modal System
+       ============================================ */
+    
+    .ios-modal-overlay {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .ios-modal {
+        @apply glass-card;
+        animation: modalSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    /* ============================================
+       Utility Classes
+       ============================================ */
+    
+    .text-balance {
+        text-wrap: balance;
+    }
+    
+    .backdrop-blur-ios {
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+    }
+    
+    .smooth-scroll {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
     }
 }
+
+/* ============================================
+   Keyframe Animations
+   ============================================ */
 
 @keyframes fadeIn {
     from {
@@ -182,7 +448,7 @@
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
     to {
         opacity: 1;
@@ -193,7 +459,7 @@
 @keyframes scaleIn {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.92);
     }
     to {
         opacity: 1;
@@ -201,17 +467,91 @@
     }
 }
 
-/* Legacy gradient for compatibility */
-.ai-gradient {
-    @apply gradient-primary;
+@keyframes springIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.glass-surface {
-    @apply glass;
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* ============================================
+   Scrollbar Styling (macOS Style)
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: hsla(var(--muted-foreground), 0.3);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: hsla(var(--muted-foreground), 0.5);
+    background-clip: content-box;
+}
+
+/* ============================================
+   Debug & Compatibility
+   ============================================ */
 
 @layer base {
     [data-debug-wrapper="true"] {
         display: contents !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .glass, .glass-card, .glass-nav {
+        background: white !important;
+        backdrop-filter: none !important;
+        border: 1px solid #e5e7eb !important;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
