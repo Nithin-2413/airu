@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Copy, RefreshCw, Send, Sparkles, Home, Loader2, CheckCircle } from 'lucide-react';
+import { Mail, Copy, RefreshCw, Send, Sparkles, Home, Loader2, CheckCircle, Edit3, Download } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { ThemeToggle } from '../components/ThemeToggle';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Textarea } from '../components/ui/textarea';
 import apiClient from '../utils/api';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 
 const EmailDrafts = () => {
   const navigate = useNavigate();
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedEmail, setGeneratedEmail] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     email_type: 'interview_invitation',
     candidate_name: '',
@@ -43,10 +43,12 @@ const EmailDrafts = () => {
     }
 
     setIsGenerating(true);
+    setGeneratedEmail(null);
 
     try {
       const response = await apiClient.post('/emails/generate-draft', formData);
       setGeneratedEmail(response.data);
+      setIsEditing(false);
       toast.success('Email draft generated successfully!');
     } catch (error) {
       console.error('Failed to generate email:', error);
@@ -66,6 +68,7 @@ const EmailDrafts = () => {
 
   const handleReset = () => {
     setGeneratedEmail(null);
+    setIsEditing(false);
     setFormData({
       email_type: 'interview_invitation',
       candidate_name: '',
@@ -80,341 +83,422 @@ const EmailDrafts = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background gradient-mesh">
-      {/* Glassmorphism Navigation */}
-      <nav className="glass-nav sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/dashboard')}>
-                <div className="w-8 h-8 rounded-xl gradient-primary flex items-center justify-center shadow-lg">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      
+      {/* Background */}
+      <div className="fixed inset-0 gradient-mesh-ios opacity-20 pointer-events-none" />
+
+      {/* iOS Navigation */}
+      <motion.nav 
+        className="glass-nav sticky top-0 z-50"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center gap-8">
+              <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/dashboard')}>
+                <div className="w-10 h-10 rounded-2xl gradient-ios-blue flex items-center justify-center shadow-depth-2">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold tracking-tight">Recruit-AI</span>
+                <span className="text-xl font-bold tracking-tightest">Recruit-AI</span>
               </div>
               
-              <div className="hidden md:flex items-center gap-1">
-                <Button variant="ghost" onClick={() => navigate('/dashboard')}>
-                  Dashboard
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/jobs')}>
-                  Jobs
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/screening')}>
-                  Screen Resumes
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/history')}>
-                  History
-                </Button>
-                <Button variant="ghost" onClick={() => navigate('/calendar')}>
-                  Calendar
-                </Button>
-                <Button variant="ghost" className="font-medium">
-                  Email Drafts
-                </Button>
+              <div className="hidden lg:flex items-center gap-2">
+                <Button variant="ghost" onClick={() => navigate('/dashboard')} className="tracking-apple rounded-xl">Dashboard</Button>
+                <Button variant="ghost" onClick={() => navigate('/jobs')} className="tracking-apple rounded-xl">Jobs</Button>
+                <Button variant="ghost" onClick={() => navigate('/screening')} className="tracking-apple rounded-xl">Screening</Button>
+                <Button variant="ghost" onClick={() => navigate('/history')} className="tracking-apple rounded-xl">History</Button>
+                <Button variant="ghost" onClick={() => navigate('/calendar')} className="tracking-apple rounded-xl">Calendar</Button>
+                <Button variant="ghost" className="text-foreground font-semibold tracking-apple rounded-xl">Emails</Button>
               </div>
             </div>
             
             <div className="flex items-center gap-3">
               <ThemeToggle />
-              <Button variant="ghost" size="icon" onClick={() => navigate('/')}>
+              <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="rounded-xl">
                 <Home className="h-5 w-5" />
               </Button>
             </div>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 py-12 relative z-10">
+        
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          className="mb-8"
         >
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold tracking-tight mb-2">Email Draft Generator</h1>
-            <p className="text-muted-foreground text-lg">
-              Generate professional HR emails with AI assistance
-            </p>
-          </div>
+          <h1 className="text-5xl font-bold tracking-tightest mb-2">Email Drafts</h1>
+          <p className="text-xl text-muted-foreground tracking-apple">Generate professional HR emails with AI</p>
+        </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Input Form */}
-            <Card className="glass-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Mail className="w-5 h-5" />
-                  Email Configuration
-                </CardTitle>
-                <CardDescription>Fill in the details to generate your email</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          {/* Left: Configuration Panel - macOS Style */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className="glass-card"
+          >
+            <div className="border-b border-border pb-4 mb-6">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-12 h-12 rounded-2xl gradient-ios-blue flex items-center justify-center shadow-depth-2">
+                  <Mail className="w-6 h-6 text-white" />
+                </div>
                 <div>
-                  <Label>Email Type *</Label>
-                  <Select
-                    value={formData.email_type}
-                    onValueChange={(value) => setFormData({ ...formData, email_type: value })}
-                  >
-                    <SelectTrigger className="ios-input mt-1">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(emailTypeLabels).map(([key, label]) => (
-                        <SelectItem key={key} value={key}>
-                          {label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <h2 className="text-2xl font-bold tracking-tight">Email Configuration</h2>
+                  <p className="text-sm text-muted-foreground tracking-apple">Fill in the details</p>
                 </div>
+              </div>
+            </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label>Candidate Name *</Label>
-                    <Input
-                      className="ios-input mt-1"
-                      value={formData.candidate_name}
-                      onChange={(e) => setFormData({ ...formData, candidate_name: e.target.value })}
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label>Job Title</Label>
-                    <Input
-                      className="ios-input mt-1"
-                      value={formData.job_title}
-                      onChange={(e) => setFormData({ ...formData, job_title: e.target.value })}
-                      placeholder="Senior Developer"
-                    />
-                  </div>
-                </div>
+            <div className="space-y-5">
+              
+              {/* Email Type */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold tracking-apple">Email Type</Label>
+                <Select 
+                  value={formData.email_type} 
+                  onValueChange={(value) => setFormData({ ...formData, email_type: value })}
+                >
+                  <SelectTrigger className="ios-input">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="glass-card border-2 border-border">
+                    {Object.entries(emailTypeLabels).map(([value, label]) => (
+                      <SelectItem key={value} value={value}>{label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-                <div>
-                  <Label>Company Name</Label>
-                  <Input
-                    className="ios-input mt-1"
-                    value={formData.company_name}
-                    onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
-                    placeholder="Tech Corp Inc."
-                  />
-                </div>
+              {/* Candidate Name */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold tracking-apple">Candidate Name *</Label>
+                <Input
+                  value={formData.candidate_name}
+                  onChange={(e) => setFormData({ ...formData, candidate_name: e.target.value })}
+                  placeholder="John Doe"
+                  className="ios-input"
+                />
+              </div>
 
-                {(formData.email_type === 'interview_invitation' || formData.email_type === 'reschedule') && (
-                  <>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label>Interview Date</Label>
-                        <Input
-                          type="date"
-                          className="ios-input mt-1"
-                          value={formData.interview_date}
-                          onChange={(e) => setFormData({ ...formData, interview_date: e.target.value })}
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label>Interview Time</Label>
-                        <Input
-                          type="time"
-                          className="ios-input mt-1"
-                          value={formData.interview_time}
-                          onChange={(e) => setFormData({ ...formData, interview_time: e.target.value })}
-                        />
-                      </div>
-                    </div>
+              {/* Job Title */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold tracking-apple">Job Title</Label>
+                <Input
+                  value={formData.job_title}
+                  onChange={(e) => setFormData({ ...formData, job_title: e.target.value })}
+                  placeholder="Senior Software Engineer"
+                  className="ios-input"
+                />
+              </div>
 
-                    <div>
-                      <Label>Interview Location</Label>
+              {/* Company Name */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold tracking-apple">Company Name</Label>
+                <Input
+                  value={formData.company_name}
+                  onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
+                  placeholder="Your Company"
+                  className="ios-input"
+                />
+              </div>
+
+              {/* Interview Date & Time */}
+              {formData.email_type === 'interview_invitation' && (
+                <>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold tracking-apple">Interview Date</Label>
                       <Input
-                        className="ios-input mt-1"
-                        value={formData.interview_location}
-                        onChange={(e) => setFormData({ ...formData, interview_location: e.target.value })}
-                        placeholder="Office or Zoom link"
+                        type="date"
+                        value={formData.interview_date}
+                        onChange={(e) => setFormData({ ...formData, interview_date: e.target.value })}
+                        className="ios-input"
                       />
                     </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold tracking-apple">Time</Label>
+                      <Input
+                        type="time"
+                        value={formData.interview_time}
+                        onChange={(e) => setFormData({ ...formData, interview_time: e.target.value })}
+                        className="ios-input"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-semibold tracking-apple">Location</Label>
+                    <Input
+                      value={formData.interview_location}
+                      onChange={(e) => setFormData({ ...formData, interview_location: e.target.value })}
+                      placeholder="Zoom, Office, etc."
+                      className="ios-input"
+                    />
+                  </div>
+                </>
+              )}
+
+              {/* Tone */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold tracking-apple">Tone</Label>
+                <Select 
+                  value={formData.tone} 
+                  onValueChange={(value) => setFormData({ ...formData, tone: value })}
+                >
+                  <SelectTrigger className="ios-input">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="glass-card border-2 border-border">
+                    <SelectItem value="professional">Professional</SelectItem>
+                    <SelectItem value="friendly">Friendly</SelectItem>
+                    <SelectItem value="formal">Formal</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Additional Details */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold tracking-apple">Additional Details</Label>
+                <Textarea
+                  value={formData.additional_details}
+                  onChange={(e) => setFormData({ ...formData, additional_details: e.target.value })}
+                  placeholder="Any specific instructions or details..."
+                  className="ios-textarea"
+                  rows={3}
+                />
+              </div>
+
+              {/* Generate Button */}
+              <Button
+                onClick={handleGenerate}
+                disabled={isGenerating || !formData.candidate_name}
+                className="w-full ios-button-primary h-14 shadow-depth-2 hover:shadow-depth-3"
+              >
+                {isGenerating ? (
+                  <>
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    Generate Email
                   </>
                 )}
+              </Button>
+            </div>
+          </motion.div>
 
+          {/* Right: Email Preview - macOS Mail Style */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="glass-card flex flex-col"
+          >
+            <div className="border-b border-border pb-4 mb-6">
+              <div className="flex items-center justify-between">
                 <div>
-                  <Label>Tone</Label>
-                  <Select
-                    value={formData.tone}
-                    onValueChange={(value) => setFormData({ ...formData, tone: value })}
-                  >
-                    <SelectTrigger className="ios-input mt-1">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="professional">Professional</SelectItem>
-                      <SelectItem value="friendly">Friendly</SelectItem>
-                      <SelectItem value="formal">Formal</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <h2 className="text-2xl font-bold tracking-tight">Email Preview</h2>
+                  <p className="text-sm text-muted-foreground tracking-apple">Your generated draft</p>
                 </div>
-
-                <div>
-                  <Label>Additional Details</Label>
-                  <Textarea
-                    className="ios-input mt-1 min-h-[100px]"
-                    value={formData.additional_details}
-                    onChange={(e) => setFormData({ ...formData, additional_details: e.target.value })}
-                    placeholder="Any specific points to include in the email..."
-                  />
-                </div>
-
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    className="ios-button-primary flex-1"
-                    onClick={handleGenerate}
-                    disabled={isGenerating || !formData.candidate_name}
-                  >
-                    {isGenerating ? (
-                      <>
-                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        Generating...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-5 h-5 mr-2" />
-                        Generate Email
-                      </>
-                    )}
-                  </Button>
-                  
-                  <Button
-                    variant="outline"
-                    className="ios-button-secondary"
-                    onClick={handleReset}
-                  >
-                    <RefreshCw className="w-5 h-5 mr-2" />
-                    Reset
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Email Preview */}
-            <Card className="glass-card">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span className="flex items-center gap-2">
-                    <Send className="w-5 h-5" />
-                    Generated Email
-                  </span>
-                  {generatedEmail && (
+                
+                {generatedEmail && !isEditing && (
+                  <div className="flex gap-2">
                     <Button
-                      variant="outline"
-                      size="sm"
-                      className="ios-button-secondary"
-                      onClick={handleCopyToClipboard}
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setIsEditing(true)}
+                      className="rounded-xl hover:bg-secondary"
+                      title="Edit"
                     >
-                      <Copy className="w-4 h-4 mr-2" />
-                      Copy
+                      <Edit3 className="w-5 h-5" />
                     </Button>
-                  )}
-                </CardTitle>
-                <CardDescription>
-                  {generatedEmail
-                    ? 'Your AI-generated email is ready'
-                    : 'Fill the form and click Generate to see your email'}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {!generatedEmail && !isGenerating && (
-                  <div className="flex flex-col items-center justify-center py-16 text-center">
-                    <div className="w-16 h-16 rounded-2xl gradient-accent flex items-center justify-center mb-4 shadow-lg">
-                      <Mail className="w-8 h-8 text-white" />
-                    </div>
-                    <p className="text-muted-foreground">
-                      Configure your email settings and generate a professional draft
-                    </p>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleCopyToClipboard}
+                      className="rounded-xl hover:bg-secondary"
+                      title="Copy"
+                    >
+                      <Copy className="w-5 h-5" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleReset}
+                      className="rounded-xl hover:bg-secondary"
+                      title="Reset"
+                    >
+                      <RefreshCw className="w-5 h-5" />
+                    </Button>
                   </div>
                 )}
+              </div>
+            </div>
 
-                {isGenerating && (
-                  <div className="flex flex-col items-center justify-center py-16">
-                    <Loader2 className="w-12 h-12 animate-spin text-primary mb-4" />
-                    <p className="text-muted-foreground">Generating your email...</p>
-                  </div>
-                )}
-
-                {generatedEmail && (
+            <div className="flex-1">
+              <AnimatePresence mode="wait">
+                {isGenerating ? (
                   <motion.div
+                    key="loading"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex flex-col items-center justify-center h-full py-20"
+                  >
+                    <div className="w-16 h-16 rounded-full border-4 border-primary/20 border-t-primary animate-spin mb-4" />
+                    <p className="text-muted-foreground tracking-apple">Crafting your email...</p>
+                  </motion.div>
+                ) : generatedEmail ? (
+                  <motion.div
+                    key="email"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
                     className="space-y-6"
                   >
-                    {/* macOS Mail-inspired header */}
-                    <div className="glass rounded-xl p-4 border">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-3 h-3 rounded-full bg-red-500" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-muted-foreground min-w-[60px]">To:</span>
-                          <span className="text-sm">{formData.candidate_name}</span>
-                        </div>
-                        
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-muted-foreground min-w-[60px]">Subject:</span>
-                          <span className="text-sm font-semibold">{generatedEmail.subject}</span>
-                        </div>
-                      </div>
+                    {/* Subject Line */}
+                    <div className="glass-light rounded-2xl p-5">
+                      <Label className="text-xs font-semibold text-muted-foreground tracking-apple uppercase mb-2 block">
+                        Subject
+                      </Label>
+                      {isEditing ? (
+                        <Input
+                          value={generatedEmail.subject}
+                          onChange={(e) => setGeneratedEmail({ ...generatedEmail, subject: e.target.value })}
+                          className="ios-input text-lg font-semibold"
+                        />
+                      ) : (
+                        <h3 className="text-lg font-bold tracking-tight">{generatedEmail.subject}</h3>
+                      )}
                     </div>
 
                     {/* Email Body */}
-                    <div className="glass rounded-xl p-6 border">
-                      <div className="prose prose-sm dark:prose-invert max-w-none">
-                        <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                          {generatedEmail.body}
+                    <div className="glass-light rounded-2xl p-5">
+                      <Label className="text-xs font-semibold text-muted-foreground tracking-apple uppercase mb-3 block">
+                        Message
+                      </Label>
+                      {isEditing ? (
+                        <Textarea
+                          value={generatedEmail.body}
+                          onChange={(e) => setGeneratedEmail({ ...generatedEmail, body: e.target.value })}
+                          className="ios-textarea text-[15px] leading-relaxed"
+                          rows={16}
+                        />
+                      ) : (
+                        <div className="prose prose-sm max-w-none">
+                          <pre className="whitespace-pre-wrap font-sans text-[15px] leading-relaxed text-foreground tracking-apple">
+                            {generatedEmail.body}
+                          </pre>
                         </div>
-                      </div>
+                      )}
                     </div>
 
-                    {/* Success Badge */}
-                    <div className="flex items-center justify-center gap-2 p-3 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                      <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
-                      <span className="text-sm font-medium text-green-900 dark:text-green-100">
-                        Email generated successfully! Copy and send when ready.
-                      </span>
+                    {/* Action Buttons */}
+                    {isEditing ? (
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={() => setIsEditing(false)}
+                          className="flex-1 ios-button-primary shadow-depth-2"
+                        >
+                          <CheckCircle className="w-5 h-5 mr-2" />
+                          Save Changes
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          onClick={() => setIsEditing(false)}
+                          className="rounded-xl"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={handleCopyToClipboard}
+                          className="flex-1 ios-button-secondary shadow-depth-1"
+                        >
+                          <Copy className="w-5 h-5 mr-2" />
+                          Copy to Clipboard
+                        </Button>
+                        <Button
+                          onClick={handleReset}
+                          variant="ghost"
+                          className="rounded-xl"
+                        >
+                          <RefreshCw className="w-5 h-5 mr-2" />
+                          New Draft
+                        </Button>
+                      </div>
+                    )}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="empty"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex flex-col items-center justify-center h-full py-20 text-center"
+                  >
+                    <div className="w-20 h-20 rounded-3xl gradient-ios-blue flex items-center justify-center mb-6 shadow-depth-2">
+                      <Mail className="w-10 h-10 text-white" />
                     </div>
+                    <h3 className="text-2xl font-bold tracking-tight mb-3">No Email Yet</h3>
+                    <p className="text-muted-foreground tracking-apple max-w-sm">
+                      Fill in the details on the left and click "Generate Email" to create your professional draft
+                    </p>
                   </motion.div>
                 )}
-              </CardContent>
-            </Card>
-          </div>
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </div>
 
-          {/* Email Templates Info */}
-          <Card className="glass-card mt-6">
-            <CardHeader>
-              <CardTitle>Available Email Templates</CardTitle>
-              <CardDescription>Choose from our AI-powered professional templates</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {Object.entries(emailTypeLabels).map(([key, label]) => (
-                  <button
-                    key={key}
-                    onClick={() => setFormData({ ...formData, email_type: key })}
-                    className={`p-4 rounded-xl border-2 transition-all text-left hover:scale-105 ${
-                      formData.email_type === key
-                        ? 'border-primary bg-primary/10'
-                        : 'border-border glass hover:border-primary/50'
-                    }`}
-                  >
-                    <Mail className="w-5 h-5 mb-2 text-primary" />
-                    <div className="text-sm font-medium">{label}</div>
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        {/* Tips Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-8 glass-card"
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-2xl gradient-ios-purple flex items-center justify-center flex-shrink-0 shadow-depth-2">
+              <Sparkles className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold tracking-tight mb-2">Pro Tips</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground tracking-apple">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
+                  <span>Be specific with candidate names and job titles for personalized emails</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
+                  <span>Include interview dates and times for invitation emails</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
+                  <span>Choose the right tone based on your company culture</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
+                  <span>You can edit the generated email before copying it</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </motion.div>
+
       </main>
     </div>
   );
