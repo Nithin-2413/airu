@@ -57,50 +57,42 @@
     }
     
     .dark {
-        /* Galaxy Theme - Deep Space with Cosmic Colors */
-        --background: 240 20% 4%;
+        /* Premium Dark Mode */
+        --background: 220 15% 6%;
         --foreground: 220 10% 95%;
         
-        --card: 240 15% 8%;
+        --card: 220 13% 10%;
         --card-foreground: 220 10% 95%;
-        --popover: 240 15% 8%;
+        --popover: 220 13% 10%;
         --popover-foreground: 220 10% 95%;
         
-        /* Cosmic Blue */
-        --primary: 217 91% 60%;
+        --primary: 211 100% 55%;
         --primary-foreground: 0 0% 100%;
         
-        --secondary: 240 13% 12%;
+        --secondary: 220 13% 16%;
         --secondary-foreground: 220 10% 95%;
         
-        /* Nebula Purple */
-        --accent: 271 81% 65%;
+        --accent: 271 81% 60%;
         --accent-foreground: 0 0% 100%;
         
-        --success: 142 72% 50%;
-        --success-subtle: 142 72% 12%;
-        --warning: 38 92% 60%;
-        --warning-subtle: 38 92% 12%;
-        --destructive: 0 72% 60%;
-        --destructive-subtle: 0 72% 12%;
+        --success: 142 72% 45%;
+        --success-subtle: 142 72% 15%;
+        --warning: 38 92% 55%;
+        --warning-subtle: 38 92% 15%;
+        --destructive: 0 72% 55%;
+        --destructive-subtle: 0 72% 15%;
         
-        --muted: 240 13% 12%;
-        --muted-foreground: 220 9% 65%;
-        --border: 240 13% 14%;
-        --input: 240 13% 14%;
-        --ring: 217 91% 60%;
+        --muted: 220 13% 16%;
+        --muted-foreground: 220 9% 60%;
+        --border: 220 13% 18%;
+        --input: 220 13% 18%;
+        --ring: 211 100% 55%;
         
-        /* Galaxy glassmorphism */
-        --glass-bg: rgba(10, 10, 20, 0.75);
-        --glass-border: rgba(100, 120, 255, 0.15);
-        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-        --glass-highlight: rgba(100, 120, 255, 0.1);
-        
-        /* Galaxy particles */
-        --star-color: #ffffff;
-        --nebula-1: rgba(100, 120, 255, 0.3);
-        --nebula-2: rgba(200, 100, 255, 0.3);
-        --nebula-3: rgba(100, 200, 255, 0.2);
+        /* Dark glassmorphism */
+        --glass-bg: rgba(20, 20, 30, 0.72);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+        --glass-highlight: rgba(255, 255, 255, 0.05);
     }
 }
 
