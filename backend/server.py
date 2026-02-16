@@ -290,11 +290,14 @@ Focus on:
 
 Be objective and data-driven in your analysis. Return ONLY valid JSON."""
 
-        response = gemini_client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt
+        response = groq_client.chat.completions.create(
+            model='llama-3.3-70b-versatile',
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.3
         )
-        response_text = response.text.strip()
+        response_text = response.choices[0].message.content.strip()
         
         # Extract JSON from response (remove markdown code blocks if present)
         if response_text.startswith('```'):
