@@ -30,9 +30,53 @@ const Screening = () => {
   const [screeningResults, setScreeningResults] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
 
+  // Load persisted screening session on mount
   useEffect(() => {
     loadJobs();
+    loadPersistedScreeningSession();
   }, []);
+
+  // Persist screening session whenever it changes
+  useEffect(() => {
+    if (uploadedResumes.length > 0 || selectedJob) {
+      persistScreeningSession();
+    }
+  }, [uploadedResumes, selectedJob]);
+
+  const loadPersistedScreeningSession = () => {
+    try {
+      const savedSession = sessionStorage.getItem('screening_session');
+      if (savedSession) {
+        const { resumes, jobId } = JSON.parse(savedSession);
+        if (resumes && resumes.length > 0) {
+          setUploadedResumes(resumes);
+        }
+        if (jobId) {
+          setSelectedJob(jobId);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load screening session:', error);
+    }
+  };
+
+  const persistScreeningSession = () => {
+    try {
+      sessionStorage.setItem('screening_session', JSON.stringify({
+        resumes: uploadedResumes,
+        jobId: selectedJob
+      }));
+    } catch (error) {
+      console.error('Failed to persist screening session:', error);
+    }
+  };
+
+  const clearScreeningSession = () => {
+    sessionStorage.removeItem('screening_session');
+    setUploadedResumes([]);
+    setSelectedJob('');
+    setUploadedFiles([]);
+  };
 
   const loadJobs = async () => {
     try {
