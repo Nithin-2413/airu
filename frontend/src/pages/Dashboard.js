@@ -17,6 +17,7 @@ import apiClient from '../utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { BarChart, Bar, LineChart, Line, PieChart as RechartsPie, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Loader from '../components/Loader';
 
 const Dashboard = () => {
   const navigate = useNavigate();
