@@ -200,11 +200,14 @@ Rules:
 3. For skills, extract both technical and soft skills
 4. Return ONLY valid JSON, no markdown or extra text"""
 
-        response = gemini_client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt
+        response = groq_client.chat.completions.create(
+            model='llama-3.3-70b-versatile',
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.3
         )
-        response_text = response.text.strip()
+        response_text = response.choices[0].message.content.strip()
         
         # Clean response
         if response_text.startswith('```'):
