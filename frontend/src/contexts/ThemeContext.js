@@ -11,7 +11,7 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('recruit-ai-theme') || 'light';
+    const savedTheme = localStorage.getItem('air-ecruiter-theme') || 'light';
     setTheme(savedTheme);
     if (savedTheme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -21,7 +21,7 @@ export const ThemeProvider = ({ children }) => {
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    localStorage.setItem('recruit-ai-theme', newTheme);
+    localStorage.setItem('air-ecruiter-theme', newTheme);
     
     if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
