@@ -17,13 +17,13 @@ import io
 import re
 import PyPDF2
 import docx
-from google import genai
+from groq import Groq
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# Configure Gemini AI Client
-gemini_client = genai.Client(api_key=os.environ.get('GOOGLE_API_KEY'))
+# Configure Groq AI Client for Llama 3.3 (70B)
+groq_client = Groq(api_key=os.environ.get('GROQ_API_KEY'))
 
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
