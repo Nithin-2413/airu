@@ -142,11 +142,56 @@ University of California, Berkeley | 2017"""
         """Upload a test resume"""
         print("\n📄 Uploading Test Resume...")
         
-        # Create test resume file
-        resume_content = "John Smith Resume Content - Senior Software Engineer with 5+ years experience"
+        # Create a minimal valid PDF for testing
+        pdf_content = b"""%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources <<>> >>
+endobj
+4 0 obj
+<< /Length 500 >>
+stream
+BT
+/Helv 12 Tf
+100 700 Td
+(John Smith) Tj
+0 -20 Td
+(Senior Software Engineer) Tj
+0 -20 Td
+(Email: john.smith@email.com) Tj
+0 -20 Td
+(Phone: 555-123-4567) Tj
+0 -40 Td
+(EXPERIENCE) Tj
+0 -20 Td
+(5+ years Python, React, AWS) Tj
+0 -20 Td
+(Led development teams) Tj
+0 -20 Td
+(Microservices architecture) Tj
+ET
+endstream
+endobj
+xref
+0 5
+0000000000 65535 f 
+0000000010 00000 n 
+0000000075 00000 n 
+0000000178 00000 n 
+0000000319 00000 n 
+trailer
+<< /Size 5 /Root 1 0 R >>
+startxref
+850
+%%EOF"""
         
         files = {
-            'files': ('john_smith_resume.txt', resume_content, 'text/plain')
+            'files': ('john_smith_resume.pdf', pdf_content, 'application/pdf')
         }
         
         # Remove Content-Type header for multipart form data
