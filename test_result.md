@@ -205,6 +205,18 @@ backend:
         agent: "testing"
         comment: "✅ Backend API confirmed working. GET /api/analytics/dashboard returns proper status_breakdown, average_scores, top_jobs array, conversion_rate. All calculations accurate."
 
+  - task: "Candidate management APIs"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ Backend APIs confirmed working. GET /api/screenings with all filters (status, min_score, max_score, search, job_id) functional. Bulk status update and CSV export endpoints working. All response formats correct."
+
 frontend:
   - task: "Calendar event hover animation"
     implemented: true
