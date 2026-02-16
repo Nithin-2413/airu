@@ -139,7 +139,7 @@ const Dashboard = () => {
                 <div className="w-10 h-10 rounded-2xl gradient-ios-blue flex items-center justify-center shadow-depth-2">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold tracking-tightest">Recruit-AI</span>
+                <span className="text-xl font-bold tracking-tightest">AIRecruiter</span>
               </div>
               
               <div className="hidden lg:flex items-center gap-2">

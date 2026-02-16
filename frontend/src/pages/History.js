@@ -287,7 +287,7 @@ const History = () => {
                   </defs>
                 </svg>
                 <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 dark:from-indigo-400 dark:via-purple-400 dark:to-violet-400 bg-clip-text text-transparent">
-                  Recruit-AI
+                  AIRecruiter
                 </span>
               </div>
               

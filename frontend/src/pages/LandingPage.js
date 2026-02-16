@@ -95,7 +95,7 @@ const LandingPage = () => {
                 <div className="absolute inset-0 rounded-2xl gradient-ios-blue opacity-40 blur-lg group-hover:opacity-60 transition-opacity" />
               </div>
               <span className="text-2xl font-bold tracking-tightest bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                AIR-ecruiter
+                AIRecruiter
               </span>
             </motion.div>
             
@@ -310,7 +310,7 @@ const LandingPage = () => {
                 <h2 className="text-5xl lg:text-6xl font-bold tracking-tightest mb-6">
                   Why{' '}
                   <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    AIR-ecruiter
+                    AIRecruiter
                   </span>
                   ?
                 </h2>
@@ -406,11 +406,11 @@ const LandingPage = () => {
               <div className="w-10 h-10 rounded-2xl gradient-ios-blue flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold">AIR-ecruiter</span>
+              <span className="text-lg font-bold">AIRecruiter</span>
             </div>
             
             <p className="text-sm text-muted-foreground">
-              © 2025 AIR-ecruiter. Hiring smarter, not harder.
+              © 2025 AIRecruiter. Hiring smarter, not harder.
             </p>
           </div>
         </div>
