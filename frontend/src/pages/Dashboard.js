@@ -120,8 +120,9 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden" data-testid="dashboard-container">
       
-      {/* Background Gradient */}
-      <div className="fixed inset-0 gradient-mesh-ios opacity-30 pointer-events-none" />
+      {/* Premium Frosted Glass Background */}
+      <div className="fixed inset-0 gradient-mesh-premium-light opacity-40 pointer-events-none" />
+      <div className="fixed inset-0 gradient-mesh-premium opacity-30 pointer-events-none" />
 
       {/* iOS Navigation */}
       <motion.nav 
