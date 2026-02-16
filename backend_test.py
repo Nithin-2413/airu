@@ -14,7 +14,8 @@ import os
 
 class BackendTester:
     def __init__(self):
-        self.base_url = "https://resume-match-fix-1.preview.emergentagent.com/api"
+        # Use localhost for testing as external URL has routing issues
+        self.base_url = "http://localhost:8001/api"
         self.session_id = str(uuid.uuid4())
         self.headers = {
             "X-Session-ID": self.session_id,
