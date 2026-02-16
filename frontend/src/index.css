@@ -295,6 +295,24 @@
             radial-gradient(at 0% 100%, hsla(271, 81%, 56%, 0.15) 0px, transparent 50%);
     }
     
+    /* Premium Frosted Glass Background - Orangish Pink Violet Bluish */
+    .gradient-mesh-premium {
+        background: 
+            radial-gradient(at 10% 20%, hsla(25, 95%, 70%, 0.08) 0px, transparent 50%),
+            radial-gradient(at 90% 10%, hsla(340, 85%, 75%, 0.08) 0px, transparent 50%),
+            radial-gradient(at 80% 80%, hsla(270, 70%, 75%, 0.08) 0px, transparent 50%),
+            radial-gradient(at 20% 90%, hsla(220, 80%, 70%, 0.08) 0px, transparent 50%),
+            radial-gradient(at 50% 50%, hsla(300, 70%, 80%, 0.06) 0px, transparent 60%);
+    }
+    
+    .gradient-mesh-premium-light {
+        background: 
+            radial-gradient(circle at 15% 20%, rgba(255, 179, 128, 0.12) 0%, transparent 40%),
+            radial-gradient(circle at 85% 15%, rgba(255, 128, 179, 0.12) 0%, transparent 40%),
+            radial-gradient(circle at 75% 75%, rgba(200, 150, 255, 0.12) 0%, transparent 40%),
+            radial-gradient(circle at 25% 85%, rgba(150, 200, 255, 0.12) 0%, transparent 40%);
+    }
+    
     /* ============================================
        iOS Depth System
        ============================================ */
