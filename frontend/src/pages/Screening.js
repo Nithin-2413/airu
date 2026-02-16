@@ -385,18 +385,39 @@ const Screening = () => {
                   {uploadedResumes.length > 0 && (
                     <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                       <div className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5" />
+                        <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-green-900 dark:text-green-100">
-                            {uploadedResumes.length} resume{uploadedResumes.length > 1 ? 's' : ''} uploaded successfully
-                          </p>
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-sm font-medium text-green-900 dark:text-green-100">
+                              {uploadedResumes.length} resume{uploadedResumes.length > 1 ? 's' : ''} ready for screening
+                            </p>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={handleCancelScreening}
+                              className="text-xs text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+                            >
+                              Clear All
+                            </Button>
+                          </div>
                           <ul className="mt-2 space-y-1">
                             {uploadedResumes.map((resume, idx) => (
-                              <li key={idx} className="text-xs text-green-700 dark:text-green-300">
-                                • {resume.filename}
+                              <li key={idx} className="text-xs text-green-700 dark:text-green-300 flex items-center justify-between group">
+                                <span>• {resume.filename} {resume.candidate_name ? `(${resume.candidate_name})` : ''}</span>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => removeUploadedResume(idx)}
+                                  className="opacity-0 group-hover:opacity-100 transition-opacity h-6 px-2"
+                                >
+                                  <XCircle className="w-3 h-3 text-red-500" />
+                                </Button>
                               </li>
                             ))}
                           </ul>
+                          <p className="text-xs text-green-600 dark:text-green-400 mt-2 italic">
+                            ✓ Session persisted - you can navigate away and come back
+                          </p>
                         </div>
                       </div>
                     </div>
