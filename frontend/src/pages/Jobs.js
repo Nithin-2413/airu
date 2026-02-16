@@ -145,6 +145,20 @@ const Jobs = () => {
                 >
                   History
                 </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate('/calendar')}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Calendar
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate('/emails')}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Emails
+                </Button>
               </div>
             </div>
             
