@@ -385,10 +385,13 @@ const Calendar = () => {
                       {dayEvents.slice(0, 2).map((event, eventIdx) => (
                         <motion.div
                           key={eventIdx}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          whileHover={{ opacity: 0.85 }}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          whileHover={{ 
+                            scale: 1.02,
+                            transition: { duration: 0.3, ease: "easeInOut" }
+                          }}
                           onClick={(e) => {
                             e.stopPropagation();
                             openEditDialog(event);
@@ -397,7 +400,7 @@ const Calendar = () => {
                             text-xs px-2 py-1.5 rounded-lg border
                             ${colorTagStyles[event.color_tag] || colorTagStyles.blue}
                             font-medium tracking-apple cursor-pointer
-                            transition-all duration-300 ease-in-out
+                            transition-opacity duration-300 ease-in-out
                           `}
                         >
                           <div className="flex items-center gap-1 truncate">
