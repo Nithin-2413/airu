@@ -38,6 +38,7 @@ const StyledWrapper = styled.div`
   .btn-wrapper {
     position: relative;
     display: inline-block;
+    width: 100%;
   }
 
   .btn {
@@ -50,10 +51,14 @@ const StyledWrapper = styled.div`
     user-select: none;
     display: flex;
     justify-content: center;
-    padding: 0.5em 0.5em 0.5em 1.1em;
+    align-items: center;
+    width: 100%;
+    min-width: 200px;
+    padding: 0.75em 1.5em;
     font-family: "Poppins", "Inter", "Segoe UI", sans-serif;
     font-size: 1em;
-    font-weight: 400;
+    font-weight: 500;
+    white-space: nowrap;
 
     background-color: var(--button-color);
 
@@ -151,9 +156,10 @@ const StyledWrapper = styled.div`
   }
 
   .btn-svg {
-    flex-grow: 1;
+    flex-shrink: 0;
     height: 24px;
-    margin-right: 0.5rem;
+    width: 24px;
+    margin-right: 0.75rem;
     fill: #e8e8e8;
     animation: flicker 2s linear infinite;
     animation-delay: 0.5s;
@@ -174,13 +180,15 @@ const StyledWrapper = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    min-width: 6.4em;
+    justify-content: center;
+    min-width: 120px;
+    white-space: nowrap;
   }
   
   .txt-1,
   .txt-2 {
     position: absolute;
-    word-spacing: -1em;
+    white-space: nowrap;
   }
   
   .txt-1 {
@@ -259,7 +267,7 @@ const StyledWrapper = styled.div`
     filter: brightness(100%);
   }
 
-  ${Array.from({ length: 13 }, (_, i) => `
+  ${Array.from({ length: 15 }, (_, i) => `
     .btn-letter:nth-child(${i + 1}),
     .btn:focus .btn-letter:nth-child(${i + 1}) {
       animation-delay: ${i * 0.08}s;
