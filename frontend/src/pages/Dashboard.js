@@ -233,8 +233,8 @@ const Dashboard = () => {
           animate={{ opacity: 1, scale: 1 }}
           className="text-center"
         >
-          <div className="w-16 h-16 rounded-full border-4 border-primary/20 border-t-primary animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground tracking-apple">Loading Intelligence Dashboard...</p>
+          <Loader />
+          <p className="text-muted-foreground tracking-apple mt-4">Loading Intelligence Dashboard...</p>
         </motion.div>
       </div>
     );
