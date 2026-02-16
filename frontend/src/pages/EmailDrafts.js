@@ -143,7 +143,7 @@ const EmailDrafts = () => {
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-2xl font-bold tracking-tightest bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                  AIR-ecruiter
+                  AIRecruiter
                 </span>
               </div>
             </div>
