@@ -296,6 +296,8 @@ const History = () => {
                 <Button variant="ghost" onClick={() => navigate('/jobs')}>Jobs</Button>
                 <Button variant="ghost" onClick={() => navigate('/screening')}>Screen Resumes</Button>
                 <Button variant="ghost" className="bg-indigo-100 dark:bg-indigo-900/30">History</Button>
+                <Button variant="ghost" onClick={() => navigate('/calendar')}>Calendar</Button>
+                <Button variant="ghost" onClick={() => navigate('/emails')}>Emails</Button>
               </div>
             </div>
 
