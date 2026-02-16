@@ -217,7 +217,7 @@ const Screening = () => {
                 <div className="w-8 h-8 rounded-xl gradient-primary flex items-center justify-center shadow-lg">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold tracking-tight">Recruit-AI</span>
+                <span className="text-xl font-bold tracking-tight">AIRecruiter</span>
               </div>
               
               <div className="hidden md:flex items-center gap-1">
