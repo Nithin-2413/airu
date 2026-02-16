@@ -124,6 +124,11 @@ const Screening = () => {
     setUploadedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
+  const removeUploadedResume = (index) => {
+    setUploadedResumes(prev => prev.filter((_, i) => i !== index));
+    toast.info('Resume removed from session');
+  };
+
   const handleUpload = async () => {
     if (uploadedFiles.length === 0) {
       toast.error('Please select at least one resume file');
