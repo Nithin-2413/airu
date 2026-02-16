@@ -18,6 +18,7 @@ import apiClient from '../utils/api';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import JobFormDialog from '../components/JobFormDialog';
+import Loader from '../components/Loader';
 
 const Jobs = () => {
   const navigate = useNavigate();
