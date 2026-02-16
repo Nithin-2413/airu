@@ -178,6 +178,9 @@ const Screening = () => {
       setScreeningResults(response.data.results);
       toast.success(response.data.message);
       
+      // Clear screening session after successful screening
+      clearScreeningSession();
+      
       // Navigate to history to see results
       setTimeout(() => {
         navigate('/history');
@@ -187,6 +190,15 @@ const Screening = () => {
       toast.error(error.response?.data?.detail || 'Failed to screen resumes');
     } finally {
       setIsScreening(false);
+    }
+  };
+
+  const handleCancelScreening = () => {
+    if (uploadedResumes.length > 0 || selectedJob) {
+      if (window.confirm('Are you sure you want to cancel? All uploaded resumes and selections will be cleared.')) {
+        clearScreeningSession();
+        toast.success('Screening session cleared');
+      }
     }
   };
 
