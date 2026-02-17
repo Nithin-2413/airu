@@ -395,7 +395,7 @@ const EmailDrafts = () => {
                 <GenerateButton 
                   onClick={handleGenerate} 
                   loading={isGenerating}
-                  disabled={isGenerating || !formData.candidate_name || !formData.job_title}
+                  disabled={isGenerating || !isFormValid}
                 >
                   {isGenerating ? 'Generating' : 'Generate Draft'}
                 </GenerateButton>
@@ -411,6 +411,14 @@ const EmailDrafts = () => {
                   </Button>
                 )}
               </div>
+              
+              {/* Debug Info - Remove after testing */}
+              {!isFormValid && (
+                <div className="text-xs text-muted-foreground pt-2">
+                  {!formData.candidate_name && "• Please enter candidate name"}<br/>
+                  {!formData.job_title && "• Please select a job role"}
+                </div>
+              )}
             </div>
           </motion.div>
 
