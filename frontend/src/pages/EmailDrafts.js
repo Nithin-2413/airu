@@ -324,46 +324,46 @@ const EmailDrafts = () => {
 
               {/* Interview Details (conditional) */}
               {(formData.email_type === 'interview_invitation' || formData.email_type === 'reschedule') && (
-                <div className="space-y-4 pt-4 border-t border-border">
-                  <h3 className="text-lg font-semibold">Interview Details</h3>
+                <div className="space-y-4 pt-6 border-t border-border">
+                  <h3 className="text-lg font-semibold mb-3">Interview Details</h3>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-sm font-semibold">Date</Label>
+                    <div className="space-y-3">
+                      <Label className="text-sm font-semibold mb-2 block">Date</Label>
                       <Input
                         type="date"
                         value={formData.interview_date}
                         onChange={(e) => setFormData({ ...formData, interview_date: e.target.value })}
-                        className="ios-input h-12"
+                        className="ios-input h-12 text-foreground"
                       />
                     </div>
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-semibold">Time</Label>
+                    <div className="space-y-3">
+                      <Label className="text-sm font-semibold mb-2 block">Time</Label>
                       <Input
                         type="time"
                         value={formData.interview_time}
                         onChange={(e) => setFormData({ ...formData, interview_time: e.target.value })}
-                        className="ios-input h-12"
+                        className="ios-input h-12 text-foreground"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label className="text-sm font-semibold">Location</Label>
+                  <div className="space-y-3">
+                    <Label className="text-sm font-semibold mb-2 block">Location</Label>
                     <Input
                       placeholder="Office / Virtual / Zoom Link"
                       value={formData.interview_location}
                       onChange={(e) => setFormData({ ...formData, interview_location: e.target.value })}
-                      className="ios-input h-12"
+                      className="ios-input h-12 text-foreground"
                     />
                   </div>
                 </div>
               )}
 
               {/* Tone */}
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold">Email Tone</Label>
+              <div className="space-y-3 pt-4">
+                <Label className="text-sm font-semibold mb-2 block">Email Tone</Label>
                 <Select
                   value={formData.tone}
                   onValueChange={(value) => setFormData({ ...formData, tone: value })}
@@ -380,13 +380,13 @@ const EmailDrafts = () => {
               </div>
 
               {/* Additional Details */}
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold">Additional Details (Optional)</Label>
+              <div className="space-y-3 pt-4">
+                <Label className="text-sm font-semibold mb-2 block">Additional Details (Optional)</Label>
                 <Textarea
                   placeholder="Any special instructions or details to include..."
                   value={formData.additional_details}
                   onChange={(e) => setFormData({ ...formData, additional_details: e.target.value })}
-                  className="ios-textarea min-h-[100px]"
+                  className="ios-textarea min-h-[100px] text-foreground"
                 />
               </div>
 
