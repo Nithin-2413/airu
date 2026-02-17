@@ -1430,7 +1430,7 @@ IMPORTANT: Include HR contact information in the email signature if provided. Re
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "reschedule": f"""Generate a professional interview reschedule email.
+        "reschedule": f"""Generate a professional, detailed interview reschedule email with realistic corporate length (200-300 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
@@ -1439,6 +1439,18 @@ New Interview Date: {draft_request.interview_date}
 New Interview Time: {draft_request.interview_time}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+
+Create a comprehensive email that includes:
+1. Apologize for the inconvenience of rescheduling
+2. Brief reason for rescheduling (if appropriate: scheduling conflict, interviewer availability, etc.)
+3. Clearly state the new interview date, time, and location/platform
+4. Confirm all other details remain the same
+5. Express continued interest in the candidate
+6. Provide clear instructions for confirming the new time
+7. Offer flexibility if this time doesn't work
+8. Professional closing with HR contact information
+
+Make it empathetic, professional, and comprehensive like real corporate emails.
 
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
