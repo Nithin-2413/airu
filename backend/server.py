@@ -1398,32 +1398,36 @@ async def generate_email_draft(draft_request: EmailDraftRequest, request: Reques
             hr_info += f" ({draft_request.hr_email})"
     
     email_templates = {
-        "interview_invitation": f"""Generate a professional, detailed interview invitation email with realistic corporate length (250-350 words).
+        "interview_invitation": f"""Generate a professional interview invitation email (300-340 words, 3-4 paragraphs, approximately 80-120 words per paragraph).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
-Interview Date: {draft_request.interview_date}
-Interview Time: {draft_request.interview_time}
-Location: {draft_request.interview_location}
+Interview Date: {draft_request.interview_date or 'TBD'}
+Interview Time: {draft_request.interview_time or 'TBD'}
+Location: {draft_request.interview_location or 'TBD'}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-Create a comprehensive email that includes:
-1. Warm opening congratulating the candidate on moving forward
-2. Clear interview details (date, time, location/platform)
-3. Interview format and duration (mention 45-60 min duration, panel or 1-on-1)
-4. What to prepare (resume copy, portfolio if applicable, questions about the role)
-5. Dress code or other relevant information
-6. Who they'll be meeting with (interviewers' names and titles)
-7. Instructions for virtual interviews if applicable (meeting link, test beforehand)
-8. Parking/building access instructions if in-person
-9. Encourage them to reach out with questions
-10. Professional closing with HR contact information
+IMPORTANT GUIDELINES:
+- Keep email concise: 300-340 words total
+- Structure: 3-4 paragraphs, each 80-120 words
+- DO NOT include any confidential information (no salary, compensation, or benefits details)
+- If date/time/location is missing or 'TBD', state "Details will be informed shortly"
+- Be warm and professional, not too formal
 
-Make it warm, professional, and comprehensive like real corporate emails. Use proper paragraphs and spacing.
+Email structure:
+1. Paragraph 1 (80-100 words): Warm congratulations on moving forward in the hiring process. Brief excitement about their candidacy.
 
-IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
+2. Paragraph 2 (90-110 words): Interview logistics - date, time, location (or "Details will be informed shortly" if missing). Mention interview format (virtual/in-person), expected duration (45-60 minutes), and who they'll meet with if known.
+
+3. Paragraph 3 (80-100 words): What to prepare - bring resume copy, be ready to discuss experience and the role, prepare questions. For virtual interviews, mention testing connection beforehand.
+
+4. Paragraph 4 (50-70 words): Closing - encourage questions, express enthusiasm, professional sign-off with HR contact.
+
+Make it human, warm, and professional. Avoid clichés.
+
+Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
     "body": "complete email body with \\n for line breaks and HR signature at the end"
