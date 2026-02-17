@@ -267,9 +267,14 @@ const History = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      
+      {/* Premium Background */}
+      <div className="fixed inset-0 gradient-mesh-premium-light opacity-40 pointer-events-none" />
+      <div className="fixed inset-0 gradient-mesh-premium opacity-30 pointer-events-none" />
+      
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 dark:bg-slate-950/70 border-b border-slate-200/50 dark:border-slate-800/50">
+      <nav className="glass-nav sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center gap-8">
