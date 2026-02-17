@@ -33,6 +33,7 @@ const Dashboard = () => {
   const [screenings, setScreenings] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [allCandidates, setAllCandidates] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
   
   // Filter and search state
   const [searchQuery, setSearchQuery] = useState('');
