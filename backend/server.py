@@ -1490,12 +1490,18 @@ Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""
         
         # Extract and clean JSON from response
         if response_text.startswith('```'):
-            response_text = re.sub(r'^```(?:json)?\n', '', response_text)
-            response_text = re.sub(r'\n```$', '', response_text)
+            response_text = re.sub(r'^```(?:json)?\n?', '', response_text)
+            response_text = re.sub(r'\n?```$', '', response_text)
         
-        # Clean control characters and fix common JSON issues
-        # Remove control characters except newlines and tabs
+        # Clean control characters more aggressively
+        # Remove all control characters except newlines and tabs
         response_text = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]', '', response_text)
+        
+        # Normalize line endings
+        response_text = response_text.replace('\r\n', '\n').replace('\r', '\n')
+        
+        # Fix common JSON escaping issues
+        response_text = response_text.replace('\\\\', '\\')  # Fix double backslashes
         
         # Try to parse JSON with error handling
         import json
@@ -1507,16 +1513,25 @@ Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""
             
             # Try to extract subject and body manually if JSON parsing fails
             try:
-                subject_match = re.search(r'"subject"\s*:\s*"([^"]*(?:\\.[^"]*)*)"', response_text)
-                body_match = re.search(r'"body"\s*:\s*"([^"]*(?:\\.[^"]*)*)"', response_text, re.DOTALL)
+                # More robust regex patterns for extracting JSON fields
+                subject_match = re.search(r'"subject"\s*:\s*"((?:[^"\\]|\\.)*)"\s*,', response_text, re.DOTALL)
+                body_match = re.search(r'"body"\s*:\s*"((?:[^"\\]|\\.)*)"', response_text, re.DOTALL)
                 
                 if subject_match and body_match:
+                    subject_raw = subject_match.group(1)
+                    body_raw = body_match.group(1)
+                    
+                    # Unescape the strings properly
                     email_data = {
-                        "subject": subject_match.group(1).replace('\\"', '"'),
-                        "body": body_match.group(1).replace('\\"', '"').replace('\\n', '\n')
+                        "subject": subject_raw.replace('\\"', '"').replace('\\n', '\n').replace('\\t', '\t'),
+                        "body": body_raw.replace('\\"', '"').replace('\\n', '\n').replace('\\t', '\t')
                     }
                 else:
-                    raise HTTPException(status_code=500, detail="Could not parse AI response")
+                    # Last resort: try to find any text that looks like email content
+                    logging.error("Could not extract structured data, attempting fallback")
+                    raise HTTPException(status_code=500, detail="Could not parse AI response - invalid format")
+            except HTTPException:
+                raise
             except Exception as parse_error:
                 logging.error(f"Manual parsing error: {str(parse_error)}")
                 raise HTTPException(status_code=500, detail=f"Failed to parse email content: {str(je)}")
