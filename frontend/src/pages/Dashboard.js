@@ -57,16 +57,30 @@ const Dashboard = () => {
       setLoading(true);
       
       // Load all data in parallel
-      const [analyticsRes, screeningsRes, jobsRes] = await Promise.all([
+      const [analyticsRes, screeningsRes, jobsRes, eventsRes] = await Promise.all([
         apiClient.get('/analytics/dashboard'),
         apiClient.get('/screenings'),
-        apiClient.get('/jobs')
+        apiClient.get('/jobs'),
+        apiClient.get('/calendar/events', {
+          params: {
+            start_date: new Date().toISOString(),
+            end_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString() // Next 14 days
+          }
+        }).catch(() => ({ data: [] })) // Fallback if calendar API fails
       ]);
       
       setAnalytics(analyticsRes.data);
       setScreenings(screeningsRes.data);
       setAllCandidates(screeningsRes.data);
       setJobs(jobsRes.data);
+      
+      // Filter and sort upcoming events
+      const now = new Date();
+      const upcoming = eventsRes.data
+        .filter(event => new Date(event.start_datetime) >= now)
+        .sort((a, b) => new Date(a.start_datetime) - new Date(b.start_datetime))
+        .slice(0, 5); // Get next 5 events
+      setUpcomingEvents(upcoming);
       
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
