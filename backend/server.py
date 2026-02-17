@@ -1376,6 +1376,8 @@ class EmailDraftRequest(BaseModel):
     interview_location: Optional[str] = None
     tone: str = "professional"  # professional, friendly, formal
     additional_details: Optional[str] = None
+    hr_name: Optional[str] = None
+    hr_email: Optional[str] = None
 
 class EmailDraftResponse(BaseModel):
     subject: str
