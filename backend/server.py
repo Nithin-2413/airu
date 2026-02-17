@@ -1535,7 +1535,7 @@ Return ONLY valid JSON in this EXACT format with properly escaped characters:
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "follow_up": f"""Generate a professional, detailed follow-up email after interview with realistic corporate length (200-300 words).
+        "follow_up": f"""Generate a professional follow-up email after interview (300-340 words, 3-4 paragraphs, approximately 80-120 words per paragraph).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
@@ -1543,22 +1543,28 @@ Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-Create a comprehensive email that includes:
-1. Thank them for taking the time to interview
-2. Recap key highlights from the interview conversation
-3. Reiterate the team's positive impressions
-4. Provide clear timeline for next steps in the process
-5. Mention if any additional interviews or assessments are needed
-6. Encourage them to reach out with any questions
-7. Express continued interest and enthusiasm
-8. Professional closing with HR contact information
+IMPORTANT GUIDELINES:
+- Keep email concise: 300-340 words total
+- Structure: 3-4 paragraphs, each 80-120 words
+- DO NOT include any confidential information
+- Be warm, reassuring, and professional
+- Keep the candidate engaged and informed
 
-Make it warm, reassuring, and professional. This email should keep the candidate engaged and informed.
+Email structure:
+1. Paragraph 1 (80-100 words): Thank them for taking the time to interview. Express that it was a pleasure meeting them and learning about their experience. Mention something specific from the interview conversation that stood out positively.
 
-IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
+2. Paragraph 2 (90-110 words): Share the team's positive impressions from the interview. Reiterate their qualifications that align well with the role. Make them feel valued and that the interview went well.
+
+3. Paragraph 3 (80-100 words): Provide clear timeline for next steps - when they can expect to hear back. If additional interviews or assessments are needed, mention them. If timeline is uncertain, state "We'll update you on next steps shortly". Emphasize that the team is actively reviewing all candidates.
+
+4. Paragraph 4 (50-70 words): Closing - encourage them to reach out with any questions. Express continued enthusiasm about their candidacy. Professional sign-off with HR contact.
+
+Make it warm, reassuring, and professional. This email should keep candidates engaged and positive.
+
+Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object."""
