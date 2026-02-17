@@ -337,10 +337,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Screening flow - persist uploaded resumes"
+    - "Resume upload and AI parsing"
+    - "ATS screening with AI scoring"
     - "Email Draft Generator"
-  stuck_tasks:
-    - "Email generation with AI"
+    - "Dashboard AI Summary display"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
