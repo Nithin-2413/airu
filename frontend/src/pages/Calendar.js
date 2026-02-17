@@ -430,7 +430,7 @@ const Calendar = () => {
         setIsDialogOpen(open);
         if (!open) resetForm();
       }}>
-        <DialogContent className="glass-card border-2 border-border shadow-depth-4 max-w-2xl animate-modal-slide-up">
+        <DialogContent className="glass-card-dialog border-2 border-border shadow-depth-4 max-w-2xl">
           <DialogHeader className="border-b border-border pb-4">
             <DialogTitle className="text-2xl font-bold tracking-tight">
               {isEditMode ? 'Edit Event' : 'New Event'}
