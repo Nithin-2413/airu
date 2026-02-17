@@ -1439,12 +1439,12 @@ Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
 Tone: {draft_request.tone}
-Additional Details: {draft_request.additional_details or 'None'}
+Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
+IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
@@ -1454,12 +1454,12 @@ Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
 Tone: {draft_request.tone}
-Additional Details: {draft_request.additional_details or 'None'}
+Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
+IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
@@ -1469,12 +1469,12 @@ Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
 Tone: {draft_request.tone}
-Additional Details: {draft_request.additional_details or 'None'}
+Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
+IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object."""
