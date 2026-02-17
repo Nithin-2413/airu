@@ -587,6 +587,7 @@ const Dashboard = () => {
                     <th className="p-4 font-semibold text-sm">Match Score</th>
                     <th className="p-4 font-semibold text-sm">Skills</th>
                     <th className="p-4 font-semibold text-sm">Experience</th>
+                    <th className="p-4 font-semibold text-sm">AI Summary</th>
                     <th className="p-4 font-semibold text-sm">Status</th>
                     <th className="p-4 font-semibold text-sm">Action</th>
                     <th className="p-4 font-semibold text-sm"></th>
