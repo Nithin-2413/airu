@@ -398,3 +398,28 @@ agent_communication:
       - Dashboard with AI summary display
       
       All services running. Ready for frontend testing.
+  - agent: "main"
+    message: |
+      🔥 URGENT FIX APPLIED - Groq Library Compatibility Issue:
+      
+      ROOT CAUSE IDENTIFIED:
+      - User reported: ResizeObserver errors, "failed to load" on every page, job creation failing, screening failing
+      - Investigation revealed: Groq library v0.11.0 has incompatibility with httpx proxies
+      - Error: "TypeError: Client.__init__() got an unexpected keyword argument 'proxies'"
+      - This prevented backend from starting, causing ALL API calls to fail
+      
+      FIXES APPLIED:
+      1. ✅ Upgraded groq library from 0.11.0 to 1.0.0
+      2. ✅ Updated requirements.txt with new version
+      3. ✅ Backend successfully imports and runs
+      4. ✅ Suppressed benign ResizeObserver loop errors in frontend (harmless React warnings)
+      5. ✅ Both backend and frontend services running successfully
+      
+      VERIFICATION:
+      - Backend: RUNNING (pid 1033)
+      - Frontend: RUNNING (pid 1092)
+      - MongoDB: RUNNING
+      - Backend API responding correctly (tested /api/jobs endpoint)
+      - All Groq AI features should now work: resume parsing, ATS screening, email generation
+      
+      STATUS: All services operational. Ready for comprehensive testing of all features (job creation, resume screening, email generation).
