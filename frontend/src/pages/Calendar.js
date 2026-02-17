@@ -430,37 +430,37 @@ const Calendar = () => {
 
       </main>
 
-      {/* Event Dialog - Compact & Square */}
+      {/* Event Dialog - Enhanced Width & Responsive */}
       <Dialog open={isDialogOpen} onOpenChange={(open) => {
         setIsDialogOpen(open);
         if (!open) resetForm();
       }}>
-        <DialogContent className="glass-card-dialog border-2 border-border shadow-depth-4 max-w-2xl w-[600px]">
+        <DialogContent className="glass-card-dialog border-2 border-border shadow-depth-4 max-w-3xl w-full mx-4 sm:mx-auto sm:w-[700px]">
           <DialogHeader className="border-b border-border pb-3">
             <DialogTitle className="text-xl font-bold tracking-tight">
               {isEditMode ? 'Edit Event' : 'New Event'}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="space-y-3 py-4 max-h-[60vh] overflow-y-auto">
+          <div className="space-y-4 py-4 max-h-[70vh] overflow-y-auto px-1">
             
             {/* Title */}
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               <Label className="text-xs font-semibold tracking-apple">Event Title</Label>
               <Input
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="Interview with candidate"
-                className="ios-input h-9"
+                className="ios-input h-10"
               />
             </div>
 
-            {/* Type, Status, Color - Compact Row */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="space-y-1">
+            {/* Type, Status, Color - Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="space-y-1.5">
                 <Label className="text-xs font-semibold tracking-apple">Type</Label>
                 <Select value={formData.event_type} onValueChange={(value) => setFormData({ ...formData, event_type: value })}>
-                  <SelectTrigger className="ios-input h-9 text-sm">
+                  <SelectTrigger className="ios-input h-10 text-sm w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="glass-card border-2 border-border">
@@ -472,10 +472,10 @@ const Calendar = () => {
                 </Select>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <Label className="text-xs font-semibold tracking-apple">Status</Label>
                 <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
-                  <SelectTrigger className="ios-input h-9 text-sm">
+                  <SelectTrigger className="ios-input h-10 text-sm w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="glass-card border-2 border-border">
@@ -486,16 +486,16 @@ const Calendar = () => {
                 </Select>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <Label className="text-xs font-semibold tracking-apple">Color</Label>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   {['blue', 'green', 'red', 'purple', 'yellow'].map(color => (
                     <button
                       key={color}
                       onClick={() => setFormData({ ...formData, color_tag: color })}
                       className={`
-                        w-7 h-7 rounded-lg border transition-all duration-200
-                        ${formData.color_tag === color ? 'border-foreground scale-110' : 'border-border'}
+                        w-8 h-8 rounded-lg border transition-all duration-200 flex-shrink-0
+                        ${formData.color_tag === color ? 'border-foreground scale-110 ring-2 ring-offset-1 ring-foreground' : 'border-border'}
                         ${color === 'blue' ? 'bg-primary' : ''}
                         ${color === 'green' ? 'bg-success' : ''}
                         ${color === 'red' ? 'bg-destructive' : ''}
@@ -508,92 +508,92 @@ const Calendar = () => {
               </div>
             </div>
 
-            {/* Date & Time - Compact */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
+            {/* Date & Time - Responsive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
                 <Label className="text-xs font-semibold tracking-apple">Start</Label>
                 <Input
                   type="datetime-local"
                   value={formData.start_datetime}
                   onChange={(e) => setFormData({ ...formData, start_datetime: e.target.value })}
-                  className="ios-input h-9 text-sm"
+                  className="ios-input h-10 text-sm w-full"
                 />
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <Label className="text-xs font-semibold tracking-apple">End</Label>
                 <Input
                   type="datetime-local"
                   value={formData.end_datetime}
                   onChange={(e) => setFormData({ ...formData, end_datetime: e.target.value })}
-                  className="ios-input h-9 text-sm"
+                  className="ios-input h-10 text-sm w-full"
                 />
               </div>
             </div>
 
-            {/* Candidate Details - Compact */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
+            {/* Candidate Details - Responsive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
                 <Label className="text-xs font-semibold tracking-apple">Candidate Name</Label>
                 <Input
                   value={formData.candidate_name}
                   onChange={(e) => setFormData({ ...formData, candidate_name: e.target.value })}
                   placeholder="John Doe"
-                  className="ios-input h-9 text-sm"
+                  className="ios-input h-10 text-sm w-full"
                 />
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <Label className="text-xs font-semibold tracking-apple">Email</Label>
                 <Input
                   type="email"
                   value={formData.candidate_email}
                   onChange={(e) => setFormData({ ...formData, candidate_email: e.target.value })}
                   placeholder="john@example.com"
-                  className="ios-input h-9 text-sm"
+                  className="ios-input h-10 text-sm w-full"
                 />
               </div>
             </div>
 
-            {/* Location - Compact */}
-            <div className="space-y-1">
+            {/* Location */}
+            <div className="space-y-1.5">
               <Label className="text-xs font-semibold tracking-apple">Location</Label>
               <Input
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 placeholder="Zoom, Office, etc."
-                className="ios-input h-9 text-sm"
+                className="ios-input h-10 text-sm w-full"
               />
             </div>
 
-            {/* Description - Compact */}
-            <div className="space-y-1">
+            {/* Description */}
+            <div className="space-y-1.5">
               <Label className="text-xs font-semibold tracking-apple">Description (Optional)</Label>
               <Textarea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Additional notes..."
-                className="ios-textarea text-sm"
-                rows={2}
+                className="ios-textarea text-sm w-full"
+                rows={3}
               />
             </div>
           </div>
 
-          {/* Actions - Compact */}
-          <div className="flex justify-between pt-3 border-t border-border">
+          {/* Actions - Responsive */}
+          <div className="flex flex-col sm:flex-row justify-between gap-3 pt-3 border-t border-border">
             {isEditMode && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => handleDeleteEvent(selectedEvent.event_id)}
-                className="text-destructive hover:text-destructive hover:bg-destructive/10 rounded-lg h-9"
+                className="text-destructive hover:text-destructive hover:bg-destructive/10 rounded-lg h-10 w-full sm:w-auto"
               >
-                <Trash2 className="w-3.5 h-3.5 mr-1.5" />
+                <Trash2 className="w-4 h-4 mr-2" />
                 Delete
               </Button>
             )}
             
-            <div className="flex gap-2 ml-auto">
+            <div className="flex gap-2 ml-auto w-full sm:w-auto">
               <Button
                 size="sm"
                 variant="ghost"
@@ -601,14 +601,14 @@ const Calendar = () => {
                   setIsDialogOpen(false);
                   resetForm();
                 }}
-                className="rounded-lg h-9"
+                className="rounded-lg h-10 flex-1 sm:flex-none"
               >
                 Cancel
               </Button>
               <Button
                 size="sm"
                 onClick={isEditMode ? handleUpdateEvent : handleCreateEvent}
-                className="ios-button-primary shadow-depth-2 h-9"
+                className="ios-button-primary shadow-depth-2 h-10 flex-1 sm:flex-none"
               >
                 {isEditMode ? 'Update' : 'Create'}
               </Button>
