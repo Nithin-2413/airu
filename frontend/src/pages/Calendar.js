@@ -574,35 +574,38 @@ const Calendar = () => {
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex justify-between pt-4 border-t border-border">
+          {/* Actions - Compact */}
+          <div className="flex justify-between pt-3 border-t border-border">
             {isEditMode && (
               <Button
                 variant="ghost"
+                size="sm"
                 onClick={() => handleDeleteEvent(selectedEvent.event_id)}
-                className="text-destructive hover:text-destructive hover:bg-destructive/10 rounded-xl"
+                className="text-destructive hover:text-destructive hover:bg-destructive/10 rounded-lg h-9"
               >
-                <Trash2 className="w-4 h-4 mr-2" />
+                <Trash2 className="w-3.5 h-3.5 mr-1.5" />
                 Delete
               </Button>
             )}
             
-            <div className="flex gap-3 ml-auto">
+            <div className="flex gap-2 ml-auto">
               <Button
+                size="sm"
                 variant="ghost"
                 onClick={() => {
                   setIsDialogOpen(false);
                   resetForm();
                 }}
-                className="rounded-xl"
+                className="rounded-lg h-9"
               >
                 Cancel
               </Button>
               <Button
+                size="sm"
                 onClick={isEditMode ? handleUpdateEvent : handleCreateEvent}
-                className="ios-button-primary shadow-depth-2"
+                className="ios-button-primary shadow-depth-2 h-9"
               >
-                {isEditMode ? 'Update Event' : 'Create Event'}
+                {isEditMode ? 'Update' : 'Create'}
               </Button>
             </div>
           </div>
