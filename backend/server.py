@@ -1516,13 +1516,25 @@ IMPORTANT: Include HR contact information in the email signature if provided. Re
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "follow_up": f"""Generate a professional follow-up email after interview.
+        "follow_up": f"""Generate a professional, detailed follow-up email after interview with realistic corporate length (200-300 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+
+Create a comprehensive email that includes:
+1. Thank them for taking the time to interview
+2. Recap key highlights from the interview conversation
+3. Reiterate the team's positive impressions
+4. Provide clear timeline for next steps in the process
+5. Mention if any additional interviews or assessments are needed
+6. Encourage them to reach out with any questions
+7. Express continued interest and enthusiasm
+8. Professional closing with HR contact information
+
+Make it warm, reassuring, and professional. This email should keep the candidate engaged and informed.
 
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
