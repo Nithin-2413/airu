@@ -325,6 +325,9 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Added AI Summary column to dashboard table showing 1-line screening reason for each candidate. Shows the AI-generated summary explaining why the candidate got their score."
+      - working: "NA"
+        agent: "main"
+        comment: "FIXED CANDIDATE DETAILS POPUP: Same issue as Calendar - dialog was using .glass-card class with hover transform. Updated Dashboard.js to use .glass-card-dialog class. Eye button popup now stays fixed while viewing candidate details, no movement on hover."
 
   - task: "History - Advanced Candidate Table"
     implemented: true
