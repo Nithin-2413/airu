@@ -284,9 +284,6 @@ const Dashboard = () => {
                 <Button variant="ghost" onClick={() => navigate('/emails')} className="tracking-apple rounded-xl">
                   Emails
                 </Button>
-                <Button variant="ghost" onClick={() => navigate('/analytics')} className="tracking-apple rounded-xl">
-                  Analytics
-                </Button>
               </div>
             </div>
             
