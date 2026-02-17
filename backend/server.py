@@ -1488,13 +1488,26 @@ IMPORTANT: Include HR contact information in the email signature if provided. Re
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "rejection": f"""Generate a professional and respectful job rejection email.
+        "rejection": f"""Generate a professional, respectful, and detailed job rejection email with realistic corporate length (200-300 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+
+Create a comprehensive email that includes:
+1. Thank the candidate for their time and interest
+2. Acknowledge their effort in the interview process
+3. Deliver the decision clearly but respectfully
+4. Provide constructive context (high competition, specific fit considerations)
+5. Highlight positive aspects of their candidacy
+6. Encourage future applications and keep door open
+7. Offer to stay connected (LinkedIn, future opportunities)
+8. Wish them success in their job search
+9. Professional closing with HR contact information
+
+Make it empathetic, respectful, and encouraging. Rejection emails should leave candidates with a positive impression of the company.
 
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
