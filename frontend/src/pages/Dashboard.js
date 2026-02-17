@@ -56,6 +56,9 @@ const Dashboard = () => {
     try {
       setLoading(true);
       
+      // Minimum 5 second loading animation
+      const startTime = Date.now();
+      
       // Load all data in parallel
       const [analyticsRes, screeningsRes, jobsRes, eventsRes] = await Promise.all([
         apiClient.get('/analytics/dashboard'),
@@ -82,9 +85,21 @@ const Dashboard = () => {
         .slice(0, 5); // Get next 5 events
       setUpcomingEvents(upcoming);
       
+      // Calculate remaining time to reach 5 seconds
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, 5000 - elapsedTime);
+      
+      // Wait for remaining time before hiding loader
+      await new Promise(resolve => setTimeout(resolve, remainingTime));
+      
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
       toast.error('Failed to load dashboard data');
+      
+      // Still wait for 5 seconds minimum even on error
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, 5000 - elapsedTime);
+      await new Promise(resolve => setTimeout(resolve, remainingTime));
     } finally {
       setLoading(false);
     }
