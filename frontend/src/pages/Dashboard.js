@@ -830,7 +830,7 @@ const Dashboard = () => {
           >
             {/* Advanced Metrics Row */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="glass-card p-6">
+              <div className="glass-card metric-card-3d p-6">
                 <div className="flex items-center justify-between mb-2">
                   <TrendingUp className="w-8 h-8 text-success" />
                   <span className="text-xs text-success font-semibold">+12%</span>
@@ -842,7 +842,7 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="glass-card p-6">
+              <div className="glass-card metric-card-3d p-6">
                 <div className="flex items-center justify-between mb-2">
                   <Target className="w-8 h-8 text-primary" />
                   <span className="text-xs text-primary font-semibold">Active</span>
@@ -854,7 +854,7 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="glass-card p-6">
+              <div className="glass-card metric-card-3d p-6">
                 <div className="flex items-center justify-between mb-2">
                   <Activity className="w-8 h-8 text-warning" />
                   <span className="text-xs text-warning font-semibold">Live</span>
@@ -866,7 +866,7 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="glass-card p-6">
+              <div className="glass-card metric-card-3d p-6">
                 <div className="flex items-center justify-between mb-2">
                   <CheckCircle className="w-8 h-8 text-success" />
                   <span className="text-xs text-success font-semibold">Success</span>
