@@ -151,7 +151,7 @@ backend:
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
@@ -159,6 +159,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ Backend API working. POST /api/resumes/screen endpoint functional. Resume upload (PDF/DOCX) working. Issue is Gemini API quota exhaustion - free tier limit of 5 requests/minute exceeded. All screening logic functions correctly when quota available."
+      - working: "NA"
+        agent: "main"
+        comment: "Fixed Groq library compatibility issue (upgraded from 0.11.0 to 1.0.0). Backend now starts properly. Ready for retesting with Groq llama-3.3-70b-versatile model."
 
   - task: "Email generation with AI"
     implemented: true
