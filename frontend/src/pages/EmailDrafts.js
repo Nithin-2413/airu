@@ -269,8 +269,8 @@ const EmailDrafts = () => {
               </div>
 
               {/* Job Role Dropdown */}
-              <div className="space-y-2 pt-4 border-t border-border">
-                <Label className="text-sm font-semibold flex items-center gap-2">
+              <div className="space-y-3 pt-6 border-t border-border">
+                <Label className="text-sm font-semibold flex items-center gap-2 mb-2 block">
                   <Building2 className="w-4 h-4 text-primary" />
                   Job Role (For which position is this email?)
                 </Label>
@@ -298,26 +298,26 @@ const EmailDrafts = () => {
               </div>
 
               {/* Candidate Details */}
-              <div className="space-y-4 pt-4 border-t border-border">
-                <h3 className="text-lg font-semibold">Candidate Information</h3>
+              <div className="space-y-4 pt-6 border-t border-border">
+                <h3 className="text-lg font-semibold mb-3">Candidate Information</h3>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-semibold">Candidate Name *</Label>
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold mb-2 block">Candidate Name *</Label>
                   <Input
                     placeholder="Jane Doe"
                     value={formData.candidate_name}
                     onChange={(e) => setFormData({ ...formData, candidate_name: e.target.value })}
-                    className="ios-input h-12"
+                    className="ios-input h-12 text-foreground"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-semibold">Company Name</Label>
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold mb-2 block">Company Name</Label>
                   <Input
                     placeholder="Our Company"
                     value={formData.company_name}
                     onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
-                    className="ios-input h-12"
+                    className="ios-input h-12 text-foreground"
                   />
                 </div>
               </div>
