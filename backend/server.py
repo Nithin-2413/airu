@@ -1469,7 +1469,7 @@ Return ONLY valid JSON in this EXACT format with properly escaped characters:
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "offer_letter": f"""Generate a professional, detailed job offer letter email with realistic corporate length (350-450 words).
+        "offer_letter": f"""Generate a professional job offer email (300-340 words, 3-4 paragraphs, approximately 80-120 words per paragraph).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
@@ -1477,24 +1477,28 @@ Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-Create a comprehensive email that includes:
-1. Enthusiastic opening congratulating the candidate
-2. Formal offer statement with job title
-3. Key terms overview (salary range mention, start date, employment type)
-4. Mention of benefits package (health insurance, PTO, 401k, etc.)
-5. Next steps (formal offer letter attached or coming separately)
-6. Timeline for response and decision
-7. Onboarding process preview
-8. Express excitement about them joining the team
-9. Contact information for questions
-10. Professional closing with HR contact information
+IMPORTANT GUIDELINES:
+- Keep email concise: 300-340 words total
+- Structure: 3-4 paragraphs, each 80-120 words
+- DO NOT include confidential compensation details (NO salary, benefits, perks, stock options, bonuses)
+- If specific details are needed, state "Details will be provided in the formal offer letter"
+- Be warm, exciting, and professional
 
-Make it warm, exciting, professional, and comprehensive like real corporate offer letters. This is a significant moment for the candidate.
+Email structure:
+1. Paragraph 1 (80-100 words): Enthusiastic congratulations! Express excitement about extending the offer. Highlight what impressed the team about their candidacy. Make them feel valued and wanted.
 
-IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
+2. Paragraph 2 (90-110 words): Formal offer statement for the [Job Title] position. Mention that complete compensation and benefits details will be provided in the formal offer letter document (attached or coming separately). Note employment type (full-time/part-time/contract) and tentative start date if known, or state "Start date details will be discussed".
+
+3. Paragraph 3 (80-100 words): Next steps - mention formal offer letter coming, timeline for their decision (typical 1-2 weeks), onboarding process preview. Encourage questions and offer to schedule a call to discuss any aspects of the offer.
+
+4. Paragraph 4 (50-70 words): Closing - express genuine excitement about them potentially joining the team. Professional sign-off with HR contact.
+
+Make it warm, exciting, and celebratory while remaining professional. This is a significant moment.
+
+Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
