@@ -1168,7 +1168,7 @@ const Dashboard = () => {
 
       {/* Candidate Detail Modal */}
       <Dialog open={showCandidateDetail} onOpenChange={setShowCandidateDetail}>
-        <DialogContent className="glass-card-dialog max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="glass-card-dialog max-w-3xl max-h-[90vh] overflow-y-auto">
           {selectedCandidate && (
             <>
               <DialogHeader className="border-b border-border pb-4">
