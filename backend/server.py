@@ -243,11 +243,11 @@ def extract_candidate_name_simple(resume_text: str) -> Optional[str]:
             return first_line
     return None
 
-# ATS-style screening with Gemini AI
+# ATS-style screening with Groq AI - STRICT SCORING
 async def screen_resume_with_ai(resume_text: str, job_data: dict) -> dict:
     try:
-        # Build comprehensive prompt for ATS-style analysis
-        prompt = f"""You are an expert ATS (Applicant Tracking System) and HR recruiter. Analyze this resume against the job description using ATS-style keyword matching and scoring.
+        # Build comprehensive prompt for STRICT ATS-style analysis
+        prompt = f"""You are an EXCEPTIONALLY STRICT expert ATS (Applicant Tracking System) and senior HR recruiter with 15+ years of experience. Analyze this resume against the job description using VERY STRICT ATS-style evaluation.
 
 JOB DESCRIPTION:
 Title: {job_data['title']}
@@ -267,35 +267,56 @@ NICE-TO-HAVE QUALIFICATIONS:
 RESUME:
 {resume_text}
 
-Provide a comprehensive ATS-style analysis in the following JSON format:
+⚠️ CRITICAL SCORING GUIDELINES - BE EXTREMELY STRICT:
+
+SCORE DISTRIBUTION (Use the FULL range 0-100):
+- 90-100: EXCEPTIONAL candidate - Exceeds ALL requirements significantly, rare top-tier talent
+- 80-89: STRONG candidate - Meets ALL requirements + some nice-to-haves, clearly qualified
+- 70-79: GOOD candidate - Meets MOST requirements, minor gaps acceptable
+- 60-69: ADEQUATE candidate - Meets SOME requirements, noticeable gaps
+- 50-59: WEAK candidate - Barely meets minimum, significant concerns
+- 40-49: POOR candidate - Many gaps, questionable fit
+- 0-39: UNQUALIFIED - Does not meet basic requirements
+
+STRICT EVALUATION RULES:
+1. Missing even ONE required qualification should DROP score by 15-20 points
+2. Wrong experience level (e.g., Junior applying for Senior) should cap match_score at 60
+3. Lack of specific technologies/skills mentioned in JD should DROP skills_score by 10-15 points EACH
+4. Generic or weak experience descriptions should be penalized heavily
+5. Career gaps or job hopping should reduce experience_score by 10-20 points
+6. NO candidate should score 85+ unless they are TRULY EXCEPTIONAL and exceed requirements
+7. Average candidates should score 55-70 range
+8. Only give 80+ if candidate demonstrably exceeds most requirements with proof
+
+Provide analysis in this JSON format:
 {{
-    "match_score": <0-100, overall match score>,
-    "experience_score": <0-100, based on years and relevance of experience>,
-    "skills_score": <0-100, based on required and nice-to-have skills match>,
-    "keyword_score": <0-100, based on keyword density and relevance>,
-    "summary": "<2-3 sentence overview of candidate fit>",
+    "match_score": <0-100, STRICT overall match - most candidates should be 50-75>,
+    "experience_score": <0-100, STRICT experience evaluation>,
+    "skills_score": <0-100, STRICT skills match - penalize missing required skills heavily>,
+    "keyword_score": <0-100, STRICT keyword density check>,
+    "summary": "<2-3 sentence HONEST overview - mention gaps clearly>",
     "strengths": ["<strength 1>", "<strength 2>", "<strength 3>"],
-    "gaps": ["<gap 1>", "<gap 2>"],
+    "gaps": ["<gap 1>", "<gap 2>", "<gap 3>"],
     "key_highlights": ["<highlight 1>", "<highlight 2>", "<highlight 3>"],
     "recommended_action": "<Interview|Maybe|Reject>",
-    "detailed_analysis": "<Comprehensive paragraph analyzing experience, skills, education, and overall fit>"
+    "detailed_analysis": "<HONEST paragraph - be critical, mention gaps and concerns>"
 }}
 
-Focus on:
-1. Keyword matching between resume and job requirements
-2. Experience level alignment (years and relevance)
-3. Technical skills match (required vs nice-to-have)
-4. Education and certifications relevance
-5. Overall cultural and role fit
+Focus on STRICT evaluation:
+1. Count EXACT keyword matches - partial matches don't count
+2. Verify experience level EXACTLY matches requirement
+3. Check for ALL required skills - missing any? Penalize heavily
+4. Evaluate quality of achievements - vague descriptions = low score
+5. Check education requirements - missing degree? Penalize
 
-Be objective and data-driven in your analysis. Return ONLY valid JSON."""
+BE CRITICAL. BE STRICT. Most candidates should score 50-75. Only truly exceptional candidates deserve 80+. Return ONLY valid JSON."""
 
         response = groq_client.chat.completions.create(
             model='llama-3.3-70b-versatile',
             messages=[
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.3
+            temperature=0.2  # Lower temperature for more consistent strict scoring
         )
         response_text = response.choices[0].message.content.strip()
         
