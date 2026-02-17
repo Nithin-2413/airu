@@ -1459,13 +1459,27 @@ IMPORTANT: Include HR contact information in the email signature if provided. Re
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "offer_letter": f"""Generate a professional job offer letter email.
+        "offer_letter": f"""Generate a professional, detailed job offer letter email with realistic corporate length (350-450 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+
+Create a comprehensive email that includes:
+1. Enthusiastic opening congratulating the candidate
+2. Formal offer statement with job title
+3. Key terms overview (salary range mention, start date, employment type)
+4. Mention of benefits package (health insurance, PTO, 401k, etc.)
+5. Next steps (formal offer letter attached or coming separately)
+6. Timeline for response and decision
+7. Onboarding process preview
+8. Express excitement about them joining the team
+9. Contact information for questions
+10. Professional closing with HR contact information
+
+Make it warm, exciting, professional, and comprehensive like real corporate offer letters. This is a significant moment for the candidate.
 
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
