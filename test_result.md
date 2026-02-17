@@ -189,6 +189,9 @@ backend:
       - working: "NA"
         agent: "main"
         comment: "FIXED JSON PARSING: Enhanced line 1491-1540 with: (1) Better markdown removal regex (2) Aggressive control char removal (3) Line ending normalization (4) Fixed double backslash escaping (5) Improved regex for extracting subject/body with proper escaping (6) Better error handling and logging. Backend restarted."
+      - working: "NA"
+        agent: "main"
+        comment: "FIXED HR DETAILS: Added hr_name and hr_email fields to EmailDraftRequest model. Updated all email templates to include HR contact info in signature. Prompts now instruct AI to include HR details at end of email body."
 
   - task: "Calendar events CRUD"
     implemented: true
