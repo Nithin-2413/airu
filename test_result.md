@@ -253,6 +253,9 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "FIXED CALENDAR CELLS: Removed all scale animations from calendar day cells (line 360-364). Now only fade-in animation (opacity 0→1). No movement on hover, just smooth background color change."
+      - working: "NA"
+        agent: "main"
+        comment: "FIXED ADD EVENT POPUP: Root cause - .glass-card:hover CSS caused translateY(-2px) scale(1.01) on dialog, making it move while filling form. Created new .glass-card-dialog class without hover effects. Removed slide/zoom animations from dialog.jsx (kept only fade-in/out). Updated Calendar.js to use glass-card-dialog. Popup now stays fixed while user interacts with form fields."
 
   - task: "Screening flow - persist uploaded resumes"
     implemented: true
