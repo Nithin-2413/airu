@@ -111,11 +111,16 @@ const Jobs = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/dashboard')}>
-                <div className="w-8 h-8 rounded-lg ai-gradient flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
+              <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/dashboard')}>
+                <div className="relative group">
+                  <div className="w-11 h-11 rounded-2xl gradient-ios-blue flex items-center justify-center shadow-depth-2 transition-all duration-300 group-hover:shadow-depth-3 group-hover:scale-105">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="absolute inset-0 rounded-2xl gradient-ios-blue opacity-40 blur-lg group-hover:opacity-60 transition-opacity" />
                 </div>
-                <span className="text-xl font-bold tracking-tight">AIRecruiter</span>
+                <span className="text-2xl font-bold tracking-tightest bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                  AIRecruiter
+                </span>
               </div>
               
               <div className="hidden md:flex items-center gap-1">
