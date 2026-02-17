@@ -639,6 +639,11 @@ const Dashboard = () => {
                       <td className="p-4">
                         <div className="text-sm font-semibold">{candidate.experience_score}%</div>
                       </td>
+                      <td className="p-4 max-w-xs">
+                        <div className="text-sm text-muted-foreground italic line-clamp-2" title={candidate.summary}>
+                          {candidate.summary || 'No summary available'}
+                        </div>
+                      </td>
                       <td className="p-4">
                         <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(candidate.status)}`}>
                           {candidate.status}
