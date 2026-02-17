@@ -371,3 +371,29 @@ agent_communication:
       - Calendar animations
       
       All code changes applied. Frontend restarted. Ready for backend testing.
+  - agent: "main"
+    message: |
+      NEW SESSION - Groq Migration Setup:
+      
+      COMPLETED SETUP:
+      1. ✅ Added GROQ_API_KEY to backend .env (user's Llama 3.3 70B key)
+      2. ✅ Added groq library to requirements.txt
+      3. ✅ Installed groq Python library
+      4. ✅ Backend and frontend restarted successfully
+      5. ✅ Added AI Summary column to dashboard table - shows 1-line screening reason
+      
+      BACKEND AI FEATURES (Already Implemented with Groq):
+      - Resume parsing with AI (extracts name, email, phone, skills, experience, education, achievements)
+      - ATS screening with AI (match score, experience score, skills score, keyword score, detailed analysis)
+      - Email generation with AI (all types: interview invitation, reschedule, offer, rejection, follow-up)
+      
+      NEW FEATURE ADDED:
+      - Dashboard table now shows "AI Summary" column displaying the 1-line reason for each candidate's score
+      
+      READY FOR TESTING:
+      - Resume upload and parsing
+      - Screening and scoring
+      - Email generation
+      - Dashboard with AI summary display
+      
+      All services running. Ready for frontend testing.
