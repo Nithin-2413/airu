@@ -5,7 +5,7 @@ import {
   TrendingUp, Users, CheckCircle, Clock, ArrowRight, Brain, Zap, Target,
   Search, Filter, ChevronDown, Download, MoreVertical, Eye, Send, X,
   Award, AlertCircle, TrendingDown, Activity, BarChart3, PieChart,
-  Briefcase, Star, UserCheck, UserX, UserPlus, Layers, RefreshCw
+  Briefcase, Star, UserCheck, UserX, UserPlus, Layers, RefreshCw, User, MapPin
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { ThemeToggle } from '../components/ThemeToggle';
