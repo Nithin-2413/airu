@@ -3,27 +3,43 @@ import ReactDOM from "react-dom/client";
 import "@/index.css";
 import App from "@/App";
 
-// Suppress ResizeObserver errors (benign React warnings that don't affect functionality)
-// These errors occur when components resize rapidly during animations
-window.addEventListener('error', (e) => {
-  if (e.message && e.message.includes('ResizeObserver loop')) {
-    e.stopImmediatePropagation();
-    e.preventDefault();
-    return true;
-  }
-});
+// AGGRESSIVE ResizeObserver error suppression
+// These are harmless React warnings from rapid component resizing
+const suppressResizeObserver = () => {
+  // Suppress at window level
+  const resizeObserverLoopErr = /ResizeObserver loop/;
+  window.addEventListener('error', (e) => {
+    if (resizeObserverLoopErr.test(e.message || e.error?.message || '')) {
+      e.stopImmediatePropagation();
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  });
 
-const originalError = console.error;
-console.error = (...args) => {
-  if (
-    typeof args[0] === 'string' &&
-    (args[0].includes('ResizeObserver loop') || 
-     args[0].includes('ResizeObserver'))
-  ) {
-    return;
-  }
-  originalError.apply(console, args);
+  // Suppress console errors
+  const originalError = console.error;
+  console.error = (...args) => {
+    const message = args[0];
+    if (typeof message === 'string' && resizeObserverLoopErr.test(message)) {
+      return;
+    }
+    originalError.apply(console, args);
+  };
+
+  // Override ResizeObserver to catch errors
+  const OriginalResizeObserver = window.ResizeObserver;
+  window.ResizeObserver = class extends OriginalResizeObserver {
+    constructor(callback) {
+      super((entries, observer) => {
+        requestAnimationFrame(() => {
+          callback(entries, observer);
+        });
+      });
+    }
+  };
 };
+
+suppressResizeObserver();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
