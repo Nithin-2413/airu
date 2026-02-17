@@ -1390,8 +1390,13 @@ async def generate_email_draft(draft_request: EmailDraftRequest, request: Reques
     user = await get_user_from_cookie(request)
     if not user:
         raise HTTPException(status_code=401, detail="Not authenticated")
-    
     # Create prompt based on email type
+    hr_info = ""
+    if draft_request.hr_name or draft_request.hr_email:
+        hr_info = f"\nHR Contact: {draft_request.hr_name or 'HR Team'}"
+        if draft_request.hr_email:
+            hr_info += f" ({draft_request.hr_email})"
+    
     email_templates = {
         "interview_invitation": f"""Generate a professional interview invitation email.
 
@@ -1402,12 +1407,12 @@ Interview Date: {draft_request.interview_date}
 Interview Time: {draft_request.interview_time}
 Location: {draft_request.interview_location}
 Tone: {draft_request.tone}
-Additional Details: {draft_request.additional_details or 'None'}
+Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
+IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
@@ -1419,12 +1424,12 @@ Company: {draft_request.company_name}
 New Interview Date: {draft_request.interview_date}
 New Interview Time: {draft_request.interview_time}
 Tone: {draft_request.tone}
-Additional Details: {draft_request.additional_details or 'None'}
+Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
+IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
