@@ -168,7 +168,7 @@ backend:
 
   - task: "Email generation with AI"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
@@ -186,6 +186,9 @@ backend:
       - working: "NA"
         agent: "main"
         comment: "Fixed Groq library compatibility issue (upgraded from 0.11.0 to 1.0.0). Backend now starts properly. Ready for retesting with Groq llama-3.3-70b-versatile model."
+      - working: "NA"
+        agent: "main"
+        comment: "FIXED JSON PARSING: Enhanced line 1491-1540 with: (1) Better markdown removal regex (2) Aggressive control char removal (3) Line ending normalization (4) Fixed double backslash escaping (5) Improved regex for extracting subject/body with proper escaping (6) Better error handling and logging. Backend restarted."
 
   - task: "Calendar events CRUD"
     implemented: true
