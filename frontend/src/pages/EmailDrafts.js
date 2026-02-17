@@ -87,12 +87,29 @@ const EmailDrafts = () => {
     setIsGenerating(true);
     setGeneratedEmail(null);
 
+    // Minimum 5 second loading animation
+    const startTime = Date.now();
+
     try {
       const response = await apiClient.post('/emails/generate-draft', formData);
+      
+      // Calculate remaining time to reach 5 seconds
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, 5000 - elapsedTime);
+      
+      // Wait for remaining time before showing result
+      await new Promise(resolve => setTimeout(resolve, remainingTime));
+      
       setGeneratedEmail(response.data);
       toast.success('Email draft generated successfully!');
     } catch (error) {
       console.error('Failed to generate email:', error);
+      
+      // Still wait for 5 seconds minimum even on error
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, 5000 - elapsedTime);
+      await new Promise(resolve => setTimeout(resolve, remainingTime));
+      
       toast.error('Failed to generate email draft');
     } finally {
       setIsGenerating(false);
