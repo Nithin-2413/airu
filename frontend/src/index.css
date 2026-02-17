@@ -186,6 +186,12 @@
         box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
     }
     
+    /* Dialog-specific glass card without hover movement */
+    .glass-card-dialog {
+        @apply glass rounded-3xl p-6;
+        /* No hover transform to prevent popup movement when filling forms */
+    }
+    
     .glass-nav {
         @apply glass;
         backdrop-filter: blur(40px) saturate(180%);

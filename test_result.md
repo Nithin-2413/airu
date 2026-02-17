@@ -253,6 +253,9 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "FIXED CALENDAR CELLS: Removed all scale animations from calendar day cells (line 360-364). Now only fade-in animation (opacity 0→1). No movement on hover, just smooth background color change."
+      - working: "NA"
+        agent: "main"
+        comment: "FIXED ADD EVENT POPUP: Root cause - .glass-card:hover CSS caused translateY(-2px) scale(1.01) on dialog, making it move while filling form. Created new .glass-card-dialog class without hover effects. Removed slide/zoom animations from dialog.jsx (kept only fade-in/out). Updated Calendar.js to use glass-card-dialog. Popup now stays fixed while user interacts with form fields."
 
   - task: "Screening flow - persist uploaded resumes"
     implemented: true
@@ -322,6 +325,9 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Added AI Summary column to dashboard table showing 1-line screening reason for each candidate. Shows the AI-generated summary explaining why the candidate got their score."
+      - working: "NA"
+        agent: "main"
+        comment: "FIXED CANDIDATE DETAILS POPUP: Same issue as Calendar - dialog was using .glass-card class with hover transform. Updated Dashboard.js to use .glass-card-dialog class. Eye button popup now stays fixed while viewing candidate details, no movement on hover."
 
   - task: "History - Advanced Candidate Table"
     implemented: true
@@ -515,3 +521,50 @@ agent_communication:
       - Analytics dashboard (navigate to /analytics from Dashboard)
 
       STATUS: All services operational. Ready for comprehensive testing of all features (job creation, resume screening, email generation).
+  - agent: "main"
+    message: |
+      ✅ NEW SESSION - Dialog Popup Movement Issues FIXED:
+      
+      USER REPORTED ISSUES:
+      1. Calendar "Add Event" popup - moving on hover, difficult to fill form
+      2. Dashboard candidate details popup (eye button) - same movement issue
+      
+      ROOT CAUSE IDENTIFIED:
+      - Both dialogs use .glass-card CSS class which has hover effect
+      - .glass-card:hover applies transform: translateY(-2px) scale(1.01)
+      - This caused popups to shift position while user hovers/interacts with form fields
+      - DialogContent also had excessive slide/zoom animations from Radix UI
+      
+      FIXES APPLIED:
+      1. ✅ Created new CSS class .glass-card-dialog (index.css line 189-193)
+         - Same glassmorphism styling as .glass-card
+         - NO hover transform effects
+         - Prevents popup movement while filling forms
+      
+      2. ✅ Simplified Dialog animations (dialog.jsx)
+         - Removed: zoom-out-95, zoom-in-95, slide-out, slide-in animations
+         - Kept: Only fade-in/fade-out for smooth open/close
+         - Result: Dialog stays perfectly centered and stable
+      
+      3. ✅ Updated Calendar.js (line 433)
+         - Changed: glass-card → glass-card-dialog
+         - Removed: animate-modal-slide-up class
+         - Add Event popup now stays fixed while user fills form
+      
+      4. ✅ Updated Dashboard.js (line 1171)
+         - Changed: glass-card → glass-card-dialog
+         - Candidate details popup (eye button) now stays fixed
+      
+      DEPENDENCIES INSTALLED:
+      - Frontend: yarn install completed
+      - Backend: pip install completed
+      
+      SERVICES STATUS:
+      - Backend: RUNNING (pid 1275)
+      - Frontend: RUNNING (pid 1277)
+      - MongoDB: RUNNING (pid 1278)
+      
+      READY FOR USER TESTING:
+      - Calendar add event popup - should stay fixed, no movement
+      - Dashboard candidate details popup - should stay fixed, no movement
+      - Both popups maintain premium glassmorphism design

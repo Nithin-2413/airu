@@ -5,7 +5,7 @@ import {
   TrendingUp, Users, CheckCircle, Clock, ArrowRight, Brain, Zap, Target,
   Search, Filter, ChevronDown, Download, MoreVertical, Eye, Send, X,
   Award, AlertCircle, TrendingDown, Activity, BarChart3, PieChart,
-  Briefcase, Star, UserCheck, UserX, UserPlus, Layers, RefreshCw
+  Briefcase, Star, UserCheck, UserX, UserPlus, Layers, RefreshCw, User, MapPin
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { ThemeToggle } from '../components/ThemeToggle';
@@ -33,6 +33,7 @@ const Dashboard = () => {
   const [screenings, setScreenings] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [allCandidates, setAllCandidates] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
   
   // Filter and search state
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,16 +57,30 @@ const Dashboard = () => {
       setLoading(true);
       
       // Load all data in parallel
-      const [analyticsRes, screeningsRes, jobsRes] = await Promise.all([
+      const [analyticsRes, screeningsRes, jobsRes, eventsRes] = await Promise.all([
         apiClient.get('/analytics/dashboard'),
         apiClient.get('/screenings'),
-        apiClient.get('/jobs')
+        apiClient.get('/jobs'),
+        apiClient.get('/calendar/events', {
+          params: {
+            start_date: new Date().toISOString(),
+            end_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString() // Next 14 days
+          }
+        }).catch(() => ({ data: [] })) // Fallback if calendar API fails
       ]);
       
       setAnalytics(analyticsRes.data);
       setScreenings(screeningsRes.data);
       setAllCandidates(screeningsRes.data);
       setJobs(jobsRes.data);
+      
+      // Filter and sort upcoming events
+      const now = new Date();
+      const upcoming = eventsRes.data
+        .filter(event => new Date(event.start_datetime) >= now)
+        .sort((a, b) => new Date(a.start_datetime) - new Date(b.start_datetime))
+        .slice(0, 5); // Get next 5 events
+      setUpcomingEvents(upcoming);
       
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
@@ -394,6 +409,116 @@ const Dashboard = () => {
             <div className="text-sm text-muted-foreground">Conversion Rate</div>
           </div>
         </motion.div>
+
+        {/* Upcoming Calendar Events - To-Do Card */}
+        {upcomingEvents.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="mb-8"
+          >
+            <div className="glass-card">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl gradient-ios-purple flex items-center justify-center shadow-depth-2">
+                    <CalendarIcon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold tracking-tightest">Upcoming Interviews</h2>
+                    <p className="text-sm text-muted-foreground">Next {upcomingEvents.length} scheduled events</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate('/calendar')}
+                  className="rounded-xl text-primary hover:text-primary"
+                >
+                  View All
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+
+              <div className="space-y-3">
+                {upcomingEvents.map((event, idx) => {
+                  const eventDate = new Date(event.start_datetime);
+                  const isToday = eventDate.toDateString() === new Date().toDateString();
+                  const isTomorrow = eventDate.toDateString() === new Date(Date.now() + 86400000).toDateString();
+                  
+                  const colorStyles = {
+                    blue: 'bg-primary/10 border-primary/30 text-primary',
+                    green: 'bg-success/10 border-success/30 text-success',
+                    red: 'bg-destructive/10 border-destructive/30 text-destructive',
+                    purple: 'bg-accent/10 border-accent/30 text-accent',
+                    yellow: 'bg-warning/10 border-warning/30 text-warning',
+                  };
+
+                  return (
+                    <motion.div
+                      key={event.event_id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15 + idx * 0.05 }}
+                      onClick={() => navigate('/calendar')}
+                      className={`
+                        flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer
+                        transition-all duration-200 hover:shadow-lg
+                        ${colorStyles[event.color_tag] || colorStyles.blue}
+                      `}
+                    >
+                      <div className="flex-shrink-0">
+                        <div className="w-14 h-14 rounded-xl glass-light flex flex-col items-center justify-center">
+                          <div className="text-xs font-semibold text-muted-foreground">
+                            {eventDate.toLocaleDateString('en-US', { month: 'short' })}
+                          </div>
+                          <div className="text-2xl font-bold">{eventDate.getDate()}</div>
+                        </div>
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-semibold truncate">{event.title}</h3>
+                          {isToday && (
+                            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-destructive/20 text-destructive">
+                              Today
+                            </span>
+                          )}
+                          {isTomorrow && (
+                            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-warning/20 text-warning">
+                              Tomorrow
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>{eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</span>
+                          </div>
+                          {event.candidate_name && (
+                            <div className="flex items-center gap-1">
+                              <User className="w-3.5 h-3.5" />
+                              <span className="truncate">{event.candidate_name}</span>
+                            </div>
+                          )}
+                          {event.location && (
+                            <div className="flex items-center gap-1">
+                              <MapPin className="w-3.5 h-3.5" />
+                              <span className="truncate">{event.location}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="flex-shrink-0">
+                        <CheckCircle className="w-5 h-5 opacity-50 hover:opacity-100 transition-opacity" />
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         {/* View Tabs */}
         <motion.div
@@ -1168,7 +1293,7 @@ const Dashboard = () => {
 
       {/* Candidate Detail Modal */}
       <Dialog open={showCandidateDetail} onOpenChange={setShowCandidateDetail}>
-        <DialogContent className="glass-card max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="glass-card-dialog max-w-3xl max-h-[90vh] overflow-y-auto">
           {selectedCandidate && (
             <>
               <DialogHeader className="border-b border-border pb-4">

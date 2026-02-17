@@ -1398,7 +1398,7 @@ async def generate_email_draft(draft_request: EmailDraftRequest, request: Reques
             hr_info += f" ({draft_request.hr_email})"
     
     email_templates = {
-        "interview_invitation": f"""Generate a professional interview invitation email.
+        "interview_invitation": f"""Generate a professional, detailed interview invitation email with realistic corporate length (250-350 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
@@ -1409,6 +1409,20 @@ Location: {draft_request.interview_location}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
+Create a comprehensive email that includes:
+1. Warm opening congratulating the candidate on moving forward
+2. Clear interview details (date, time, location/platform)
+3. Interview format and duration (mention 45-60 min duration, panel or 1-on-1)
+4. What to prepare (resume copy, portfolio if applicable, questions about the role)
+5. Dress code or other relevant information
+6. Who they'll be meeting with (interviewers' names and titles)
+7. Instructions for virtual interviews if applicable (meeting link, test beforehand)
+8. Parking/building access instructions if in-person
+9. Encourage them to reach out with questions
+10. Professional closing with HR contact information
+
+Make it warm, professional, and comprehensive like real corporate emails. Use proper paragraphs and spacing.
+
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
@@ -1416,7 +1430,7 @@ IMPORTANT: Include HR contact information in the email signature if provided. Re
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "reschedule": f"""Generate a professional interview reschedule email.
+        "reschedule": f"""Generate a professional, detailed interview reschedule email with realistic corporate length (200-300 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
@@ -1426,20 +1440,17 @@ New Interview Time: {draft_request.interview_time}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
-{{
-    "subject": "email subject line here",
-    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
-}}
+Create a comprehensive email that includes:
+1. Apologize for the inconvenience of rescheduling
+2. Brief reason for rescheduling (if appropriate: scheduling conflict, interviewer availability, etc.)
+3. Clearly state the new interview date, time, and location/platform
+4. Confirm all other details remain the same
+5. Express continued interest in the candidate
+6. Provide clear instructions for confirming the new time
+7. Offer flexibility if this time doesn't work
+8. Professional closing with HR contact information
 
-Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "offer_letter": f"""Generate a professional job offer letter email.
-
-Candidate Name: {draft_request.candidate_name}
-Job Title: {draft_request.job_title}
-Company: {draft_request.company_name}
-Tone: {draft_request.tone}
-Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+Make it empathetic, professional, and comprehensive like real corporate emails.
 
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
@@ -1448,13 +1459,27 @@ IMPORTANT: Include HR contact information in the email signature if provided. Re
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "rejection": f"""Generate a professional and respectful job rejection email.
+        "offer_letter": f"""Generate a professional, detailed job offer letter email with realistic corporate length (350-450 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+
+Create a comprehensive email that includes:
+1. Enthusiastic opening congratulating the candidate
+2. Formal offer statement with job title
+3. Key terms overview (salary range mention, start date, employment type)
+4. Mention of benefits package (health insurance, PTO, 401k, etc.)
+5. Next steps (formal offer letter attached or coming separately)
+6. Timeline for response and decision
+7. Onboarding process preview
+8. Express excitement about them joining the team
+9. Contact information for questions
+10. Professional closing with HR contact information
+
+Make it warm, exciting, professional, and comprehensive like real corporate offer letters. This is a significant moment for the candidate.
 
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
@@ -1463,13 +1488,53 @@ IMPORTANT: Include HR contact information in the email signature if provided. Re
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "follow_up": f"""Generate a professional follow-up email after interview.
+        "rejection": f"""Generate a professional, respectful, and detailed job rejection email with realistic corporate length (200-300 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+
+Create a comprehensive email that includes:
+1. Thank the candidate for their time and interest
+2. Acknowledge their effort in the interview process
+3. Deliver the decision clearly but respectfully
+4. Provide constructive context (high competition, specific fit considerations)
+5. Highlight positive aspects of their candidacy
+6. Encourage future applications and keep door open
+7. Offer to stay connected (LinkedIn, future opportunities)
+8. Wish them success in their job search
+9. Professional closing with HR contact information
+
+Make it empathetic, respectful, and encouraging. Rejection emails should leave candidates with a positive impression of the company.
+
+IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
+{{
+    "subject": "email subject line here",
+    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
+}}
+
+Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
+        "follow_up": f"""Generate a professional, detailed follow-up email after interview with realistic corporate length (200-300 words).
+
+Candidate Name: {draft_request.candidate_name}
+Job Title: {draft_request.job_title}
+Company: {draft_request.company_name}
+Tone: {draft_request.tone}
+Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+
+Create a comprehensive email that includes:
+1. Thank them for taking the time to interview
+2. Recap key highlights from the interview conversation
+3. Reiterate the team's positive impressions
+4. Provide clear timeline for next steps in the process
+5. Mention if any additional interviews or assessments are needed
+6. Encourage them to reach out with any questions
+7. Express continued interest and enthusiasm
+8. Professional closing with HR contact information
+
+Make it warm, reassuring, and professional. This email should keep the candidate engaged and informed.
 
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
