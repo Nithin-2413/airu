@@ -40,6 +40,9 @@ const EmailDrafts = () => {
     fetchJobs();
   }, []);
 
+  // Check if form is valid for submission
+  const isFormValid = formData.candidate_name.trim().length > 0 && formData.job_title.trim().length > 0;
+
   const fetchJobs = async () => {
     try {
       const response = await apiClient.get('/jobs');
