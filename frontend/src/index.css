@@ -259,6 +259,7 @@
         @apply border-none outline-none;
         @apply transition-all duration-200;
         @apply focus:ring-2 focus:ring-primary/30;
+        @apply text-foreground;
         letter-spacing: -0.011em;
     }
     
@@ -267,10 +268,28 @@
         transform: scale(1.01);
     }
     
+    .dark .ios-input {
+        color: hsl(var(--foreground));
+    }
+    
+    .dark .ios-input:focus {
+        background: rgba(30, 30, 40, 0.95);
+        color: hsl(var(--foreground));
+    }
+    
     .ios-textarea {
         @apply ios-input;
         resize: none;
         min-height: 120px;
+    }
+    
+    .dark .ios-textarea {
+        color: hsl(var(--foreground));
+    }
+    
+    .dark .ios-textarea:focus {
+        background: rgba(30, 30, 40, 0.95);
+        color: hsl(var(--foreground));
     }
     
     /* ============================================
