@@ -1001,27 +1001,44 @@ const Dashboard = () => {
               </div>
 
               {/* Skills vs Experience Scatter */}
-              <div className="glass-card">
+              <div className="glass-card glass-card-3d chart-shadow-3d overflow-hidden">
                 <div className="p-6 border-b border-border">
                   <h3 className="text-xl font-bold flex items-center gap-2">
                     <Activity className="w-5 h-5 text-success" />
                     Skills vs Experience Matrix
                   </h3>
                 </div>
-                <div className="p-6">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={[
-                      { name: 'Exp 0-2yr', skills: allCandidates.filter(c => c.experience_score < 40).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score < 40).length || 1) },
-                      { name: 'Exp 2-5yr', skills: allCandidates.filter(c => c.experience_score >= 40 && c.experience_score < 70).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score >= 40 && c.experience_score < 70).length || 1) },
-                      { name: 'Exp 5+yr', skills: allCandidates.filter(c => c.experience_score >= 70).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score >= 70).length || 1) }
-                    ]}>
-                      <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Bar dataKey="skills" fill="#10b981" radius={[8, 8, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
+                <div className="p-6 chart-3d-container relative">
+                  <div className="chart-3d chart-glow">
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={[
+                        { name: 'Exp 0-2yr', skills: allCandidates.filter(c => c.experience_score < 40).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score < 40).length || 1) },
+                        { name: 'Exp 2-5yr', skills: allCandidates.filter(c => c.experience_score >= 40 && c.experience_score < 70).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score >= 40 && c.experience_score < 70).length || 1) },
+                        { name: 'Exp 5+yr', skills: allCandidates.filter(c => c.experience_score >= 70).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score >= 70).length || 1) }
+                      ]}>
+                        <defs>
+                          <linearGradient id="skillsGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#10b981" stopOpacity={1} />
+                            <stop offset="100%" stopColor="#10b981" stopOpacity={0.6} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" opacity={0.1} stroke="#94a3b8" />
+                        <XAxis dataKey="name" stroke="#64748b" />
+                        <YAxis stroke="#64748b" />
+                        <Tooltip 
+                          contentStyle={{
+                            background: 'var(--glass-bg)',
+                            backdropFilter: 'blur(20px)',
+                            border: '1px solid var(--glass-border)',
+                            borderRadius: '12px',
+                            boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
+                          }}
+                        />
+                        <Bar dataKey="skills" fill="url(#skillsGradient)" radius={[8, 8, 0, 0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className="premium-shimmer absolute inset-0 pointer-events-none"></div>
                 </div>
               </div>
 
