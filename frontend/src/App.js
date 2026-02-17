@@ -21,7 +21,6 @@ function AppRouter() {
       <Route path="/history" element={<History />} />
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/emails" element={<EmailDrafts />} />
-      <Route path="/analytics" element={<Analytics />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
