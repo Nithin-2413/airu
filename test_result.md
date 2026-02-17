@@ -449,4 +449,60 @@ agent_communication:
       - Backend API responding correctly (tested /api/jobs endpoint)
       - All Groq AI features should now work: resume parsing, ATS screening, email generation
       
+  - agent: "main"
+    message: |
+      ✅ NEW SESSION - Critical Fixes and Premium Analytics Dashboard:
+      
+      ISSUES FIXED:
+      1. ✅ Calendar Event Popup Hover - Fixed weird movement
+         - Removed scale transformation causing position shifts
+         - Now uses only opacity (0.85) + premium boxShadow glow
+         - Smooth 200ms transition with easeInOut timing
+         - No more weird movement on hover
+      
+      2. ✅ Email Generation JSON Parsing - Enhanced robustness
+         - Better markdown removal with optional newlines
+         - Aggressive control character removal (except \n and \t)
+         - Line ending normalization (CRLF → LF)
+         - Fixed double backslash escaping issue
+         - Improved regex patterns for extracting subject/body
+         - Better error handling with detailed logging
+         - Manual fallback parsing for edge cases
+      
+      3. ✅ NEW FEATURE: Premium Analytics Dashboard with 3D Visualizations
+         Created /analytics route with enterprise-grade UI:
+         
+         KPI Cards (4 premium cards):
+         - Total Candidates, Avg Match Score, Shortlisted, Conversion Rate
+         - 3D depth effect with glassmorphism
+         - Neon glow on hover (blue/green/purple/orange)
+         - Smooth elevation (translateY -8px) with 300ms ease-in-out
+         - Color-coded icons with gradient overlays
+         
+         Charts:
+         - 3D Pie Chart: Status distribution with drop-shadow and hover glow
+         - 3D Bar Chart: Top 5 job positions with gradient fill (blue→purple)
+         - Score Distribution: Bar chart with green→blue gradient
+         - Hiring Trends: Area chart showing 6-month performance
+         - All charts have premium dark tooltips with glassmorphism
+         - Smooth hover effects with neon glow (drop-shadow filters)
+         
+         UI/UX:
+         - Glassmorphism throughout with backdrop-filter blur
+         - Framer-motion animations (stagger delays)
+         - Dark/light theme support
+         - Fully responsive grid layout
+         - Added Analytics button to Dashboard navigation
+         - Enhanced glass-card-3d CSS with better shadows
+      
+      SERVICES STATUS:
+      - Backend: RUNNING (JSON parsing fixes applied)
+      - Frontend: RUNNING (Calendar + Analytics updated)
+      - MongoDB: RUNNING
+      
+      READY FOR TESTING:
+      - Calendar event hover (should be smooth, no movement)
+      - Email generation (should handle JSON parsing better)
+      - Analytics dashboard (navigate to /analytics from Dashboard)
+
       STATUS: All services operational. Ready for comprehensive testing of all features (job creation, resume screening, email generation).
