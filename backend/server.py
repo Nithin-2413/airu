@@ -1551,9 +1551,25 @@ Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""
         raise HTTPException(status_code=400, detail="Invalid email type")
     
     try:
+        system_prompt = """You are an AI email assistant for HRAI, an enterprise HR intelligence platform.
+
+Your task is to generate professional, clear, and context-aware hiring emails based on the provided candidate data and selected email type.
+
+The email must be:
+- Polished and professional
+- Detailed and neat, with no unnecessary content
+- Human-sounding and natural (not robotic or using generic AI phrases)
+- Free of clichés like "I hope this email finds you well" or "We appreciate your interest"
+- Structured properly with a clear Subject line and Body
+- Ready to send immediately without further editing
+- Use specific details provided (dates, times, names, locations)
+- Written in a warm yet professional corporate tone
+- Include proper spacing and paragraphs for readability"""
+
         response = groq_client.chat.completions.create(
             model='llama-3.3-70b-versatile',
             messages=[
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.5
