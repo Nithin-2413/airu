@@ -1,80 +1,69 @@
 #!/usr/bin/env python3
 """
-HR Intelligence Dashboard Backend Testing Suite
-Comprehensive testing for high-priority backend endpoints
+Backend API Testing for HR Intelligence Dashboard
+Testing Groq AI integrations after library upgrade from 0.11.0 to 1.0.0
 """
 
 import requests
 import json
 import uuid
-import time
-from datetime import datetime
-import base64
-import os
+from datetime import datetime, timezone
+import io
+from typing import Dict, Any
+
+# Configuration
+BASE_URL = "https://llamacode.preview.emergentagent.com/api"
+SESSION_ID = f"test-session-{uuid.uuid4()}"
 
 class BackendTester:
     def __init__(self):
-        # Use localhost for testing as external URL has routing issues
-        self.base_url = "http://localhost:8001/api"
-        self.session_id = str(uuid.uuid4())
-        self.headers = {
-            "X-Session-ID": self.session_id,
+        self.session = requests.Session()
+        self.session.headers.update({
+            "X-Session-ID": SESSION_ID,
             "Content-Type": "application/json"
-        }
-        self.created_resources = {
-            "jobs": [],
-            "resumes": [],
-            "screenings": []
-        }
-        
-    def log_test(self, test_name, success, details=""):
-        """Log test results"""
-        status = "✅ PASS" if success else "❌ FAIL"
-        print(f"\n{status} {test_name}")
-        if details:
-            print(f"    Details: {details}")
-        
-    def test_session_authentication(self):
-        """Test session-based authentication"""
-        print("\n🔐 Testing Session Authentication...")
-        
-        try:
-            response = requests.get(f"{self.base_url}/auth/me", headers=self.headers, timeout=30)
-            
-            if response.status_code == 200:
-                user_data = response.json()
-                self.log_test("Session Authentication", True, f"User created: {user_data.get('name')}")
-                return True
-            else:
-                self.log_test("Session Authentication", False, f"Status: {response.status_code}, Response: {response.text}")
-                return False
-                
-        except Exception as e:
-            self.log_test("Session Authentication", False, f"Exception: {str(e)}")
-            return False
+        })
+        self.test_data = {}
+        self.results = []
     
-    def create_test_job(self):
-        """Create a test job for screening and email generation"""
-        print("\n📋 Creating Test Job...")
+    def log_result(self, test_name: str, success: bool, response_data: Any = None, error: str = None):
+        """Log test result"""
+        result = {
+            "test": test_name,
+            "success": success,
+            "response_data": response_data,
+            "error": error,
+            "timestamp": datetime.now().isoformat()
+        }
+        self.results.append(result)
+        status = "✅ PASS" if success else "❌ FAIL"
+        print(f"{status} | {test_name}")
+        if error:
+            print(f"       Error: {error}")
+        if response_data and isinstance(response_data, dict):
+            print(f"       Data: {json.dumps(response_data, indent=2)}")
+    
+    def test_job_creation_api(self):
+        """Test Priority 1: Job Creation API - POST /api/jobs"""
+        print("\n🎯 Testing Job Creation API...")
         
         job_data = {
             "title": "Senior Software Engineer",
             "department": "Engineering",
-            "location": "San Francisco, CA",
+            "location": "Remote",
             "employment_type": "Full-time",
             "experience_level": "Senior",
-            "description": "We are looking for a skilled Senior Software Engineer to join our dynamic team. The ideal candidate will have strong experience in Python, React, and cloud technologies.",
+            "description": "We are looking for a senior software engineer to join our team. The role involves designing and implementing scalable backend systems using Python, FastAPI, and MongoDB.",
             "requirements": [
-                "5+ years of software development experience",
-                "Strong proficiency in Python and JavaScript",
-                "Experience with React and modern web frameworks",
-                "Knowledge of cloud platforms (AWS, GCP, or Azure)",
-                "Strong problem-solving and communication skills"
+                "5+ years of Python development experience",
+                "Experience with FastAPI or similar web frameworks",
+                "Strong knowledge of MongoDB and NoSQL databases",
+                "Experience with RESTful API design",
+                "Understanding of cloud platforms (AWS, GCP, Azure)"
             ],
             "nice_to_have": [
-                "Experience with machine learning",
-                "DevOps and CI/CD knowledge",
-                "Leadership experience"
+                "Experience with Docker and Kubernetes",
+                "Knowledge of GraphQL",
+                "Machine learning background"
             ],
             "salary_range": {
                 "min": 120000,
@@ -85,384 +74,342 @@ class BackendTester:
         }
         
         try:
-            response = requests.post(
-                f"{self.base_url}/jobs", 
-                headers=self.headers, 
-                json=job_data,
-                timeout=30
-            )
+            response = self.session.post(f"{BASE_URL}/jobs", json=job_data)
             
             if response.status_code == 200:
-                job = response.json()
-                job_id = job.get("job_id")
-                self.created_resources["jobs"].append(job_id)
-                self.log_test("Job Creation", True, f"Job ID: {job_id}")
-                return job_id
-            else:
-                self.log_test("Job Creation", False, f"Status: {response.status_code}, Response: {response.text}")
-                return None
-                
-        except Exception as e:
-            self.log_test("Job Creation", False, f"Exception: {str(e)}")
-            return None
-    
-    def create_sample_resume_content(self):
-        """Create sample resume content for testing"""
-        resume_text = """John Smith
-Senior Software Engineer
-Email: john.smith@email.com
-Phone: (555) 123-4567
-
-EXPERIENCE
-Senior Software Engineer | Tech Corp | 2019-2024
-• Led development of microservices architecture using Python and FastAPI
-• Built responsive web applications using React and TypeScript
-• Managed AWS cloud infrastructure and CI/CD pipelines
-• Mentored junior developers and conducted code reviews
-
-Software Engineer | StartUp Inc | 2017-2019
-• Developed REST APIs and database systems
-• Implemented automated testing and deployment processes
-• Collaborated with cross-functional teams on product features
-
-SKILLS
-• Programming: Python, JavaScript, TypeScript, SQL
-• Frameworks: React, FastAPI, Django, Node.js
-• Cloud: AWS, Docker, Kubernetes
-• Tools: Git, Jenkins, Jest, Pytest
-
-EDUCATION
-Bachelor of Science in Computer Science
-University of California, Berkeley | 2017"""
-        
-        # Convert to base64 as if it were a PDF
-        return base64.b64encode(resume_text.encode()).decode()
-    
-    def upload_test_resume(self):
-        """Upload a test resume"""
-        print("\n📄 Uploading Test Resume...")
-        
-        # Create a minimal valid PDF for testing
-        pdf_content = b"""%PDF-1.4
-1 0 obj
-<< /Type /Catalog /Pages 2 0 R >>
-endobj
-2 0 obj
-<< /Type /Pages /Kids [3 0 R] /Count 1 >>
-endobj
-3 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources <<>> >>
-endobj
-4 0 obj
-<< /Length 500 >>
-stream
-BT
-/Helv 12 Tf
-100 700 Td
-(John Smith) Tj
-0 -20 Td
-(Senior Software Engineer) Tj
-0 -20 Td
-(Email: john.smith@email.com) Tj
-0 -20 Td
-(Phone: 555-123-4567) Tj
-0 -40 Td
-(EXPERIENCE) Tj
-0 -20 Td
-(5+ years Python, React, AWS) Tj
-0 -20 Td
-(Led development teams) Tj
-0 -20 Td
-(Microservices architecture) Tj
-ET
-endstream
-endobj
-xref
-0 5
-0000000000 65535 f 
-0000000010 00000 n 
-0000000075 00000 n 
-0000000178 00000 n 
-0000000319 00000 n 
-trailer
-<< /Size 5 /Root 1 0 R >>
-startxref
-850
-%%EOF"""
-        
-        files = {
-            'files': ('john_smith_resume.pdf', pdf_content, 'application/pdf')
-        }
-        
-        # Remove Content-Type header for multipart form data
-        headers_for_upload = {key: value for key, value in self.headers.items() if key != "Content-Type"}
-        
-        try:
-            response = requests.post(
-                f"{self.base_url}/resumes/upload",
-                headers=headers_for_upload,
-                files=files,
-                timeout=30
-            )
-            
-            if response.status_code == 200:
-                result = response.json()
-                resumes = result.get("resumes", [])
-                if resumes:
-                    resume_id = resumes[0].get("resume_id")
-                    self.created_resources["resumes"].append(resume_id)
-                    self.log_test("Resume Upload", True, f"Resume ID: {resume_id}")
-                    return resume_id
+                data = response.json()
+                if "job_id" in data and data["title"] == job_data["title"]:
+                    self.test_data["job_id"] = data["job_id"]
+                    self.log_result("Job Creation API", True, {
+                        "job_id": data["job_id"],
+                        "title": data["title"],
+                        "status": data["status"]
+                    })
+                    return True
                 else:
-                    self.log_test("Resume Upload", False, "No resumes in response")
-                    return None
+                    self.log_result("Job Creation API", False, error="Invalid response format")
+                    return False
             else:
-                self.log_test("Resume Upload", False, f"Status: {response.status_code}, Response: {response.text}")
-                return None
-                
-        except Exception as e:
-            self.log_test("Resume Upload", False, f"Exception: {str(e)}")
-            return None
-    
-    def test_resume_screening(self, job_id, resume_id):
-        """Test resume screening endpoint"""
-        print("\n🔍 Testing Resume Screening...")
-        
-        screening_data = {
-            "job_id": job_id,
-            "resume_ids": [resume_id]
-        }
-        
-        try:
-            response = requests.post(
-                f"{self.base_url}/resumes/screen",
-                headers=self.headers,
-                json=screening_data,
-                timeout=60  # AI processing may take longer
-            )
-            
-            if response.status_code == 200:
-                result = response.json()
-                results = result.get("results", [])
-                if results:
-                    screening_id = results[0].get("screening_id")
-                    match_score = results[0].get("match_score")
-                    self.created_resources["screenings"].append(screening_id)
-                    self.log_test("Resume Screening", True, f"Screening ID: {screening_id}, Match Score: {match_score}")
-                    return screening_id
-                else:
-                    self.log_test("Resume Screening", False, "No screening results")
-                    return None
-            else:
-                self.log_test("Resume Screening", False, f"Status: {response.status_code}, Response: {response.text}")
-                return None
-                
-        except Exception as e:
-            self.log_test("Resume Screening", False, f"Exception: {str(e)}")
-            return None
-    
-    def test_email_generation(self, job_title="Senior Software Engineer"):
-        """Test email generation endpoint with all email types"""
-        print("\n📧 Testing Email Generation...")
-        
-        email_types = [
-            "interview_invitation",
-            "reschedule", 
-            "offer_letter",
-            "rejection",
-            "follow_up"
-        ]
-        
-        results = {}
-        
-        for email_type in email_types:
-            print(f"\n  Testing {email_type} email...")
-            
-            email_data = {
-                "email_type": email_type,
-                "candidate_name": "John Smith",
-                "job_title": job_title,
-                "company_name": "AIRecruiter",
-                "tone": "professional"
-            }
-            
-            # Add specific fields for certain email types
-            if email_type in ["interview_invitation", "reschedule"]:
-                email_data.update({
-                    "interview_date": "2024-12-20",
-                    "interview_time": "2:00 PM",
-                    "interview_location": "Conference Room A"
-                })
-            
-            try:
-                response = requests.post(
-                    f"{self.base_url}/emails/generate-draft",
-                    headers=self.headers,
-                    json=email_data,
-                    timeout=60  # AI generation may take longer
-                )
-                
-                if response.status_code == 200:
-                    result = response.json()
-                    subject = result.get("subject", "")
-                    body = result.get("body", "")
-                    
-                    if subject and body:
-                        self.log_test(f"Email Generation - {email_type}", True, f"Subject: {subject[:50]}...")
-                        results[email_type] = True
-                    else:
-                        self.log_test(f"Email Generation - {email_type}", False, "Missing subject or body")
-                        results[email_type] = False
-                else:
-                    self.log_test(f"Email Generation - {email_type}", False, f"Status: {response.status_code}, Response: {response.text}")
-                    results[email_type] = False
-                    
-            except Exception as e:
-                self.log_test(f"Email Generation - {email_type}", False, f"Exception: {str(e)}")
-                results[email_type] = False
-        
-        # Overall result
-        all_passed = all(results.values())
-        failed_types = [t for t, passed in results.items() if not passed]
-        
-        if all_passed:
-            self.log_test("Email Generation - All Types", True, "All email types generated successfully")
-        else:
-            self.log_test("Email Generation - All Types", False, f"Failed types: {failed_types}")
-        
-        return all_passed, results
-    
-    def test_analytics_endpoint(self):
-        """Test analytics dashboard endpoint"""
-        print("\n📊 Testing Analytics Dashboard...")
-        
-        try:
-            response = requests.get(f"{self.base_url}/analytics/dashboard", headers=self.headers, timeout=30)
-            
-            if response.status_code == 200:
-                analytics = response.json()
-                total_screenings = analytics.get("total_screenings", 0)
-                self.log_test("Analytics Dashboard", True, f"Total screenings: {total_screenings}")
-                return True
-            else:
-                self.log_test("Analytics Dashboard", False, f"Status: {response.status_code}, Response: {response.text}")
+                self.log_result("Job Creation API", False, error=f"HTTP {response.status_code}: {response.text}")
                 return False
                 
         except Exception as e:
-            self.log_test("Analytics Dashboard", False, f"Exception: {str(e)}")
+            self.log_result("Job Creation API", False, error=str(e))
             return False
     
-    def run_comprehensive_test(self):
-        """Run comprehensive backend testing"""
-        print("🚀 Starting HR Intelligence Dashboard Backend Tests")
-        print(f"🌐 Base URL: {self.base_url}")
-        print(f"🔑 Session ID: {self.session_id}")
+    def test_email_generation_api(self):
+        """Test Priority 2: Email Generation API with Groq AI"""
+        print("\n🎯 Testing Email Generation API (Groq AI)...")
         
-        results = {}
+        email_requests = [
+            {
+                "name": "Interview Invitation Email",
+                "data": {
+                    "email_type": "interview_invitation",
+                    "candidate_name": "Sarah Johnson",
+                    "job_title": "Senior Software Engineer",
+                    "company_name": "TechCorp Inc",
+                    "interview_date": "2024-01-15",
+                    "interview_time": "10:00 AM EST",
+                    "interview_location": "Virtual - Google Meet",
+                    "tone": "professional",
+                    "additional_details": "Please prepare for technical coding questions"
+                }
+            },
+            {
+                "name": "Job Offer Email",
+                "data": {
+                    "email_type": "offer_letter",
+                    "candidate_name": "Michael Chen",
+                    "job_title": "Senior Software Engineer",
+                    "company_name": "TechCorp Inc",
+                    "tone": "friendly",
+                    "additional_details": "Starting salary: $150,000 annually"
+                }
+            }
+        ]
         
-        # 1. Test Authentication
-        results["authentication"] = self.test_session_authentication()
+        success_count = 0
         
-        if not results["authentication"]:
-            print("\n❌ Authentication failed - stopping tests")
-            return results
+        for email_req in email_requests:
+            try:
+                response = self.session.post(f"{BASE_URL}/emails/generate-draft", json=email_req["data"])
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if all(key in data for key in ["subject", "body", "email_type"]):
+                        if len(data["subject"]) > 5 and len(data["body"]) > 50:
+                            self.log_result(f"Email Generation - {email_req['name']}", True, {
+                                "email_type": data["email_type"],
+                                "subject_length": len(data["subject"]),
+                                "body_length": len(data["body"]),
+                                "subject": data["subject"][:100] + "..." if len(data["subject"]) > 100 else data["subject"]
+                            })
+                            success_count += 1
+                        else:
+                            self.log_result(f"Email Generation - {email_req['name']}", False, error="Generated content too short")
+                    else:
+                        self.log_result(f"Email Generation - {email_req['name']}", False, error="Missing required fields in response")
+                else:
+                    self.log_result(f"Email Generation - {email_req['name']}", False, error=f"HTTP {response.status_code}: {response.text}")
+                    
+            except Exception as e:
+                self.log_result(f"Email Generation - {email_req['name']}", False, error=str(e))
         
-        # 2. Create test job (required for email generation)
-        job_id = self.create_test_job()
-        results["job_creation"] = job_id is not None
-        
-        # 3. Upload test resume 
-        resume_id = self.upload_test_resume()
-        results["resume_upload"] = resume_id is not None
-        
-        # 4. Test resume screening (if we have both job and resume)
-        if job_id and resume_id:
-            screening_id = self.test_resume_screening(job_id, resume_id)
-            results["resume_screening"] = screening_id is not None
-        else:
-            results["resume_screening"] = False
-            self.log_test("Resume Screening", False, "Missing job_id or resume_id")
-        
-        # 5. Test email generation (critical - user reported broken)
-        job_title = "Senior Software Engineer" if job_id else "Software Engineer"
-        email_success, email_results = self.test_email_generation(job_title)
-        results["email_generation"] = email_success
-        results["email_types"] = email_results
-        
-        # 6. Test analytics
-        results["analytics"] = self.test_analytics_endpoint()
-        
-        # Summary
-        self.print_test_summary(results)
-        
-        return results
+        return success_count == len(email_requests)
     
-    def print_test_summary(self, results):
-        """Print comprehensive test summary"""
-        print("\n" + "="*60)
-        print("🏁 TEST SUMMARY")
-        print("="*60)
+    def create_test_resume(self) -> bytes:
+        """Create a simple test resume in text format"""
+        resume_content = """
+SARAH JOHNSON
+Software Engineer
+Email: sarah.johnson@email.com
+Phone: (555) 123-4567
+
+EXPERIENCE
+Senior Software Engineer | TechCorp (2020-2024)
+- Developed scalable backend systems using Python and FastAPI
+- Implemented microservices architecture serving 1M+ users
+- Led team of 5 engineers on critical product features
+- Reduced API response time by 40% through optimization
+
+Software Engineer | StartupXYZ (2018-2020)
+- Built REST APIs using Django and PostgreSQL
+- Implemented CI/CD pipelines using Jenkins and Docker
+- Collaborated with frontend team on React applications
+- Mentored junior developers
+
+EDUCATION
+Bachelor of Science in Computer Science
+University of Technology (2014-2018)
+GPA: 3.8/4.0
+
+SKILLS
+Programming Languages: Python, JavaScript, Java, Go
+Frameworks: FastAPI, Django, Flask, React, Node.js
+Databases: PostgreSQL, MongoDB, Redis
+Cloud: AWS, GCP, Docker, Kubernetes
+Tools: Git, Jenkins, Jira, Slack
+
+ACHIEVEMENTS
+- AWS Certified Solutions Architect
+- Published 3 technical papers on distributed systems
+- Contributed to open-source projects with 1000+ stars
+- Led successful migration of legacy systems to microservices
+        """.strip()
         
-        total_tests = 0
-        passed_tests = 0
+        return resume_content.encode('utf-8')
+    
+    def test_resume_upload_and_parsing(self):
+        """Test Priority 3: Resume Upload & Parsing with Groq AI"""
+        print("\n🎯 Testing Resume Upload & AI Parsing (Groq AI)...")
         
-        # Core functionality tests
-        core_tests = {
-            "Session Authentication": results.get("authentication", False),
-            "Job Creation": results.get("job_creation", False), 
-            "Resume Upload": results.get("resume_upload", False),
-            "Resume Screening": results.get("resume_screening", False),
-            "Email Generation": results.get("email_generation", False),
-            "Analytics Dashboard": results.get("analytics", False)
+        # Create test resume file
+        resume_content = self.create_test_resume()
+        
+        try:
+            # Prepare multipart form data
+            files = {
+                'files': ('sarah_johnson_resume.txt', resume_content, 'text/plain')
+            }
+            
+            # Remove Content-Type header for multipart request
+            headers = {"X-Session-ID": SESSION_ID}
+            
+            response = requests.post(f"{BASE_URL}/resumes/upload", files=files, headers=headers)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "resumes" in data and len(data["resumes"]) > 0:
+                    resume_info = data["resumes"][0]
+                    
+                    # Store resume ID for later tests
+                    if "resume_id" in resume_info:
+                        self.test_data["resume_id"] = resume_info["resume_id"]
+                    
+                    # Check if AI parsing worked
+                    required_fields = ["resume_id", "filename", "candidate_name", "skills_count", "experience_years"]
+                    if all(field in resume_info for field in required_fields):
+                        # Validate AI extracted meaningful data
+                        if (resume_info["candidate_name"] and 
+                            resume_info["skills_count"] > 0 and 
+                            resume_info["experience_years"] > 0):
+                            
+                            self.log_result("Resume Upload & AI Parsing", True, {
+                                "resume_id": resume_info["resume_id"],
+                                "candidate_name": resume_info["candidate_name"],
+                                "skills_count": resume_info["skills_count"],
+                                "experience_years": resume_info["experience_years"],
+                                "filename": resume_info["filename"]
+                            })
+                            return True
+                        else:
+                            self.log_result("Resume Upload & AI Parsing", False, error="AI failed to extract meaningful data")
+                    else:
+                        self.log_result("Resume Upload & AI Parsing", False, error="Missing required fields in response")
+                else:
+                    self.log_result("Resume Upload & AI Parsing", False, error="No resumes in response")
+            else:
+                self.log_result("Resume Upload & AI Parsing", False, error=f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("Resume Upload & AI Parsing", False, error=str(e))
+            
+        return False
+    
+    def test_ats_screening_with_ai(self):
+        """Test Priority 4: ATS Screening with Groq AI"""
+        print("\n🎯 Testing ATS Screening with AI (Groq AI)...")
+        
+        # Need job_id and resume_id from previous tests
+        if "job_id" not in self.test_data or "resume_id" not in self.test_data:
+            self.log_result("ATS Screening with AI", False, error="Missing job_id or resume_id from previous tests")
+            return False
+        
+        screening_request = {
+            "job_id": self.test_data["job_id"],
+            "resume_ids": [self.test_data["resume_id"]]
         }
         
-        for test_name, passed in core_tests.items():
-            status = "✅ PASS" if passed else "❌ FAIL"
-            print(f"{status} {test_name}")
-            total_tests += 1
-            if passed:
-                passed_tests += 1
-        
-        # Email type breakdown
-        if "email_types" in results:
-            print("\n📧 Email Generation Details:")
-            for email_type, passed in results["email_types"].items():
-                status = "✅" if passed else "❌"
-                print(f"  {status} {email_type}")
-        
-        # Overall score
-        success_rate = (passed_tests / total_tests * 100) if total_tests > 0 else 0
-        print(f"\n🎯 Overall Success Rate: {passed_tests}/{total_tests} ({success_rate:.1f}%)")
-        
-        # Critical issues
-        critical_failures = []
-        if not results.get("email_generation", False):
-            critical_failures.append("Email Generation (USER REPORTED BROKEN)")
-        if not results.get("resume_screening", False):
-            critical_failures.append("Resume Screening")
-        if not results.get("authentication", False):
-            critical_failures.append("Session Authentication")
-        
-        if critical_failures:
-            print(f"\n🚨 CRITICAL FAILURES:")
-            for failure in critical_failures:
-                print(f"  ❌ {failure}")
-        else:
-            print(f"\n🎉 All critical functionality working!")
-
-def main():
-    """Main test execution"""
-    tester = BackendTester()
-    results = tester.run_comprehensive_test()
+        try:
+            response = self.session.post(f"{BASE_URL}/resumes/screen", json=screening_request)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "results" in data and len(data["results"]) > 0:
+                    result = data["results"][0]
+                    
+                    # Check all required AI screening fields
+                    required_fields = ["screening_id", "resume_id", "candidate_name", "match_score", "recommended_action"]
+                    if all(field in result for field in required_fields):
+                        # Validate AI scoring logic
+                        if (0 <= result["match_score"] <= 100 and 
+                            result["recommended_action"] in ["Interview", "Maybe", "Reject"] and
+                            result["candidate_name"]):
+                            
+                            # Store screening_id for potential future tests
+                            self.test_data["screening_id"] = result["screening_id"]
+                            
+                            self.log_result("ATS Screening with AI", True, {
+                                "screening_id": result["screening_id"],
+                                "candidate_name": result["candidate_name"],
+                                "match_score": result["match_score"],
+                                "recommended_action": result["recommended_action"],
+                                "resume_id": result["resume_id"]
+                            })
+                            return True
+                        else:
+                            self.log_result("ATS Screening with AI", False, error="Invalid AI scoring results")
+                    else:
+                        self.log_result("ATS Screening with AI", False, error="Missing required fields in screening result")
+                else:
+                    self.log_result("ATS Screening with AI", False, error="No screening results returned")
+            else:
+                self.log_result("ATS Screening with AI", False, error=f"HTTP {response.status_code}: {response.text}")
+                
+        except Exception as e:
+            self.log_result("ATS Screening with AI", False, error=str(e))
+            
+        return False
     
-    # Return exit code based on critical functionality
-    critical_working = (
-        results.get("authentication", False) and
-        results.get("email_generation", False) and
-        results.get("resume_screening", False)
-    )
+    def test_additional_apis(self):
+        """Test additional APIs for completeness"""
+        print("\n🎯 Testing Additional APIs...")
+        
+        # Test Get Jobs
+        try:
+            response = self.session.get(f"{BASE_URL}/jobs")
+            if response.status_code == 200:
+                jobs = response.json()
+                self.log_result("Get Jobs API", True, {"job_count": len(jobs)})
+            else:
+                self.log_result("Get Jobs API", False, error=f"HTTP {response.status_code}")
+        except Exception as e:
+            self.log_result("Get Jobs API", False, error=str(e))
+        
+        # Test Analytics Dashboard
+        try:
+            response = self.session.get(f"{BASE_URL}/analytics/dashboard")
+            if response.status_code == 200:
+                analytics = response.json()
+                required_fields = ["total_screenings", "status_breakdown", "average_scores"]
+                if all(field in analytics for field in required_fields):
+                    self.log_result("Analytics Dashboard API", True, {
+                        "total_screenings": analytics["total_screenings"],
+                        "conversion_rate": analytics.get("conversion_rate", 0)
+                    })
+                else:
+                    self.log_result("Analytics Dashboard API", False, error="Missing required analytics fields")
+            else:
+                self.log_result("Analytics Dashboard API", False, error=f"HTTP {response.status_code}")
+        except Exception as e:
+            self.log_result("Analytics Dashboard API", False, error=str(e))
     
-    return 0 if critical_working else 1
+    def run_all_tests(self):
+        """Run all backend tests in priority order"""
+        print(f"🚀 Starting Backend API Tests for HR Intelligence Dashboard")
+        print(f"📍 Backend URL: {BASE_URL}")
+        print(f"🔑 Session ID: {SESSION_ID}")
+        print(f"⏰ Test Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        
+        # Priority tests as requested
+        test1_success = self.test_job_creation_api()
+        test2_success = self.test_email_generation_api()
+        test3_success = self.test_resume_upload_and_parsing()
+        test4_success = self.test_ats_screening_with_ai()
+        
+        # Additional API tests
+        self.test_additional_apis()
+        
+        # Summary
+        print("\n" + "="*60)
+        print("📊 TEST SUMMARY")
+        print("="*60)
+        
+        total_tests = len(self.results)
+        passed_tests = sum(1 for r in self.results if r["success"])
+        failed_tests = total_tests - passed_tests
+        
+        print(f"Total Tests: {total_tests}")
+        print(f"✅ Passed: {passed_tests}")
+        print(f"❌ Failed: {failed_tests}")
+        print(f"Success Rate: {(passed_tests/total_tests)*100:.1f}%")
+        
+        # Critical tests status
+        critical_tests = {
+            "Job Creation API": test1_success,
+            "Email Generation with Groq AI": test2_success,
+            "Resume Upload & AI Parsing": test3_success,
+            "ATS Screening with AI": test4_success
+        }
+        
+        print(f"\n🎯 CRITICAL TESTS STATUS:")
+        for test_name, success in critical_tests.items():
+            status = "✅ WORKING" if success else "❌ FAILING"
+            print(f"   {test_name}: {status}")
+        
+        # Failed tests details
+        failed_tests_list = [r for r in self.results if not r["success"]]
+        if failed_tests_list:
+            print(f"\n❌ FAILED TESTS DETAILS:")
+            for test in failed_tests_list:
+                print(f"   • {test['test']}: {test['error']}")
+        
+        print(f"\n⏰ Test Completed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        
+        return {
+            "total_tests": total_tests,
+            "passed_tests": passed_tests,
+            "failed_tests": failed_tests,
+            "success_rate": (passed_tests/total_tests)*100,
+            "critical_tests_status": critical_tests,
+            "all_critical_working": all(critical_tests.values())
+        }
 
 if __name__ == "__main__":
-    exit(main())
+    tester = BackendTester()
+    summary = tester.run_all_tests()
+    
+    # Exit code based on results
+    exit_code = 0 if summary["all_critical_working"] else 1
+    exit(exit_code)
