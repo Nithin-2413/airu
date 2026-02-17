@@ -1455,7 +1455,7 @@ Make it empathetic, professional, and comprehensive like real corporate emails.
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks and HR signature at the end"
+    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
@@ -1484,7 +1484,7 @@ Make it warm, exciting, professional, and comprehensive like real corporate offe
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks and HR signature at the end"
+    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
@@ -1512,7 +1512,7 @@ Make it empathetic, respectful, and encouraging. Rejection emails should leave c
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks and HR signature at the end"
+    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
@@ -1539,7 +1539,7 @@ Make it warm, reassuring, and professional. This email should keep the candidate
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete email body with \\n for line breaks and HR signature at the end"
+    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object."""
