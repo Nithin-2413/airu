@@ -440,22 +440,22 @@ const Calendar = () => {
           <div className="space-y-3 py-4 max-h-[60vh] overflow-y-auto">
             
             {/* Title */}
-            <div className="space-y-2">
-              <Label className="text-sm font-semibold tracking-apple">Event Title</Label>
+            <div className="space-y-1">
+              <Label className="text-xs font-semibold tracking-apple">Event Title</Label>
               <Input
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 placeholder="Interview with candidate"
-                className="ios-input"
+                className="ios-input h-9"
               />
             </div>
 
-            {/* Event Type & Status */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold tracking-apple">Event Type</Label>
+            {/* Type, Status, Color - Compact Row */}
+            <div className="grid grid-cols-3 gap-3">
+              <div className="space-y-1">
+                <Label className="text-xs font-semibold tracking-apple">Type</Label>
                 <Select value={formData.event_type} onValueChange={(value) => setFormData({ ...formData, event_type: value })}>
-                  <SelectTrigger className="ios-input">
+                  <SelectTrigger className="ios-input h-9 text-sm">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="glass-card border-2 border-border">
@@ -467,10 +467,10 @@ const Calendar = () => {
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold tracking-apple">Status</Label>
+              <div className="space-y-1">
+                <Label className="text-xs font-semibold tracking-apple">Status</Label>
                 <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
-                  <SelectTrigger className="ios-input">
+                  <SelectTrigger className="ios-input h-9 text-sm">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="glass-card border-2 border-border">
@@ -480,98 +480,97 @@ const Calendar = () => {
                   </SelectContent>
                 </Select>
               </div>
+
+              <div className="space-y-1">
+                <Label className="text-xs font-semibold tracking-apple">Color</Label>
+                <div className="flex gap-2">
+                  {['blue', 'green', 'red', 'purple', 'yellow'].map(color => (
+                    <button
+                      key={color}
+                      onClick={() => setFormData({ ...formData, color_tag: color })}
+                      className={`
+                        w-7 h-7 rounded-lg border transition-all duration-200
+                        ${formData.color_tag === color ? 'border-foreground scale-110' : 'border-border'}
+                        ${color === 'blue' ? 'bg-primary' : ''}
+                        ${color === 'green' ? 'bg-success' : ''}
+                        ${color === 'red' ? 'bg-destructive' : ''}
+                        ${color === 'purple' ? 'bg-accent' : ''}
+                        ${color === 'yellow' ? 'bg-warning' : ''}
+                      `}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
 
-            {/* Date & Time */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold tracking-apple">Start Date & Time</Label>
+            {/* Date & Time - Compact */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label className="text-xs font-semibold tracking-apple">Start</Label>
                 <Input
                   type="datetime-local"
                   value={formData.start_datetime}
                   onChange={(e) => setFormData({ ...formData, start_datetime: e.target.value })}
-                  className="ios-input"
+                  className="ios-input h-9 text-sm"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold tracking-apple">End Date & Time</Label>
+              <div className="space-y-1">
+                <Label className="text-xs font-semibold tracking-apple">End</Label>
                 <Input
                   type="datetime-local"
                   value={formData.end_datetime}
                   onChange={(e) => setFormData({ ...formData, end_datetime: e.target.value })}
-                  className="ios-input"
+                  className="ios-input h-9 text-sm"
                 />
               </div>
             </div>
 
-            {/* Candidate Details */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold tracking-apple">Candidate Name</Label>
+            {/* Candidate Details - Compact */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label className="text-xs font-semibold tracking-apple">Candidate Name</Label>
                 <Input
                   value={formData.candidate_name}
                   onChange={(e) => setFormData({ ...formData, candidate_name: e.target.value })}
                   placeholder="John Doe"
-                  className="ios-input"
+                  className="ios-input h-9 text-sm"
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold tracking-apple">Candidate Email</Label>
+              <div className="space-y-1">
+                <Label className="text-xs font-semibold tracking-apple">Email</Label>
                 <Input
                   type="email"
                   value={formData.candidate_email}
                   onChange={(e) => setFormData({ ...formData, candidate_email: e.target.value })}
                   placeholder="john@example.com"
-                  className="ios-input"
+                  className="ios-input h-9 text-sm"
                 />
               </div>
             </div>
 
-            {/* Location */}
-            <div className="space-y-2">
-              <Label className="text-sm font-semibold tracking-apple">Location</Label>
+            {/* Location - Compact */}
+            <div className="space-y-1">
+              <Label className="text-xs font-semibold tracking-apple">Location</Label>
               <Input
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 placeholder="Zoom, Office, etc."
-                className="ios-input"
+                className="ios-input h-9 text-sm"
               />
             </div>
 
-            {/* Description */}
-            <div className="space-y-2">
-              <Label className="text-sm font-semibold tracking-apple">Description</Label>
+            {/* Description - Compact */}
+            <div className="space-y-1">
+              <Label className="text-xs font-semibold tracking-apple">Description (Optional)</Label>
               <Textarea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Additional notes..."
-                className="ios-textarea"
-                rows={3}
+                className="ios-textarea text-sm"
+                rows={2}
               />
-            </div>
-
-            {/* Color Tag */}
-            <div className="space-y-2">
-              <Label className="text-sm font-semibold tracking-apple">Color Tag</Label>
-              <div className="flex gap-3">
-                {['blue', 'green', 'red', 'purple', 'yellow'].map(color => (
-                  <button
-                    key={color}
-                    onClick={() => setFormData({ ...formData, color_tag: color })}
-                    className={`
-                      w-10 h-10 rounded-xl border-2 transition-all duration-200
-                      ${formData.color_tag === color ? 'border-foreground scale-110 shadow-depth-2' : 'border-border'}
-                      ${color === 'blue' ? 'bg-primary' : ''}
-                      ${color === 'green' ? 'bg-success' : ''}
-                      ${color === 'red' ? 'bg-destructive' : ''}
-                      ${color === 'purple' ? 'bg-accent' : ''}
-                      ${color === 'yellow' ? 'bg-warning' : ''}
-                    `}
-                  />
-                ))}
-              </div>
             </div>
           </div>
 
