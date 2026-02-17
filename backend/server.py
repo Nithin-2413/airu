@@ -1398,7 +1398,7 @@ async def generate_email_draft(draft_request: EmailDraftRequest, request: Reques
             hr_info += f" ({draft_request.hr_email})"
     
     email_templates = {
-        "interview_invitation": f"""Generate a professional interview invitation email.
+        "interview_invitation": f"""Generate a professional, detailed interview invitation email with realistic corporate length (250-350 words).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
@@ -1408,6 +1408,20 @@ Interview Time: {draft_request.interview_time}
 Location: {draft_request.interview_location}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
+
+Create a comprehensive email that includes:
+1. Warm opening congratulating the candidate on moving forward
+2. Clear interview details (date, time, location/platform)
+3. Interview format and duration (mention 45-60 min duration, panel or 1-on-1)
+4. What to prepare (resume copy, portfolio if applicable, questions about the role)
+5. Dress code or other relevant information
+6. Who they'll be meeting with (interviewers' names and titles)
+7. Instructions for virtual interviews if applicable (meeting link, test beforehand)
+8. Parking/building access instructions if in-person
+9. Encourage them to reach out with questions
+10. Professional closing with HR contact information
+
+Make it warm, professional, and comprehensive like real corporate emails. Use proper paragraphs and spacing.
 
 IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
