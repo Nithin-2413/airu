@@ -241,6 +241,9 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Fixed hover animation: replaced opacity-only hover with smooth fade-in/fade-out + scale(1.02), duration 0.3s ease-in-out, no movement or position shifts."
+      - working: "NA"
+        agent: "main"
+        comment: "FIXED: Removed scale transformation causing position shifts. Now using only opacity change (0.85) + premium boxShadow glow on hover. Smooth 200ms transition with easeInOut. No weird movement."
 
   - task: "Screening flow - persist uploaded resumes"
     implemented: true
