@@ -209,8 +209,8 @@ const EmailDrafts = () => {
               <h2 className="text-2xl font-bold tracking-tight mb-6">Email Details</h2>
 
               {/* Email Type */}
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold">Email Type</Label>
+              <div className="space-y-3">
+                <Label className="text-sm font-semibold mb-2 block">Email Type</Label>
                 <Select
                   value={formData.email_type}
                   onValueChange={(value) => setFormData({ ...formData, email_type: value })}
@@ -229,41 +229,41 @@ const EmailDrafts = () => {
               </div>
 
               {/* HR Details Section */}
-              <div className="space-y-4 pt-4 border-t border-border">
-                <h3 className="text-lg font-semibold flex items-center gap-2">
+              <div className="space-y-4 pt-6 border-t border-border">
+                <h3 className="text-lg font-semibold flex items-center gap-2 mb-3">
                   <User className="w-5 h-5 text-primary" />
                   HR Representative Details
                 </h3>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-semibold">HR Name</Label>
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold mb-2 block">HR Name</Label>
                   <Input
                     placeholder="John Smith"
                     value={formData.hr_name}
                     onChange={(e) => setFormData({ ...formData, hr_name: e.target.value })}
-                    className="ios-input h-12"
+                    className="ios-input h-12 text-foreground"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-semibold">HR Email</Label>
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold mb-2 block">HR Email</Label>
                   <Input
                     type="email"
                     placeholder="hr@company.com"
                     value={formData.hr_email}
                     onChange={(e) => setFormData({ ...formData, hr_email: e.target.value })}
-                    className="ios-input h-12"
+                    className="ios-input h-12 text-foreground"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-semibold">HR Phone</Label>
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold mb-2 block">HR Phone</Label>
                   <Input
                     type="tel"
                     placeholder="+1 (555) 123-4567"
                     value={formData.hr_phone}
                     onChange={(e) => setFormData({ ...formData, hr_phone: e.target.value })}
-                    className="ios-input h-12"
+                    className="ios-input h-12 text-foreground"
                   />
                 </div>
               </div>
