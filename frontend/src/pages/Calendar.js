@@ -425,19 +425,19 @@ const Calendar = () => {
 
       </main>
 
-      {/* Event Dialog - macOS Modal Style */}
+      {/* Event Dialog - Compact & Square */}
       <Dialog open={isDialogOpen} onOpenChange={(open) => {
         setIsDialogOpen(open);
         if (!open) resetForm();
       }}>
-        <DialogContent className="glass-card-dialog border-2 border-border shadow-depth-4 max-w-lg">
-          <DialogHeader className="border-b border-border pb-4">
-            <DialogTitle className="text-2xl font-bold tracking-tight">
+        <DialogContent className="glass-card-dialog border-2 border-border shadow-depth-4 max-w-2xl w-[600px]">
+          <DialogHeader className="border-b border-border pb-3">
+            <DialogTitle className="text-xl font-bold tracking-tight">
               {isEditMode ? 'Edit Event' : 'New Event'}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="space-y-6 py-6">
+          <div className="space-y-3 py-4 max-h-[60vh] overflow-y-auto">
             
             {/* Title */}
             <div className="space-y-2">
