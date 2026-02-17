@@ -298,6 +298,9 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Replaced entire dashboard with premium enterprise-grade system. Features: Real-time metrics, advanced candidate table with search/filter/sort/pagination, candidate detail modal with full intelligence, hiring pipeline Kanban view, analytics with Recharts, bulk actions, export to CSV, score breakdown visualization, all data live from backend APIs."
+      - working: "NA"
+        agent: "main"
+        comment: "Added AI Summary column to dashboard table showing 1-line screening reason for each candidate. Shows the AI-generated summary explaining why the candidate got their score."
 
   - task: "History - Advanced Candidate Table"
     implemented: true
