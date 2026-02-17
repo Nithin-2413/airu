@@ -9,7 +9,6 @@ import Screening from "./pages/Screening";
 import History from "./pages/History";
 import Calendar from "./pages/Calendar";
 import EmailDrafts from "./pages/EmailDrafts";
-import Analytics from "./pages/Analytics";
 import { Toaster } from "./components/ui/sonner";
 
 function AppRouter() {
