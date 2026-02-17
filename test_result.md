@@ -166,7 +166,7 @@ backend:
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: false
         agent: "user"
@@ -177,6 +177,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ Backend API working. POST /api/emails/generate-draft endpoint functional for all email types (interview_invitation, reschedule, offer_letter, rejection, follow_up). Issue is Gemini API quota exhaustion - free tier limit of 5 requests/minute. All email generation logic correct when quota available."
+      - working: "NA"
+        agent: "main"
+        comment: "Fixed Groq library compatibility issue (upgraded from 0.11.0 to 1.0.0). Backend now starts properly. Ready for retesting with Groq llama-3.3-70b-versatile model."
 
   - task: "Calendar events CRUD"
     implemented: true
