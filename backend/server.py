@@ -1402,11 +1402,13 @@ Location: {draft_request.interview_location}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}
 
-Return in JSON format:
+IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
-    "subject": "<email subject line>",
-    "body": "<complete email body with proper formatting>"
-}}""",
+    "subject": "email subject line here",
+    "body": "complete email body with \\n for line breaks"
+}}
+
+Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
         "reschedule": f"""Generate a professional interview reschedule email.
 
 Candidate Name: {draft_request.candidate_name}
@@ -1417,11 +1419,13 @@ New Interview Time: {draft_request.interview_time}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}
 
-Return in JSON format:
+IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
-    "subject": "<email subject line>",
-    "body": "<complete email body with proper formatting>"
-}}""",
+    "subject": "email subject line here",
+    "body": "complete email body with \\n for line breaks"
+}}
+
+Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
         "offer_letter": f"""Generate a professional job offer letter email.
 
 Candidate Name: {draft_request.candidate_name}
@@ -1430,11 +1434,13 @@ Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}
 
-Return in JSON format:
+IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
-    "subject": "<email subject line>",
-    "body": "<complete email body with proper formatting>"
-}}""",
+    "subject": "email subject line here",
+    "body": "complete email body with \\n for line breaks"
+}}
+
+Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
         "rejection": f"""Generate a professional and respectful job rejection email.
 
 Candidate Name: {draft_request.candidate_name}
@@ -1443,11 +1449,13 @@ Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}
 
-Return in JSON format:
+IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
-    "subject": "<email subject line>",
-    "body": "<complete email body with proper formatting>"
-}}""",
+    "subject": "email subject line here",
+    "body": "complete email body with \\n for line breaks"
+}}
+
+Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
         "follow_up": f"""Generate a professional follow-up email after interview.
 
 Candidate Name: {draft_request.candidate_name}
@@ -1456,11 +1464,13 @@ Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}
 
-Return in JSON format:
+IMPORTANT: Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
-    "subject": "<email subject line>",
-    "body": "<complete email body with proper formatting>"
-}}"""
+    "subject": "email subject line here",
+    "body": "complete email body with \\n for line breaks"
+}}
+
+Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object."""
     }
     
     prompt = email_templates.get(draft_request.email_type)
