@@ -1434,32 +1434,38 @@ Return ONLY valid JSON in this EXACT format with properly escaped characters:
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "reschedule": f"""Generate a professional, detailed interview reschedule email with realistic corporate length (200-300 words).
+        "reschedule": f"""Generate a professional interview reschedule email (300-340 words, 3-4 paragraphs, approximately 80-120 words per paragraph).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
 Company: {draft_request.company_name}
-New Interview Date: {draft_request.interview_date}
-New Interview Time: {draft_request.interview_time}
+New Interview Date: {draft_request.interview_date or 'TBD'}
+New Interview Time: {draft_request.interview_time or 'TBD'}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-Create a comprehensive email that includes:
-1. Apologize for the inconvenience of rescheduling
-2. Brief reason for rescheduling (if appropriate: scheduling conflict, interviewer availability, etc.)
-3. Clearly state the new interview date, time, and location/platform
-4. Confirm all other details remain the same
-5. Express continued interest in the candidate
-6. Provide clear instructions for confirming the new time
-7. Offer flexibility if this time doesn't work
-8. Professional closing with HR contact information
+IMPORTANT GUIDELINES:
+- Keep email concise: 300-340 words total
+- Structure: 3-4 paragraphs, each 80-120 words
+- DO NOT include any confidential information
+- If new date/time is missing or 'TBD', state "Updated details will be informed shortly"
+- Be warm, empathetic, and professional
 
-Make it empathetic, professional, and comprehensive like real corporate emails.
+Email structure:
+1. Paragraph 1 (80-100 words): Apologize for the inconvenience of rescheduling. Brief, professional reason if appropriate (scheduling conflict, interviewer availability). Express continued strong interest in their candidacy.
 
-IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
+2. Paragraph 2 (90-110 words): Clearly state the new interview date, time, and location (or "Updated details will be informed shortly" if missing). Confirm that all other aspects of the interview remain the same. Mention interview format and duration.
+
+3. Paragraph 3 (80-100 words): Ask them to confirm their availability for the new time. Offer flexibility if this doesn't work - emphasize willingness to find an alternative. Provide clear instructions for responding.
+
+4. Paragraph 4 (50-70 words): Closing - thank them for their understanding, express enthusiasm about meeting them, professional sign-off with HR contact.
+
+Make it human, warm, and empathetic. Avoid clichés.
+
+Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
