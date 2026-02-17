@@ -1502,7 +1502,7 @@ Return ONLY valid JSON in this EXACT format with properly escaped characters:
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
-        "rejection": f"""Generate a professional, respectful, and detailed job rejection email with realistic corporate length (200-300 words).
+        "rejection": f"""Generate a professional, respectful job rejection email (300-340 words, 3-4 paragraphs, approximately 80-120 words per paragraph).
 
 Candidate Name: {draft_request.candidate_name}
 Job Title: {draft_request.job_title}
@@ -1510,23 +1510,28 @@ Company: {draft_request.company_name}
 Tone: {draft_request.tone}
 Additional Details: {draft_request.additional_details or 'None'}{hr_info}
 
-Create a comprehensive email that includes:
-1. Thank the candidate for their time and interest
-2. Acknowledge their effort in the interview process
-3. Deliver the decision clearly but respectfully
-4. Provide constructive context (high competition, specific fit considerations)
-5. Highlight positive aspects of their candidacy
-6. Encourage future applications and keep door open
-7. Offer to stay connected (LinkedIn, future opportunities)
-8. Wish them success in their job search
-9. Professional closing with HR contact information
+IMPORTANT GUIDELINES:
+- Keep email concise: 300-340 words total
+- Structure: 3-4 paragraphs, each 80-120 words
+- DO NOT include any confidential information
+- Be respectful, empathetic, and encouraging
+- Leave a positive impression of the company
 
-Make it empathetic, respectful, and encouraging. Rejection emails should leave candidates with a positive impression of the company.
+Email structure:
+1. Paragraph 1 (80-100 words): Thank them sincerely for their time and interest in the position. Acknowledge the effort they put into the interview process. Show genuine appreciation for the opportunity to learn about their background.
 
-IMPORTANT: Include HR contact information in the email signature if provided. Return ONLY valid JSON in this EXACT format with properly escaped characters:
+2. Paragraph 2 (90-110 words): Deliver the decision clearly but respectfully - we've decided to move forward with another candidate. Provide brief, constructive context: highly competitive process, strong pool of candidates, or specific role requirements. Emphasize this was a difficult decision.
+
+3. Paragraph 3 (80-100 words): Highlight positive aspects of their candidacy - specific skills, experience, or qualities that impressed the team. Encourage them to apply for future openings that match their profile. Keep the door open for potential future opportunities.
+
+4. Paragraph 4 (50-70 words): Closing - wish them success in their job search and career. Express hope to stay connected (LinkedIn, future roles). Professional sign-off with HR contact.
+
+Make it empathetic, respectful, and genuinely encouraging. Leave candidates with a positive impression.
+
+Return ONLY valid JSON in this EXACT format with properly escaped characters:
 {{
     "subject": "email subject line here",
-    "body": "complete detailed email body with \\n for line breaks and HR signature at the end"
+    "body": "complete email body with \\n for line breaks and HR signature at the end"
 }}
 
 Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""",
