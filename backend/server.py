@@ -1478,13 +1478,38 @@ Return in JSON format:
         )
         response_text = response.choices[0].message.content.strip()
         
-        # Extract JSON from response
+        # Extract and clean JSON from response
         if response_text.startswith('```'):
             response_text = re.sub(r'^```(?:json)?\n', '', response_text)
             response_text = re.sub(r'\n```$', '', response_text)
         
+        # Clean control characters and fix common JSON issues
+        # Remove control characters except newlines and tabs
+        response_text = re.sub(r'[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]', '', response_text)
+        
+        # Try to parse JSON with error handling
         import json
-        email_data = json.loads(response_text)
+        try:
+            email_data = json.loads(response_text)
+        except json.JSONDecodeError as je:
+            logging.error(f"JSON decode error: {str(je)}")
+            logging.error(f"Response text: {response_text[:500]}")
+            
+            # Try to extract subject and body manually if JSON parsing fails
+            try:
+                subject_match = re.search(r'"subject"\s*:\s*"([^"]*(?:\\.[^"]*)*)"', response_text)
+                body_match = re.search(r'"body"\s*:\s*"([^"]*(?:\\.[^"]*)*)"', response_text, re.DOTALL)
+                
+                if subject_match and body_match:
+                    email_data = {
+                        "subject": subject_match.group(1).replace('\\"', '"'),
+                        "body": body_match.group(1).replace('\\"', '"').replace('\\n', '\n')
+                    }
+                else:
+                    raise HTTPException(status_code=500, detail="Could not parse AI response")
+            except Exception as parse_error:
+                logging.error(f"Manual parsing error: {str(parse_error)}")
+                raise HTTPException(status_code=500, detail=f"Failed to parse email content: {str(je)}")
         
         return {
             "subject": email_data.get("subject", ""),
@@ -1492,6 +1517,8 @@ Return in JSON format:
             "email_type": draft_request.email_type
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         logging.error(f"Email generation error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to generate email: {str(e)}")
