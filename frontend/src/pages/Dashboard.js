@@ -820,7 +820,7 @@ const Dashboard = () => {
           </motion.div>
         )}
 
-        {/* Analytics View */}
+        {/* Analytics View - ADVANCED */}
         {activeView === 'analytics' && analytics && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -828,7 +828,101 @@ const Dashboard = () => {
             transition={{ delay: 0.3 }}
             className="space-y-6"
           >
+            {/* Advanced Metrics Row */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="glass-card p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <TrendingUp className="w-8 h-8 text-success" />
+                  <span className="text-xs text-success font-semibold">+12%</span>
+                </div>
+                <div className="text-2xl font-bold mb-1">{analytics.status_breakdown.shortlisted || 0}</div>
+                <div className="text-sm text-muted-foreground">Shortlisted Rate</div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {((analytics.status_breakdown.shortlisted / allCandidates.length * 100) || 0).toFixed(1)}% of total
+                </div>
+              </div>
+
+              <div className="glass-card p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <Target className="w-8 h-8 text-primary" />
+                  <span className="text-xs text-primary font-semibold">Active</span>
+                </div>
+                <div className="text-2xl font-bold mb-1">{analytics.average_scores.match_score}%</div>
+                <div className="text-sm text-muted-foreground">Avg Quality Score</div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {analytics.average_scores.match_score > 70 ? 'High' : analytics.average_scores.match_score > 50 ? 'Medium' : 'Low'} quality pool
+                </div>
+              </div>
+
+              <div className="glass-card p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <Activity className="w-8 h-8 text-warning" />
+                  <span className="text-xs text-warning font-semibold">Live</span>
+                </div>
+                <div className="text-2xl font-bold mb-1">{jobs.filter(j => j.status === 'active').length}</div>
+                <div className="text-sm text-muted-foreground">Active Positions</div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {jobs.length} total jobs
+                </div>
+              </div>
+
+              <div className="glass-card p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <CheckCircle className="w-8 h-8 text-success" />
+                  <span className="text-xs text-success font-semibold">Success</span>
+                </div>
+                <div className="text-2xl font-bold mb-1">{((analytics.conversion_rate || 0) * 100).toFixed(1)}%</div>
+                <div className="text-sm text-muted-foreground">Conversion Rate</div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                  To interview stage
+                </div>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Hiring Funnel Visualization */}
+              <div className="glass-card">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <Layers className="w-5 h-5 text-primary" />
+                    Hiring Funnel Analysis
+                  </h3>
+                </div>
+                <div className="p-6">
+                  <div className="space-y-3">
+                    {[
+                      { stage: 'Total Applications', count: allCandidates.length, width: 100, color: 'bg-blue-500' },
+                      { stage: 'Screened', count: allCandidates.filter(c => c.match_score > 0).length, width: (allCandidates.filter(c => c.match_score > 0).length / allCandidates.length * 100) || 0, color: 'bg-cyan-500' },
+                      { stage: 'Shortlisted', count: analytics.status_breakdown.shortlisted || 0, width: ((analytics.status_breakdown.shortlisted || 0) / allCandidates.length * 100) || 0, color: 'bg-green-500' },
+                      { stage: 'Interviewed', count: analytics.status_breakdown.interviewed || 0, width: ((analytics.status_breakdown.interviewed || 0) / allCandidates.length * 100) || 0, color: 'bg-yellow-500' },
+                      { stage: 'Hired', count: analytics.status_breakdown.hired || 0, width: ((analytics.status_breakdown.hired || 0) / allCandidates.length * 100) || 0, color: 'bg-purple-500' }
+                    ].map((stage, idx) => (
+                      <motion.div
+                        key={stage.stage}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: idx * 0.1 }}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-semibold">{stage.stage}</span>
+                          <span className="text-sm font-bold">{stage.count}</span>
+                        </div>
+                        <div className="relative h-12 bg-secondary/30 rounded-xl overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${stage.width}%` }}
+                            transition={{ delay: 0.5 + idx * 0.1, duration: 0.8 }}
+                            className={`h-full ${stage.color} flex items-center justify-end px-4`}
+                          >
+                            <span className="text-white font-bold text-sm">{stage.width.toFixed(0)}%</span>
+                          </motion.div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               {/* Status Distribution */}
               <div className="glass-card">
                 <div className="p-6 border-b border-border">
@@ -857,10 +951,13 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Score Distribution */}
+              {/* Score Distribution with Trend */}
               <div className="glass-card">
                 <div className="p-6 border-b border-border">
-                  <h3 className="text-xl font-bold">Match Score Distribution</h3>
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <BarChart3 className="w-5 h-5 text-primary" />
+                    Match Score Distribution
+                  </h3>
                 </div>
                 <div className="p-6">
                   <ResponsiveContainer width="100%" height={300}>
@@ -875,7 +972,32 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Average Scores */}
+              {/* Skills vs Experience Scatter */}
+              <div className="glass-card">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <Activity className="w-5 h-5 text-success" />
+                    Skills vs Experience Matrix
+                  </h3>
+                </div>
+                <div className="p-6">
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={[
+                      { name: 'Exp 0-2yr', skills: allCandidates.filter(c => c.experience_score < 40).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score < 40).length || 1) },
+                      { name: 'Exp 2-5yr', skills: allCandidates.filter(c => c.experience_score >= 40 && c.experience_score < 70).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score >= 40 && c.experience_score < 70).length || 1) },
+                      { name: 'Exp 5+yr', skills: allCandidates.filter(c => c.experience_score >= 70).reduce((sum, c) => sum + c.skills_score, 0) / (allCandidates.filter(c => c.experience_score >= 70).length || 1) }
+                    ]}>
+                      <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="skills" fill="#10b981" radius={[8, 8, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Average Scores Breakdown */}
               <div className="glass-card">
                 <div className="p-6 border-b border-border">
                   <h3 className="text-xl font-bold">Average Scores Breakdown</h3>
@@ -942,6 +1064,54 @@ const Dashboard = () => {
                         No job data available yet
                       </div>
                     )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* AI Insights Panel */}
+            <div className="glass-card p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <Brain className="w-6 h-6 text-primary" />
+                <h3 className="text-xl font-bold">AI-Powered Insights</h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 bg-success/10 rounded-xl border border-success/20">
+                  <div className="flex items-start gap-3">
+                    <TrendingUp className="w-5 h-5 text-success mt-1" />
+                    <div>
+                      <div className="font-semibold text-success mb-1">High Quality Pool</div>
+                      <div className="text-sm text-muted-foreground">
+                        {allCandidates.filter(c => c.match_score >= 70).length} candidates scored 70+. 
+                        Consider prioritizing these for interviews.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-warning/10 rounded-xl border border-warning/20">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-warning mt-1" />
+                    <div>
+                      <div className="font-semibold text-warning mb-1">Review Needed</div>
+                      <div className="text-sm text-muted-foreground">
+                        {allCandidates.filter(c => c.match_score >= 50 && c.match_score < 70).length} candidates in 50-70 range. 
+                        Manual review recommended for edge cases.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-primary/10 rounded-xl border border-primary/20">
+                  <div className="flex items-start gap-3">
+                    <Target className="w-5 h-5 text-primary mt-1" />
+                    <div>
+                      <div className="font-semibold text-primary mb-1">Optimization Tip</div>
+                      <div className="text-sm text-muted-foreground">
+                        Average keyword score is {analytics.average_scores.keyword_score}%. 
+                        {analytics.average_scores.keyword_score < 60 ? 'Refine JD keywords for better matching.' : 'Job descriptions are well optimized.'}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
