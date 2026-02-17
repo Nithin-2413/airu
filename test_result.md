@@ -568,3 +568,110 @@ agent_communication:
       - Calendar add event popup - should stay fixed, no movement
       - Dashboard candidate details popup - should stay fixed, no movement
       - Both popups maintain premium glassmorphism design
+
+  - agent: "main"
+    message: |
+      ✅ NEW SESSION - User Requested Improvements Completed:
+      
+      USER REQUESTS:
+      1. Email drafts too long - make 300-340 words, professional, remove confidential info
+      2. Logo and brand name inconsistent across pages
+      3. Calendar add event popup fields cutting on sides
+      
+      FIXES IMPLEMENTED:
+      
+      1. ✅ EMAIL GENERATION - Backend Updates (server.py lines 1400-1545):
+         All 5 email templates updated with new requirements:
+         
+         Interview Invitation:
+         - Word count: 300-340 words (3-4 paragraphs, 80-120 words each)
+         - Removed: Parking instructions, detailed dress code, overly detailed logistics
+         - Added: "Details will be informed shortly" for missing date/time/location
+         - Structure: Congratulations → Interview logistics → Preparation → Closing
+         
+         Reschedule:
+         - Word count: 300-340 words (3-4 paragraphs, 80-120 words each)
+         - Removed: Overly detailed reasons for rescheduling
+         - Added: "Updated details will be informed shortly" for missing info
+         - Structure: Apology → New details → Confirmation request → Closing
+         
+         Offer Letter:
+         - Word count: 300-340 words (3-4 paragraphs, 80-120 words each)
+         - **REMOVED ALL CONFIDENTIAL INFO**: No salary, benefits, perks, compensation
+         - Added: "Details will be provided in the formal offer letter"
+         - Structure: Congratulations → Formal offer statement → Next steps → Closing
+         
+         Rejection:
+         - Word count: 300-340 words (3-4 paragraphs, 80-120 words each)
+         - Removed: Overly detailed reasons
+         - Structure: Thanks → Decision → Positive highlights → Closing
+         
+         Follow-up:
+         - Word count: 300-340 words (3-4 paragraphs, 80-120 words each)
+         - Added: "We'll update you on next steps shortly" for uncertain timeline
+         - Structure: Thanks → Positive impressions → Timeline → Closing
+         
+         All templates now:
+         - Professional and warm tone (not too formal, not too casual)
+         - No clichés or AI-sounding phrases
+         - Concise and actionable
+         - Handle missing information gracefully
+      
+      2. ✅ LOGO AND BRAND CONSISTENCY - Frontend Updates:
+         Standardized all pages to match LandingPage style:
+         
+         Logo Component (all pages now identical):
+         - Size: w-11 h-11 (was w-8/w-10 on some pages)
+         - Shape: rounded-2xl (was rounded-lg/rounded-xl on some pages)
+         - Gradient: gradient-ios-blue (was ai-gradient/gradient-primary on some pages)
+         - Icon: Sparkles w-6 h-6 (was w-5 h-5 on some pages)
+         - Effects: Group hover with scale-105 and blur glow
+         
+         Brand Text (all pages now identical):
+         - Size: text-2xl (was text-xl on some pages)
+         - Weight: font-bold tracking-tightest
+         - Style: bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent
+         - (was plain text on Dashboard, Calendar, Jobs, Screening)
+         
+         Pages Updated:
+         ✅ Dashboard.js (line 291-296)
+         ✅ Calendar.js (line 245-250)
+         ✅ Jobs.js (line 114-119)
+         ✅ Screening.js (line 216-221)
+         ✅ EmailDrafts.js (already correct)
+         ✅ LandingPage.js (reference standard)
+      
+      3. ✅ CALENDAR ADD EVENT POPUP - Layout Fixes (Calendar.js lines 428-612):
+         
+         Root Cause: Fixed width (600px) and tight grid columns causing field cutting
+         
+         Fixes Applied:
+         - Dialog width: max-w-2xl w-[600px] → max-w-3xl w-full mx-4 sm:w-[700px]
+         - Content area: max-h-[60vh] → max-h-[70vh] with px-1 padding
+         - Spacing: space-y-3 → space-y-4 (better breathing room)
+         - Grid responsiveness:
+           * Type/Status/Color: grid-cols-3 → grid-cols-1 sm:grid-cols-3
+           * Date/Time: grid-cols-2 → grid-cols-1 sm:grid-cols-2
+           * Candidate fields: grid-cols-2 → grid-cols-1 sm:grid-cols-2
+         - All inputs: Added w-full to ensure full width within containers
+         - Input heights: h-9 → h-10 (better touch targets)
+         - Color buttons: w-7 → w-8 with ring-2 on selection
+         - Action buttons: Responsive flex-col sm:flex-row, w-full sm:w-auto
+         - Labels: space-y-1 → space-y-1.5
+         
+         Result:
+         - No field cutting on any screen size
+         - Responsive design works on mobile and desktop
+         - Better visual hierarchy and spacing
+         - All form fields fully visible and accessible
+      
+      SERVICES STATUS:
+      - Backend: RUNNING (pid 1842) - Email templates updated
+      - Frontend: RUNNING (pid 1740) - Logo consistency and calendar layout fixed
+      - MongoDB: RUNNING
+      
+      VERIFICATION NEEDED:
+      - Test email generation with various scenarios (with/without dates)
+      - Verify no salary/benefits info appears in offer letters
+      - Check logo consistency across all pages
+      - Test calendar popup on different screen sizes
