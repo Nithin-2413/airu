@@ -127,11 +127,14 @@ backend:
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
         comment: "Backend has resume upload with Gemini AI parsing. Extracts name, email, skills, experience."
+      - working: "NA"
+        agent: "main"
+        comment: "Fixed Groq library compatibility issue (upgraded from 0.11.0 to 1.0.0). Backend now starts properly. Ready for retesting with Groq llama-3.3-70b-versatile model."
 
   - task: "Job description CRUD"
     implemented: true
