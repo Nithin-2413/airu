@@ -250,6 +250,9 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "FIXED: Removed scale transformation causing position shifts. Now using only opacity change (0.85) + premium boxShadow glow on hover. Smooth 200ms transition with easeInOut. No weird movement."
+      - working: "NA"
+        agent: "main"
+        comment: "FIXED CALENDAR CELLS: Removed all scale animations from calendar day cells (line 360-364). Now only fade-in animation (opacity 0→1). No movement on hover, just smooth background color change."
 
   - task: "Screening flow - persist uploaded resumes"
     implemented: true
