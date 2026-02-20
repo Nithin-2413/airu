@@ -23,11 +23,13 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 # Configure Groq AI Client for Llama 3.3 (70B)
-groq_client = Groq(api_key=os.environ.get('GROQ_API_KEY'))
+# Initialize as None if API key not provided (allows server to start)
+groq_api_key = os.environ.get('GROQ_API_KEY')
+groq_client = Groq(api_key=groq_api_key) if groq_api_key else None
 
-mongo_url = os.environ['MONGO_URL']
+mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/')
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = client[os.environ.get('DB_NAME', 'hrai_development')]
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
@@ -408,6 +410,10 @@ async def get_user_from_cookie(request: Request) -> Optional[User]:
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", "")
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+
+# Helper function to check if AI features are available
+def is_ai_available():
+    return groq_client is not None
 GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
 GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo"
