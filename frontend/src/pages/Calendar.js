@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar as CalendarIcon, Plus, ChevronLeft, ChevronRight, Clock, MapPin, User, Trash2, Edit2, Home, Sparkles, X, Video } from 'lucide-react';
 import { Button } from '../components/ui/button';
@@ -34,11 +34,7 @@ const Calendar = () => {
     color_tag: 'blue'
   });
 
-  useEffect(() => {
-    loadEvents();
-  }, [currentDate, view]);
-
-  const loadEvents = async () => {
+  const loadEvents = useCallback(async () => {
     try {
       const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
       const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
@@ -55,7 +51,11 @@ const Calendar = () => {
       console.error('Failed to load events:', error);
       toast.error('Failed to load calendar events');
     }
-  };
+  }, [currentDate, view]);
+
+  useEffect(() => {
+    loadEvents();
+  }, [loadEvents]);
 
   const handleCreateEvent = async () => {
     try {
