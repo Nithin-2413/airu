@@ -51,7 +51,7 @@ const Calendar = () => {
       console.error('Failed to load events:', error);
       toast.error('Failed to load calendar events');
     }
-  }, [currentDate, view]);
+  }, [currentDate]); // Removed 'view' - not used in this function
 
   useEffect(() => {
     loadEvents();
