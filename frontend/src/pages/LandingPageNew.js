@@ -129,7 +129,7 @@ const LandingPageNew = () => {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </motion.div>
-        </motion.h1>
+        </motion.div>
 
         {/* Unicorn Studio WebGL Scene */}
         <div className="absolute inset-0 z-0">
