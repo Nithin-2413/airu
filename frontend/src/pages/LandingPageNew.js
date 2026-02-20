@@ -132,11 +132,11 @@ const LandingPageNew = () => {
             className="text-center mb-20"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-              <Target className="w-4 h-4 text-purple-400" />
+              <Target className="w-4 h-4 text-amber-400" />
               <span className="text-sm text-gray-300">Who We Are</span>
             </div>
             <h2 className="text-5xl lg:text-6xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 bg-clip-text text-transparent">
                 AI-Native
               </span>
               {' '}Recruitment Platform
