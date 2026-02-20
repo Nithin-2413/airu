@@ -276,7 +276,7 @@ const LandingPageNew = () => {
                 viewport={{ once: true }}
                 className="group relative p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300"
               >
-                <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
                   {service.title}
                 </h3>
                 <p className="text-gray-400 mb-6 leading-relaxed text-lg">
