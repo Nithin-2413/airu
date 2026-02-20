@@ -572,6 +572,188 @@
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
     }
+    
+    /* ============================================
+       PrimeHire Capsule UI System
+       ============================================ */
+    
+    /* 1. Pill-based Filters */
+    .capsule-filter {
+        @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium;
+        @apply transition-all duration-200 ease-in-out cursor-pointer select-none;
+        background: hsl(var(--surface));
+        border: 1px solid hsl(var(--border));
+        color: hsl(var(--foreground-secondary));
+    }
+    
+    .capsule-filter:hover {
+        border-color: hsl(var(--border-strong));
+        background: hsl(var(--elevated));
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .capsule-filter.active {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        border-color: hsl(var(--primary));
+        box-shadow: var(--shadow-md);
+    }
+    
+    .dark .capsule-filter.active {
+        box-shadow: var(--glow-primary), var(--shadow-md);
+    }
+    
+    /* 2. Status Chips */
+    .status-chip {
+        @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold;
+        @apply transition-all duration-150;
+    }
+    
+    .status-chip.active {
+        background: hsl(var(--success-bg));
+        color: hsl(var(--success));
+        border: 1px solid hsl(var(--success) / 0.3);
+    }
+    
+    .status-chip.pending {
+        background: hsl(var(--warning-bg));
+        color: hsl(var(--warning));
+        border: 1px solid hsl(var(--warning) / 0.3);
+    }
+    
+    .status-chip.rejected {
+        background: hsl(var(--danger-bg));
+        color: hsl(var(--danger));
+        border: 1px solid hsl(var(--danger) / 0.3);
+    }
+    
+    .status-chip.hired {
+        background: hsl(var(--info-bg));
+        color: hsl(var(--info));
+        border: 1px solid hsl(var(--info) / 0.3);
+    }
+    
+    .dark .status-chip.active {
+        box-shadow: var(--glow-success);
+    }
+    
+    /* 3. Score Badges */
+    .score-badge {
+        @apply inline-flex items-center justify-center w-12 h-12 rounded-2xl text-lg font-bold;
+        @apply transition-all duration-200;
+        border: 2px solid;
+    }
+    
+    .score-badge.score-high {
+        background: linear-gradient(135deg, hsl(var(--success)) 0%, hsl(var(--success) / 0.8) 100%);
+        color: white;
+        border-color: hsl(var(--success));
+    }
+    
+    .score-badge.score-medium {
+        background: linear-gradient(135deg, hsl(var(--warning)) 0%, hsl(var(--warning) / 0.8) 100%);
+        color: white;
+        border-color: hsl(var(--warning));
+    }
+    
+    .score-badge.score-low {
+        background: linear-gradient(135deg, hsl(var(--danger)) 0%, hsl(var(--danger) / 0.8) 100%);
+        color: white;
+        border-color: hsl(var(--danger));
+    }
+    
+    .dark .score-badge.score-high {
+        box-shadow: var(--glow-success);
+    }
+    
+    /* 4. Navigation Capsules */
+    .nav-capsule {
+        @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium;
+        @apply transition-all duration-200 cursor-pointer;
+        color: hsl(var(--foreground-secondary));
+    }
+    
+    .nav-capsule:hover {
+        background: hsl(var(--surface));
+        color: hsl(var(--foreground));
+    }
+    
+    .nav-capsule.active {
+        background: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        box-shadow: var(--shadow-md);
+    }
+    
+    .dark .nav-capsule.active {
+        box-shadow: var(--glow-primary), var(--shadow-md);
+    }
+    
+    /* 5. Tag Capsules */
+    .tag-capsule {
+        @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+        @apply transition-all duration-150 cursor-pointer;
+        background: hsl(var(--surface));
+        color: hsl(var(--foreground-secondary));
+        border: 1px solid hsl(var(--border));
+    }
+    
+    .tag-capsule:hover {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-color: hsl(var(--primary));
+        color: hsl(var(--primary));
+    }
+    
+    .tag-capsule.selected {
+        background: hsl(var(--primary) / 0.1);
+        color: hsl(var(--primary));
+        border-color: hsl(var(--primary));
+    }
+    
+    /* Glass Card Prime */
+    .glass-card-prime {
+        background: hsl(var(--elevated));
+        border: 1px solid hsl(var(--border));
+        border-radius: 1.5rem;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .glass-card-prime:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        border-color: hsl(var(--border-strong));
+    }
+    
+    .dark .glass-card-prime {
+        background: hsl(var(--surface));
+    }
+    
+    .dark .glass-card-prime:hover {
+        box-shadow: var(--shadow-xl), var(--glow-primary);
+    }
+    
+    /* Custom scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: hsl(var(--surface));
+        border-radius: 8px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: hsl(var(--border-strong));
+        border-radius: 8px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: hsl(var(--foreground-tertiary));
+    }
 }
 
 /* ============================================
