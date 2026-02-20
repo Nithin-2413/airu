@@ -2,18 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import PrimeHire Design System */
-@import './styles/design-system.css';
-
 /* ============================================
-   Apple iOS 17 Design System - Premium Edition
-   Authentic glassmorphism, depth, and motion
-   (Legacy - kept for backward compatibility)
+   PrimeHire Design System v2.0
+   Next-Generation AI-Native Hiring Intelligence
    ============================================ */
 
 @layer base {
     :root {
-        /* iOS 17 Light Mode - Premium Color Palette */
+        /* PrimeHire Light Theme - Clean, High Contrast, Modern SaaS */
+        /* Reference: Linear, Notion */
+        
+        /* Surface Hierarchy */
+        --surface: 220 14% 98%;            /* Light grey surface */
+        --elevated: 0 0% 100%;             /* White elevated elements */
+        --overlay: 0 0% 100%;              /* White overlays */
+        
+        /* Text Contrast (AA Compliant) */
+        --foreground-secondary: 220 15% 35%; /* Secondary text */
+        --foreground-tertiary: 220 10% 55%; /* Tertiary text */
+        
+        /* PrimeHire Brand Colors */
+        --prime-blue: 217 91% 60%;         /* Primary brand blue */
+        --prime-purple: 262 83% 58%;       /* Accent purple */
+        --prime-cyan: 189 94% 43%;         /* Accent cyan */
+        --prime-pink: 330 81% 60%;         /* Accent pink */
+        
+        /* Status Colors - High Contrast */
+        --success-bg: 142 76% 95%;
+        --warning-bg: 38 92% 95%;
+        --danger: 0 84% 60%;               /* Red */
+        --danger-bg: 0 84% 95%;
+        --info: 217 91% 60%;               /* Blue */
+        --info-bg: 217 91% 95%;
+        
+        /* UI Elements */
+        --border-strong: 220 13% 80%;
+        --input-bg: 0 0% 100%;
+        --input-border: 220 13% 91%;
+        
+        /* Shadows - Subtle depth */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+        --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+        --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.16);
+        
+        /* iOS 17 Light Mode - Premium Color Palette (Legacy) */
         --background: 0 0% 98%;
         --foreground: 220 13% 13%;
         
