@@ -153,37 +153,37 @@ const LandingPageNew = () => {
                 icon: <Brain className="w-8 h-8" />,
                 title: "AI-Powered Insights",
                 description: "Advanced machine learning algorithms analyze candidate profiles, predict success rates, and surface hidden talent.",
-                gradient: "from-blue-500 to-cyan-500"
+                gradient: "from-amber-400 to-yellow-300"
               },
               {
                 icon: <Zap className="w-8 h-8" />,
                 title: "Lightning Fast",
                 description: "Screen hundreds of resumes in seconds, generate personalized emails, and automate repetitive tasks instantly.",
-                gradient: "from-purple-500 to-pink-500"
+                gradient: "from-slate-300 to-zinc-400"
               },
               {
                 icon: <Target className="w-8 h-8" />,
                 title: "Precision Matching",
                 description: "Multi-dimensional scoring engine evaluates skills, experience, and cultural fit with unprecedented accuracy.",
-                gradient: "from-pink-500 to-rose-500"
+                gradient: "from-yellow-300 to-amber-500"
               },
               {
                 icon: <TrendingUp className="w-8 h-8" />,
                 title: "Predictive Analytics",
                 description: "Forecast hiring outcomes, identify bottlenecks, and optimize your recruitment funnel with real-time insights.",
-                gradient: "from-cyan-500 to-blue-500"
+                gradient: "from-zinc-400 to-slate-500"
               },
               {
                 icon: <Users className="w-8 h-8" />,
                 title: "Collaboration Tools",
                 description: "Streamline team communication, centralize feedback, and maintain complete visibility across your hiring pipeline.",
-                gradient: "from-violet-500 to-purple-500"
+                gradient: "from-amber-500 to-yellow-400"
               },
               {
                 icon: <Shield className="w-8 h-8" />,
                 title: "Bias Detection",
                 description: "Built-in fairness algorithms identify and mitigate unconscious bias, ensuring equitable hiring practices.",
-                gradient: "from-emerald-500 to-teal-500"
+                gradient: "from-slate-400 to-zinc-300"
               }
             ].map((feature, index) => (
               <motion.div
