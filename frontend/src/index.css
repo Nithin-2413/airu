@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import PrimeHire Design System */
+@import './styles/design-system.css';
+
 /* ============================================
    Apple iOS 17 Design System - Premium Edition
    Authentic glassmorphism, depth, and motion
+   (Legacy - kept for backward compatibility)
    ============================================ */
 
 @layer base {
