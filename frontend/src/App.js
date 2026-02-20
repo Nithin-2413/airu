@@ -14,7 +14,7 @@ import { Toaster } from "./components/ui/sonner";
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<LandingPageNew />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/jobs" element={<Jobs />} />
       <Route path="/screening" element={<Screening />} />
