@@ -19,6 +19,9 @@ module.exports = {
                 colors: {
                         background: 'hsl(var(--background))',
                         foreground: 'hsl(var(--foreground))',
+                        surface: 'hsl(var(--surface))',
+                        elevated: 'hsl(var(--elevated))',
+                        overlay: 'hsl(var(--overlay))',
                         card: {
                                 DEFAULT: 'hsl(var(--card))',
                                 foreground: 'hsl(var(--card-foreground))'
@@ -45,18 +48,31 @@ module.exports = {
                         },
                         success: {
                                 DEFAULT: 'hsl(var(--success))',
+                                bg: 'hsl(var(--success-bg))',
                                 subtle: 'hsl(var(--success-subtle))'
                         },
                         warning: {
                                 DEFAULT: 'hsl(var(--warning))',
+                                bg: 'hsl(var(--warning-bg))',
                                 subtle: 'hsl(var(--warning-subtle))'
+                        },
+                        danger: {
+                                DEFAULT: 'hsl(var(--danger))',
+                                bg: 'hsl(var(--danger-bg))',
+                        },
+                        info: {
+                                DEFAULT: 'hsl(var(--info))',
+                                bg: 'hsl(var(--info-bg))',
                         },
                         destructive: {
                                 DEFAULT: 'hsl(var(--destructive))',
                                 foreground: 'hsl(var(--destructive-foreground))',
                                 subtle: 'hsl(var(--destructive-subtle))'
                         },
-                        border: 'hsl(var(--border))',
+                        border: {
+                                DEFAULT: 'hsl(var(--border))',
+                                strong: 'hsl(var(--border-strong))'
+                        },
                         input: 'hsl(var(--input))',
                         ring: 'hsl(var(--ring))'
                 },
