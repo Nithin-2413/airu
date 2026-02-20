@@ -172,12 +172,27 @@ def extract_text_from_docx(file_content: bytes) -> str:
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Failed to extract DOCX text: {str(e)}")
 
-# Enhanced resume parsing with Gemini AI
+# Enhanced resume parsing with Groq AI
 async def parse_resume_with_ai(resume_text: str) -> dict:
     """
-    Use Gemini AI to extract structured information from resume text
+    Use Groq AI to extract structured information from resume text
     Returns: dict with name, email, phone, skills, experience, education
     """
+    
+    # Return mock data if AI is not available
+    if not is_ai_available():
+        logging.warning("Groq API key not configured - returning mock parsed data")
+        return {
+            "name": extract_candidate_name_simple(resume_text),
+            "email": None,
+            "phone": None,
+            "skills": ["Python", "JavaScript"],
+            "experience_years": 0,
+            "education": "Not parsed - AI disabled",
+            "current_role": "Not parsed - AI disabled",
+            "key_achievements": []
+        }
+    
     try:
         prompt = f"""You are an expert resume parser. Extract the following information from this resume and return it in JSON format.
 
