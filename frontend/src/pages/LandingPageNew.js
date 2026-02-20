@@ -53,12 +53,12 @@ const LandingPageNew = () => {
               className="flex items-center gap-3 cursor-pointer"
             >
               <div className="relative group">
-                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105">
-                  <Sparkles className="w-6 h-6 text-white" />
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-300 to-amber-500 flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105">
+                  <Sparkles className="w-6 h-6 text-black" />
                 </div>
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-50 blur-xl group-hover:opacity-70 transition-opacity" />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-300 to-amber-500 opacity-50 blur-xl group-hover:opacity-70 transition-opacity" />
               </div>
-              <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 bg-clip-text text-transparent">
                 PrimeHire
               </span>
             </motion.div>
@@ -69,7 +69,7 @@ const LandingPageNew = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
               onClick={handleGetStarted}
-              className="px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-semibold text-sm hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300 hover:scale-105"
+              className="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-semibold text-sm hover:shadow-lg hover:shadow-amber-400/30 transition-all duration-300 hover:scale-105"
             >
               Get Started
             </motion.button>
