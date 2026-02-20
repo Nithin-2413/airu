@@ -219,13 +219,13 @@ const LandingPageNew = () => {
             className="text-center mb-20"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-              <Sparkles className="w-4 h-4 text-blue-400" />
+              <Sparkles className="w-4 h-4 text-amber-400" />
               <span className="text-sm text-gray-300">Our Services</span>
             </div>
             <h2 className="text-5xl lg:text-6xl font-bold mb-6">
               Everything You Need to
               <br />
-              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 bg-clip-text text-transparent">
                 Hire Smarter
               </span>
             </h2>
