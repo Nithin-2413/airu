@@ -1613,6 +1613,15 @@ Do NOT include any markdown, code blocks, or extra text. ONLY the JSON object.""
     if not prompt:
         raise HTTPException(status_code=400, detail="Invalid email type")
     
+    # Check if AI is available
+    if not is_ai_available():
+        logging.warning("Groq API key not configured - returning mock email")
+        return EmailDraftResponse(
+            subject=f"{draft_request.email_type.replace('_', ' ').title()} - {draft_request.job_title or 'Position'}",
+            body=f"Dear {draft_request.candidate_name},\n\n⚠️ AI email generation is currently disabled.\n\nTo enable AI-powered email generation:\n1. Get a FREE Groq API key from https://console.groq.com/keys\n2. Add it to your backend .env file as GROQ_API_KEY=your_key_here\n3. Restart the backend server\n\nOnce configured, intelligent personalized emails will be generated automatically.\n\nBest regards,\n{draft_request.hr_name or 'HR Team'}\n{draft_request.hr_email or ''}",
+            email_type=draft_request.email_type
+        )
+    
     try:
         system_prompt = """You are an AI email assistant for HRAI, an enterprise HR intelligence platform.
 
