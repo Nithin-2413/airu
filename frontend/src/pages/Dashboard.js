@@ -53,11 +53,11 @@ const Dashboard = () => {
   }, []);
 
   const loadAllData = async () => {
+    // Declare startTime at function scope so it's available in catch block
+    const startTime = Date.now();
+    
     try {
       setLoading(true);
-      
-      // Minimum 5 second loading animation
-      const startTime = Date.now();
       
       // Load all data in parallel
       const [analyticsRes, screeningsRes, jobsRes, eventsRes] = await Promise.all([
