@@ -311,7 +311,7 @@ const LandingPageNew = () => {
             <h2 className="text-5xl lg:text-6xl font-bold mb-6">
               Ready to Transform
               <br />
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 bg-clip-text text-transparent">
                 Your Hiring Process?
               </span>
             </h2>
@@ -320,7 +320,7 @@ const LandingPageNew = () => {
             </p>
             <button
               onClick={handleGetStarted}
-              className="group px-10 py-5 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-semibold text-xl hover:shadow-2xl hover:shadow-purple-500/40 transition-all duration-300 hover:scale-105 flex items-center gap-3 mx-auto"
+              className="group px-10 py-5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-semibold text-xl hover:shadow-2xl hover:shadow-amber-400/40 transition-all duration-300 hover:scale-105 flex items-center gap-3 mx-auto"
             >
               Get Started Now
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
