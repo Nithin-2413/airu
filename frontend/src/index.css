@@ -94,7 +94,69 @@
     }
     
     .dark {
-        /* Premium Dark Mode */
+        /* PrimeHire Dark Theme - Deep Surfaces, Glowing Accents */
+        /* Reference: Vercel, Raycast */
+        
+        /* Surface Hierarchy */
+        --background: 222 47% 4%;          /* Deep navy/black */
+        --surface: 220 40% 8%;             /* Dark surface */
+        --elevated: 220 35% 12%;           /* Elevated surface */
+        --overlay: 220 30% 16%;            /* Overlay surface */
+        
+        /* Text Contrast (AA Compliant) */
+        --foreground: 210 17% 98%;         /* Almost white text */
+        --foreground-secondary: 220 15% 70%; /* Secondary text */
+        --foreground-tertiary: 220 10% 50%; /* Tertiary text */
+        
+        /* PrimeHire Brand Colors - Brighter for dark mode */
+        --prime-blue: 217 91% 65%;
+        --prime-purple: 262 83% 65%;
+        --prime-cyan: 189 94% 50%;
+        --prime-pink: 330 81% 65%;
+        
+        /* Semantic Colors */
+        --primary: 217 91% 65%;
+        --primary-foreground: 210 17% 98%;
+        --secondary: 220 35% 12%;
+        --secondary-foreground: 210 17% 98%;
+        --accent: 262 83% 65%;
+        --accent-foreground: 210 17% 98%;
+        
+        /* Status Colors - Glowing in dark */
+        --success: 142 76% 45%;
+        --success-bg: 142 76% 12%;
+        --warning: 38 92% 55%;
+        --warning-bg: 38 92% 12%;
+        --danger: 0 84% 65%;
+        --danger-bg: 0 84% 12%;
+        --info: 217 91% 65%;
+        --info-bg: 217 91% 12%;
+        
+        /* UI Elements */
+        --border: 220 30% 18%;
+        --border-strong: 220 30% 25%;
+        --input-bg: 220 35% 10%;
+        --input-border: 220 30% 18%;
+        --ring: 217 91% 65%;
+        
+        /* Shadows - Stronger in dark */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+        --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.6);
+        --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.7);
+        --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.8);
+        
+        /* Glassmorphism Dark */
+        --glass-bg: rgba(20, 25, 35, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+        
+        /* Glow effects for dark mode */
+        --glow-primary: 0 0 20px rgba(99, 179, 237, 0.3);
+        --glow-accent: 0 0 20px rgba(167, 139, 250, 0.3);
+        --glow-success: 0 0 20px rgba(74, 222, 128, 0.3);
+        --glow-danger: 0 0 20px rgba(248, 113, 113, 0.3);
+        
+        /* Premium Dark Mode (Legacy) */
         --background: 220 15% 6%;
         --foreground: 220 10% 95%;
         
