@@ -12,7 +12,7 @@ import io
 from typing import Dict, Any
 
 # Configuration
-BASE_URL = "https://llamacode.preview.emergentagent.com/api"
+BASE_URL = "https://hr-dashboard-132.preview.emergentagent.com/api"
 SESSION_ID = f"test-session-{uuid.uuid4()}"
 
 class BackendTester:
