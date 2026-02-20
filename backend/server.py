@@ -262,6 +262,23 @@ def extract_candidate_name_simple(resume_text: str) -> Optional[str]:
 
 # ATS-style screening with Groq AI - STRICT SCORING
 async def screen_resume_with_ai(resume_text: str, job_data: dict) -> dict:
+    
+    # Return mock data if AI is not available
+    if not is_ai_available():
+        logging.warning("Groq API key not configured - returning mock screening data")
+        return {
+            "match_score": 75,
+            "experience_score": 70,
+            "skills_score": 80,
+            "keyword_score": 75,
+            "summary": "AI screening disabled - Please configure GROQ_API_KEY to enable detailed analysis.",
+            "strengths": ["Resume uploaded successfully"],
+            "gaps": ["AI not configured - unable to perform detailed analysis"],
+            "key_highlights": ["Configure Groq API key for AI-powered screening"],
+            "recommended_action": "Maybe",
+            "detailed_analysis": "AI features are currently disabled. Add GROQ_API_KEY to enable intelligent resume screening."
+        }
+    
     try:
         # Build comprehensive prompt for STRICT ATS-style analysis
         prompt = f"""You are an EXCEPTIONALLY STRICT expert ATS (Applicant Tracking System) and senior HR recruiter with 15+ years of experience. Analyze this resume against the job description using VERY STRICT ATS-style evaluation.
