@@ -36,6 +36,23 @@ const Screening = () => {
     loadPersistedScreeningSession();
   }, []);
 
+  const loadPersistedScreeningSession = () => {
+    try {
+      const savedSession = sessionStorage.getItem('screening_session');
+      if (savedSession) {
+        const { resumes, jobId } = JSON.parse(savedSession);
+        if (resumes && resumes.length > 0) {
+          setUploadedResumes(resumes);
+        }
+        if (jobId) {
+          setSelectedJob(jobId);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load screening session:', error);
+    }
+  };
+
   const persistScreeningSession = useCallback(() => {
     try {
       sessionStorage.setItem('screening_session', JSON.stringify({
